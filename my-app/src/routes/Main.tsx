@@ -1,51 +1,51 @@
 import React from 'react';
+import Card from '../components/Card';
+import Input from '../components/Input';
+import { getImages } from '../services/CardService';
+import { Utils } from '../Utils/Utils';
 import './styles.css';
 
+export type MainData = {
+  albumId: number;
+  id: number;
+  thumbnailUrl: string;
+  title: string;
+  url: string;
+};
 type MainProps = Record<string, never>;
-type MainState = { value: string; defaultValue: string };
+type MainState = { loading: boolean; data: MainData[] };
 
 class Main extends React.Component<MainProps, MainState> {
   constructor(props: MainProps) {
     super(props);
-    this.state = { defaultValue: '', value: '' };
+    this.state = {
+      loading: true,
+      data: null,
+    };
   }
 
   componentDidMount() {
-    const str = localStorage.getItem('input');
-    if (str) {
+    getImages().then((result) => {
+      const data = Utils.getRandomItems(result, 10);
       this.setState({
-        defaultValue: str,
-        value: str,
+        loading: false,
+        data,
       });
-    }
-    window.addEventListener('beforeunload', this.componentWillUnmount.bind(this));
-  }
-
-  componentWillUnmount() {
-    localStorage.setItem('input', this.state.value);
-    window.removeEventListener('beforeunload', this.componentWillUnmount.bind(this));
-  }
-
-  set(item: string) {
-    this.setState({
-      value: item,
     });
   }
 
   render() {
+    if (this.state.loading) {
+      return <h2>Loading</h2>;
+    }
+
     return (
-      <div className="input-container">
-        <input
-          type="text"
-          name="input"
-          className="input"
-          autoComplete="off"
-          defaultValue={this.state.defaultValue}
-          onChange={(ev) => {
-            this.set(ev.target.value);
-          }}
-        />
-      </div>
+      <>
+        <Input />
+        {this.state.data.map((item) => {
+          return <Card item={item} key={item.id} />;
+        })}
+      </>
     );
   }
 }
