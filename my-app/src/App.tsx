@@ -1,11 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import About from './routes/About';
+import Error404 from './routes/Error404';
+import Main from './routes/Main';
 
 function App() {
   return (
-    <div className="App">
+    <>
       <header className="App-header">
         <nav className="header-container">
           <Link to="/">Main</Link>
@@ -13,7 +14,15 @@ function App() {
           <Link to="/404">404</Link>
         </nav>
       </header>
-    </div>
+      <main className="main-container">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/404" element={<Error404 />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 

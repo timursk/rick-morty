@@ -11,12 +11,6 @@ import About from './routes/About';
 ReactDOM.render(
   <BrowserRouter>
     <App />
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/404" element={<Error404 />} />
-      <Route path="*" element={<Navigate to="/404" replace />} />
-    </Routes>
   </BrowserRouter>,
   document.getElementById('root')
 );
