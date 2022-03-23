@@ -1,17 +1,31 @@
 import './App.css';
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import About from './routes/About';
 import Error404 from './routes/Error404';
 import Main from './routes/Main';
 
+const links = [
+  { link: '/', name: 'Main' },
+  { link: '/about', name: 'About' },
+  { link: '/404', name: '404' },
+];
 function App() {
   return (
     <>
       <header className="App-header">
         <nav className="header-container">
-          <Link to="/">Main</Link>
-          <Link to="/about">About Us</Link>
-          <Link to="/404">404</Link>
+          {links.map((item, id) => {
+            const { link, name } = item;
+            return (
+              <NavLink
+                style={({ isActive }) => ({ color: isActive ? 'red' : '' })}
+                to={link}
+                key={id}
+              >
+                {name}
+              </NavLink>
+            );
+          })}
         </nav>
       </header>
       <main className="main-container">
