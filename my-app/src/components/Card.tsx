@@ -1,5 +1,6 @@
 import React from 'react';
 import { MainData } from '../routes/Main';
+import './Card.css';
 
 type CardProps = {
   item: MainData;
@@ -13,12 +14,11 @@ class Card extends React.Component<CardProps, CardState> {
 
   render() {
     return (
-      <div>
-        <p>{this.props.item.albumId}</p>
-        <p>{this.props.item.id}</p>
-        <p>{this.props.item.thumbnailUrl}</p>
+      <div className="card">
+        <img className="card-img" src={this.props.item.thumbnailUrl} alt="item" />
+        <p>Album id {this.props.item.albumId}</p>
+        <p>ID {this.props.item.id}</p>
         <p>{this.props.item.title}</p>
-        <img src={this.props.item.url} alt="item" />
       </div>
     );
   }

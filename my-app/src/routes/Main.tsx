@@ -42,9 +42,11 @@ class Main extends React.Component<MainProps, MainState> {
     return (
       <>
         <Input />
-        {this.state.data.map((item) => {
-          return <Card item={item} key={item.id} />;
-        })}
+        <div className="cards-container">
+          {this.state.data.map((item) => {
+            return <Card item={item} key={item.id} />;
+          })}
+        </div>
       </>
     );
   }
