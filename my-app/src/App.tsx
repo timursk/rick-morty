@@ -18,7 +18,10 @@ function App() {
             const { link, name } = item;
             return (
               <NavLink
-                style={({ isActive }) => ({ color: isActive ? 'red' : '' })}
+                style={({ isActive }) => ({
+                  color: isActive ? '#3896ff' : 'white',
+                  textDecoration: 'none',
+                })}
                 to={link}
                 key={id}
               >
