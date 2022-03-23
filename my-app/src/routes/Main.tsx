@@ -3,8 +3,8 @@ import './styles.css';
 
 const Main = () => {
   return (
-    <div>
-      <input type="text" name="input" className="input" />
+    <div className="input-container">
+      <input type="text" name="input" placeholder="Insert text" className="input" />
     </div>
   );
 };
