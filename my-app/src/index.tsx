@@ -3,11 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Error404 from './routes/Error404';
+import Main from './routes/Main';
+import About from './routes/About';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/404" element={<Error404 />} />
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
