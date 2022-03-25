@@ -6,8 +6,6 @@ import { LocalStorageMock } from '@react-mock/localstorage';
 import userEvent from '@testing-library/user-event';
 
 describe('App', () => {
-  
-
   test('renders after loading', async () => {
     render(
       <BrowserRouter>
@@ -41,7 +39,6 @@ describe('App', () => {
     localStorage.setItem('input', '3232');
     await screen.findByRole('textbox');
     expect(window.localStorage.getItem).toHaveBeenCalledTimes(1);
-    // expect(screen.getByRole('textbox')).toHaveValue('3232');
   });
 
   test('mock localstorage', async () => {
