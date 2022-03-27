@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import userEvent from '@testing-library/user-event';
 
 describe('App', () => {
   test('renders after loading', async () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -31,9 +31,9 @@ describe('App', () => {
 
   test('localstorage works fine', async () => {
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <App />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     localStorage.setItem('input', '3232');
@@ -44,9 +44,9 @@ describe('App', () => {
   test('mock localstorage', async () => {
     render(
       <LocalStorageMock items={{ input: '' }}>
-        <BrowserRouter>
+        <MemoryRouter>
           <App />
-        </BrowserRouter>
+        </MemoryRouter>
       </LocalStorageMock>
     );
     await screen.findByRole('textbox');
