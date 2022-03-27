@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import userEvent from '@testing-library/user-event';
 
@@ -54,5 +54,40 @@ describe('App', () => {
     userEvent.type(screen.getByRole('textbox'), 'React1234');
     userEvent.click(screen.getByText('About'));
     expect(localStorage.getItem('input')).toBe('React1234');
+  });
+});
+
+describe('Router', () => {
+  test('main page routing', async () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const mainLink = screen.getByTestId('Main');
+    userEvent.click(mainLink);
+    expect(await screen.findByTestId('main-page')).toBeInTheDocument();
+  });
+
+  test('about page routing', () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const aboutLink = screen.getByTestId('About');
+    userEvent.click(aboutLink);
+    expect(screen.getByTestId('about-page')).toBeInTheDocument();
+  });
+
+  test('error page routing', () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const errorLink = screen.getByTestId('404');
+    userEvent.click(errorLink);
+    expect(screen.getByTestId('error-page')).toBeInTheDocument();
   });
 });

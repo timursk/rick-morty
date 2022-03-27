@@ -24,6 +24,7 @@ function App() {
                 })}
                 to={link}
                 key={id}
+                data-testid={name}
               >
                 {name}
               </NavLink>
