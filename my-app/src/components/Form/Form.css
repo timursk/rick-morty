@@ -1,6 +1,6 @@
 .form {
   display: flex;
-  height: 400px;
+  height: 510px;
   margin: 0px 80px;
   padding: 15px 25px;
   flex-direction: column;
@@ -19,4 +19,9 @@
 
 .form-input {
   width: 100%;
+}
+
+.error {
+  color: #d90c23;
+  transition: 0.2s;
 }

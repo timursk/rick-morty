@@ -41,10 +41,12 @@ class Form extends React.Component<InputProps, InputState> {
   }
 
   validate() {
+    let isErr = false;
     this.setState({
       errors: {},
     });
     if (this.firstName.current.value === '') {
+      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -53,6 +55,7 @@ class Form extends React.Component<InputProps, InputState> {
       }));
     }
     if (this.lastName.current.value === '') {
+      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -61,6 +64,7 @@ class Form extends React.Component<InputProps, InputState> {
       }));
     }
     if (this.birthDate.current.value === '') {
+      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -74,6 +78,7 @@ class Form extends React.Component<InputProps, InputState> {
       const years = Math.floor((now - picked) / 1000 / 60 / 60 / 24 / 365);
       const isAdult = years >= 18 && years <= 100;
       if (!isAdult) {
+        isErr = true;
         this.setState((prevState) => ({
           errors: {
             ...prevState.errors,
@@ -83,6 +88,7 @@ class Form extends React.Component<InputProps, InputState> {
       }
     }
     if (!this.consent.current.checked) {
+      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -91,6 +97,7 @@ class Form extends React.Component<InputProps, InputState> {
       }));
     }
     if (!this.notify.current.checked) {
+      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
@@ -98,13 +105,15 @@ class Form extends React.Component<InputProps, InputState> {
         },
       }));
     }
-    console.log(this.profilePicture.current?.files[0]?.name);
+    const url = URL.createObjectURL(this.profilePicture.current.files[0]);
+    console.log(url);
+    return isErr;
   }
 
   handleSubmit(ev: FormEvent) {
     ev.preventDefault();
-    this.validate();
-    if (Object.keys(this.state.errors).length === 0) {
+    const isErr = this.validate();
+    if (Object.keys(this.state.errors).length === 0 && !isErr) {
       console.log('New card!');
     } else {
       console.log('Get some errors: ', this.state.errors);
@@ -115,17 +124,31 @@ class Form extends React.Component<InputProps, InputState> {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <label className="form-item">
-          Name: {this.state.errors?.firstName === '' && <span>Error! Enter your name!</span>}
+          <p>
+            Name:
+            {this.state.errors?.firstName === '' && (
+              <span className="error">Error! Enter your name!</span>
+            )}
+          </p>
           <input type="text" name="firstName" className="form-input" ref={this.firstName} />
         </label>
         <label className="form-item">
-          Surname: {this.state.errors?.lastName === '' && <span>Error! Enter your Surname!</span>}
+          <p>
+            Surname:{' '}
+            {this.state.errors?.lastName === '' && (
+              <span className="error">Error! Enter your Surname!</span>
+            )}
+          </p>
           <input type="text" name="lastName" className="form-input" ref={this.lastName} />
         </label>
         <label className="form-item">
-          Date of Birth:
-          {this.state.errors?.birthDate === '' && <span>Error! Enter your Date!</span>}
-          {this.state.errors?.isAdult === false && <span>Error! Wrong age!</span>}
+          <p>
+            Date of Birth:
+            {this.state.errors?.birthDate === '' && (
+              <span className="error">Error! Enter your Date!</span>
+            )}
+          </p>
+          {this.state.errors?.isAdult === false && <span className="error">Error! Wrong age!</span>}
           <input type="date" name="birthDate" className="form-input" ref={this.birthDate} />
         </label>
         <label className="form-item">
@@ -138,19 +161,27 @@ class Form extends React.Component<InputProps, InputState> {
           </select>
         </label>
         <label>
-          Consent to the processing of personal data
-          {this.state.errors?.consent === false && <span>Error! Need true!</span>}
+          <p style={{ display: 'inline' }}>
+            Consent to the processing of personal data
+            {this.state.errors?.consent === false && (
+              <span className="error">Error! Need true!</span>
+            )}
+          </p>
           <input type="checkbox" name="consent" ref={this.consent} />
         </label>
         <label>
-          Receive notifications
-          {this.state.errors?.notify === false && <span>Error! Need true!</span>}
+          <p style={{ display: 'inline' }}>
+            Receive notifications
+            {this.state.errors?.notify === false && (
+              <span className="error">Error! Need true!</span>
+            )}
+          </p>
           <input type="checkbox" name="notify" ref={this.notify} />
           <span></span>
         </label>
         <label className="form-item">
           Profile picture
-          <input type="file" name="profilePicture" ref={this.profilePicture} />
+          <input type="file" name="profilePicture" accept="image/*" ref={this.profilePicture} />
         </label>
 
         <button type="submit">Submit</button>
