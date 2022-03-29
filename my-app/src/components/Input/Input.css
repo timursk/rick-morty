@@ -10,7 +10,7 @@
   left: 10px;
   width: 30px;
   height: 30px;
-  background-image: url('../../public/search.png');
+  background-image: url('../../../public/search.png');
   background-size: contain;
   background-repeat: no-repeat;
 }

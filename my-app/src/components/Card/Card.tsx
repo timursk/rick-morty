@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainData } from '../routes/Main';
+import { MainData } from '../../routes/Main';
 import './Card.css';
 
 type CardProps = {

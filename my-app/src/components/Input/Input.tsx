@@ -1,4 +1,5 @@
 import React from 'react';
+import './Input.css';
 
 type InputProps = Record<string, never>;
 type InputState = { value: string; defaultValue: string };
