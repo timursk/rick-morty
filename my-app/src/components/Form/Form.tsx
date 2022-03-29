@@ -1,73 +1,78 @@
 import React, { FormEvent, RefObject } from 'react';
+import './Form.css';
 
 type InputProps = Record<string, never>;
-type InputState = {
-  firstName: RefObject<unknown>;
-  lastName: RefObject<unknown>;
-  birthDate: RefObject<unknown>;
-  country: RefObject<unknown>;
-  consent: RefObject<unknown>;
-  notify: RefObject<unknown>;
-  profilePicture: RefObject<unknown>;
-};
+type InputState = Record<string, never>;
 
 class Form extends React.Component<InputProps, InputState> {
+  firstName: RefObject<HTMLInputElement>;
+  lastName: RefObject<HTMLInputElement>;
+  birthDate: RefObject<HTMLInputElement>;
+  country: RefObject<HTMLSelectElement>;
+  consent: RefObject<HTMLInputElement>;
+  notify: RefObject<HTMLInputElement>;
+  profilePicture: RefObject<HTMLInputElement>;
+
   constructor(props: InputProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      firstName: React.createRef(),
-      lastName: React.createRef(),
-      birthDate: React.createRef(),
-      country: React.createRef(),
-      consent: React.createRef(),
-      notify: React.createRef(),
-      profilePicture: React.createRef(),
-    };
+    this.firstName = React.createRef();
+    this.lastName = React.createRef();
+    this.birthDate = React.createRef();
+    this.country = React.createRef();
+    this.consent = React.createRef();
+    this.notify = React.createRef();
+    this.profilePicture = React.createRef();
   }
 
   handleSubmit(ev: FormEvent) {
     ev.preventDefault();
+    console.log(this.firstName.current.value);
+    console.log(this.lastName.current.value);
+    console.log(this.birthDate.current.value);
+    console.log(this.country.current.value);
+    console.log(this.consent.current.checked);
+    console.log(this.notify.current.checked);
+    console.log(this.profilePicture.current.value);
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="firstName">
+      <form className="form" onSubmit={this.handleSubmit}>
+        <label className="form-item">
           Name:
-          <input type="text" name="firstName" />
+          <input type="text" name="firstName" className="form-input" ref={this.firstName} />
         </label>
-        <label htmlFor="lastName">
+        <label className="form-item">
           Surname:
-          <input type="text" name="lastName" />
+          <input type="text" name="lastName" className="form-input" ref={this.lastName} />
         </label>
-        <label htmlFor="birthDate">
+        <label className="form-item">
           Date of Birth
-          <input type="date" name="birthDate" id="" />
+          <input type="date" name="birthDate" className="form-input" ref={this.birthDate} />
         </label>
-        <label htmlFor="country">
-          <select name="country" id="">
-            <option value="1">USA</option>
-            <option value="2" selected>
-              Russia
-            </option>
-            <option value="3">Sweden</option>
-            <option value="4">Germany</option>
+        <label className="form-item">
+          <select name="country" defaultValue={'Russia'} className="form-input" ref={this.country}>
+            <option value="Usa">Usa</option>
+            <option value="Russia">Russia</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Germany">Germany</option>
           </select>
         </label>
-        <label htmlFor="consent">
+        <label>
           Consent to the processing of personal data
-          <input type="checkbox" name="consent" id="" />
+          <input type="checkbox" name="consent" ref={this.consent} />
         </label>
-        <label htmlFor="notify">
+        <label>
           Receive notifications
-          <input type="checkbox" name="notify" id="" />
+          <input type="checkbox" name="notify" ref={this.notify} />
           <span></span>
         </label>
-        <label htmlFor="profilePicture">
+        <label className="form-item">
           Profile picture
-          <input type="file" name="profilePicture" id="" />
+          <input type="file" name="profilePicture" ref={this.profilePicture} />
         </label>
+
         <button type="submit">Submit</button>
       </form>
     );
