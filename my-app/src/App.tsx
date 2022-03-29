@@ -3,12 +3,15 @@ import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import About from './routes/About';
 import Error404 from './routes/Error404';
 import Main from './routes/Main';
+import Form from './components/Form/Form';
 
 const links = [
   { link: '/', name: 'Main' },
   { link: '/about', name: 'About' },
   { link: '/404', name: '404' },
+  { link: '/form', name: 'Form' },
 ];
+
 function App() {
   return (
     <>
@@ -37,6 +40,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/about" element={<About />} />
           <Route path="/404" element={<Error404 />} />
+          <Route path="/form" element={<Form />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </main>
