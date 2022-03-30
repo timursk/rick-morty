@@ -147,8 +147,11 @@ class Form extends React.Component<InputProps, InputState> {
             {this.state.errors?.birthDate === '' && (
               <span className="error">Error! Enter your Date!</span>
             )}
+            {this.state.errors?.isAdult === false && (
+              <span className="error">Error! Wrong age!</span>
+            )}
           </p>
-          {this.state.errors?.isAdult === false && <span className="error">Error! Wrong age!</span>}
+
           <input type="date" name="birthDate" className="form-input" ref={this.birthDate} />
         </label>
         <label className="form-item">
