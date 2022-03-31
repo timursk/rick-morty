@@ -1,15 +1,18 @@
 import React, { FormEvent, RefObject } from 'react';
 import { Card } from '../../routes/FormPage';
+import { Utils } from '../../Utils/Utils';
+import FormItem from '../FormItem/FormItem';
 import './Form.css';
 
 type Error = {
-  firstName?: string;
-  lastName?: string;
-  birthDate?: string;
-  country?: string;
+  [key: string]: boolean;
+  firstName?: boolean;
+  lastName?: boolean;
+  birthDate?: boolean;
+  country?: boolean;
   consent?: boolean;
   notify?: boolean;
-  profilePicture?: string;
+  profilePicture?: boolean;
   isAdult?: boolean;
 };
 type InputProps = {
@@ -53,7 +56,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          firstName: this.firstName.current.value,
+          firstName: true,
         },
       }));
     }
@@ -62,7 +65,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          lastName: this.lastName.current.value,
+          lastName: true,
         },
       }));
     }
@@ -71,7 +74,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          birthDate: this.birthDate.current.value,
+          birthDate: true,
         },
       }));
     }
@@ -95,7 +98,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          consent: this.birthDate.current.checked,
+          consent: true,
         },
       }));
     }
@@ -104,7 +107,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          notify: this.notify.current.checked,
+          notify: true,
         },
       }));
     }
@@ -114,7 +117,7 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
-          profilePicture: this.profilePicture.current.value,
+          profilePicture: true,
         },
       }));
     }
@@ -141,37 +144,34 @@ class Form extends React.Component<InputProps, InputState> {
   render() {
     return (
       <form className="form" onSubmit={this.handleSubmit}>
-        <label className="form-item">
-          <p>
-            Name:
-            {this.state.errors?.firstName === '' && (
-              <span className="error">Error! Enter your name!</span>
-            )}
-          </p>
-          <input type="text" name="firstName" className="form-input" ref={this.firstName} />
-        </label>
-        <label className="form-item">
-          <p>
-            Surname:{' '}
-            {this.state.errors?.lastName === '' && (
-              <span className="error">Error! Enter your Surname!</span>
-            )}
-          </p>
-          <input type="text" name="lastName" className="form-input" ref={this.lastName} />
-        </label>
-        <label className="form-item">
-          <p>
-            Date of Birth:
-            {this.state.errors?.birthDate === '' && (
-              <span className="error">Error! Enter your Date!</span>
-            )}
-            {this.state.errors?.isAdult === false && (
-              <span className="error">Error! Wrong age!</span>
-            )}
-          </p>
-
-          <input type="date" name="birthDate" className="form-input" ref={this.birthDate} />
-        </label>
+        <FormItem
+          info="Name: "
+          error={this.state.errors.firstName}
+          errorMessage="* - Enter your name!"
+          type="text"
+          name="firstName"
+          className="form-input"
+          innerRef={this.firstName}
+        />
+        <FormItem
+          info="Surname: "
+          error={this.state.errors.lastName}
+          errorMessage="* - Enter your Surname!"
+          type="text"
+          name="lastName"
+          className="form-input"
+          innerRef={this.lastName}
+        />
+        <FormItem
+          info="Date of Birth: "
+          error={this.state.errors.birthDate}
+          errorMessage="* - Enter your Date!"
+          //  Wrong age!
+          type="date"
+          name="birthDate"
+          className="form-input"
+          innerRef={this.birthDate}
+        />
         <label className="form-item">
           Choose country:
           <select name="country" defaultValue={'Russia'} className="form-input" ref={this.country}>
@@ -181,30 +181,33 @@ class Form extends React.Component<InputProps, InputState> {
             <option value="Germany">Germany</option>
           </select>
         </label>
-        <label>
-          <p style={{ display: 'inline' }}>
-            Consent to the processing of personal data
-            {this.state.errors?.consent === false && (
-              <span className="error">Error! Need true!</span>
-            )}
-          </p>
-          <input type="checkbox" name="consent" ref={this.consent} />
-        </label>
-        <label>
-          <p style={{ display: 'inline' }}>
-            Receive notifications
-            {this.state.errors?.notify === false && (
-              <span className="error">Error! Need true!</span>
-            )}
-          </p>
-          <input type="checkbox" name="notify" ref={this.notify} />
-          <span></span>
-        </label>
-        <label className="form-item">
-          Profile picture
-          <input type="file" name="profilePicture" accept="image/*" ref={this.profilePicture} />
-        </label>
-
+        <FormItem
+          info="Consent to the processing of personal data "
+          error={this.state.errors.consent}
+          errorMessage="* - Need your consent!"
+          type="checkbox"
+          name="consent"
+          innerRef={this.consent}
+          labelClass="checkbox-item"
+        />
+        <FormItem
+          info="Receive notifications "
+          error={this.state.errors.notify}
+          errorMessage="* - Need your consent!"
+          type="checkbox"
+          name="notify"
+          innerRef={this.notify}
+          labelClass="checkbox-item"
+        />
+        <FormItem
+          info="Profile picture "
+          error={this.state.errors.profilePicture}
+          errorMessage="* - Upload image!"
+          type="file"
+          name="profilePicture"
+          innerRef={this.profilePicture}
+          // accept="image/*"
+        />
         <button type="submit">Submit</button>
       </form>
     );
