@@ -6,7 +6,7 @@ export type Card = {
   lastName: string;
   birthDate: string;
   country: string;
-  profilePicture: string;
+  profilePicture: File;
 };
 
 type FormPageProps = Record<string, never>;
@@ -19,15 +19,7 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
     super(props);
     this.addCard = this.addCard.bind(this);
     this.state = {
-      cardsData: [
-        {
-          firstName: 'string',
-          lastName: 'string',
-          birthDate: 'string',
-          country: 'string',
-          profilePicture: 'string',
-        },
-      ],
+      cardsData: [],
     };
   }
 
@@ -43,13 +35,14 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
         <Form addCard={this.addCard} />
         {this.state.cardsData.map(
           ({ firstName, lastName, birthDate, country, profilePicture }, idx) => {
+            const url = URL.createObjectURL(profilePicture);
             return (
               <div key={idx}>
                 <p>{firstName}</p>
                 <p>{lastName}</p>
                 <p>{birthDate}</p>
                 <p>{country}</p>
-                <p>{profilePicture}</p>
+                <img src={url} alt="avatar" />
               </div>
             );
           }

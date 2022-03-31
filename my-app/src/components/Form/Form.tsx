@@ -9,7 +9,7 @@ type Error = {
   country?: string;
   consent?: boolean;
   notify?: boolean;
-  profilePicture?: RefObject<HTMLInputElement>;
+  profilePicture?: string;
   isAdult?: boolean;
 };
 type InputProps = {
@@ -109,9 +109,14 @@ class Form extends React.Component<InputProps, InputState> {
       }));
     }
     const file = this.profilePicture.current.files[0];
-    if (file) {
-      const url = URL.createObjectURL(this.profilePicture.current.files[0]);
-      console.log(url);
+    if (!file) {
+      isErr = true;
+      this.setState((prevState) => ({
+        errors: {
+          ...prevState.errors,
+          profilePicture: this.profilePicture.current.value,
+        },
+      }));
     }
     return isErr;
   }
@@ -126,7 +131,7 @@ class Form extends React.Component<InputProps, InputState> {
         lastName: this.lastName.current.value,
         birthDate: this.birthDate.current.value,
         country: this.country.current.value,
-        profilePicture: this.profilePicture.current.value,
+        profilePicture: this.profilePicture.current.files[0],
       });
     } else {
       console.log('Get some errors: ', this.state.errors);
