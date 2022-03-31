@@ -22,6 +22,15 @@ type InputState = {
   errors: Error;
   toAdd: boolean;
 };
+const refKeys = [
+  'firstName',
+  'lastName',
+  'birthDate',
+  'country',
+  'consent',
+  'notify',
+  'profilePicture',
+];
 
 class Form extends React.Component<InputProps, InputState> {
   firstName: RefObject<HTMLInputElement>;
@@ -53,77 +62,87 @@ class Form extends React.Component<InputProps, InputState> {
       errors: {},
       toAdd: true,
     });
-    if (this.firstName.current.value === '') {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          firstName: true,
-          toAdd: false,
-        },
-      }));
-    }
-    if (this.lastName.current.value === '') {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          lastName: true,
-          toAdd: false,
-        },
-      }));
-    }
-    if (this.birthDate.current.value === '') {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          birthDate: true,
-          toAdd: false,
-        },
-      }));
-    }
-    if (this.birthDate.current.value !== '') {
-      const now = new Date().valueOf();
-      const picked = new Date(this.birthDate.current.value).valueOf();
-      const years = Math.floor((now - picked) / 1000 / 60 / 60 / 24 / 365);
-      const isAdult = years >= 18 && years <= 100;
-      if (!isAdult) {
+    refKeys.forEach((key) => {
+      if (this[key as keyof Form].current.value === '') {
         this.setState((prevState) => ({
           errors: {
             ...prevState.errors,
-            isAdult: false,
+            [key]: true,
             toAdd: false,
           },
         }));
       }
-    }
-    if (!this.consent.current.checked) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          consent: true,
-          toAdd: false,
-        },
-      }));
-    }
-    if (!this.notify.current.checked) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          notify: true,
-          toAdd: false,
-        },
-      }));
-    }
-    const file = this.profilePicture.current.files[0];
-    if (!file) {
-      this.setState((prevState) => ({
-        errors: {
-          ...prevState.errors,
-          profilePicture: true,
-          toAdd: false,
-        },
-      }));
-    }
-    // return isErr;
+    });
+    // if (this.firstName.current.value === '') {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       firstName: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
+    // if (this.lastName.current.value === '') {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       lastName: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
+    // if (this.birthDate.current.value === '') {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       birthDate: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
+    // if (this.birthDate.current.value !== '') {
+    //   const now = new Date().valueOf();
+    //   const picked = new Date(this.birthDate.current.value).valueOf();
+    //   const years = Math.floor((now - picked) / 1000 / 60 / 60 / 24 / 365);
+    //   const isAdult = years >= 18 && years <= 100;
+    //   if (!isAdult) {
+    //     this.setState((prevState) => ({
+    //       errors: {
+    //         ...prevState.errors,
+    //         isAdult: false,
+    //         toAdd: false,
+    //       },
+    //     }));
+    //   }
+    // }
+    // if (!this.consent.current.checked) {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       consent: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
+    // if (!this.notify.current.checked) {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       notify: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
+    // const file = this.profilePicture.current.files[0];
+    // if (!file) {
+    //   this.setState((prevState) => ({
+    //     errors: {
+    //       ...prevState.errors,
+    //       profilePicture: true,
+    //       toAdd: false,
+    //     },
+    //   }));
+    // }
   }
 
   handleSubmit(ev: FormEvent) {
