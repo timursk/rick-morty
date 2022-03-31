@@ -40,6 +40,7 @@ class Form extends React.Component<InputProps, InputState> {
   consent: RefObject<HTMLInputElement>;
   notify: RefObject<HTMLInputElement>;
   profilePicture: RefObject<HTMLInputElement>;
+  form: RefObject<HTMLFormElement>;
 
   constructor(props: InputProps) {
     super(props);
@@ -55,94 +56,59 @@ class Form extends React.Component<InputProps, InputState> {
     this.consent = React.createRef();
     this.notify = React.createRef();
     this.profilePicture = React.createRef();
+    this.form = React.createRef();
   }
 
-  validate() {
+  resetState() {
     this.setState({
       errors: {},
       toAdd: true,
     });
+  }
+
+  addError(key: string) {
+    this.setState((prevState) => ({
+      errors: {
+        ...prevState.errors,
+        [key]: true,
+        toAdd: false,
+      },
+    }));
+  }
+
+  validate() {
+    this.resetState();
     refKeys.forEach((key) => {
-      if (this[key as keyof Form].current.value === '') {
-        this.setState((prevState) => ({
-          errors: {
-            ...prevState.errors,
-            [key]: true,
-            toAdd: false,
-          },
-        }));
+      const { value, type, checked, files } = this.form.current[key as keyof Form];
+      console.log(type);
+      switch (type) {
+        case 'checkbox':
+          if (!checked) {
+            this.addError(key);
+          }
+          break;
+        case 'text':
+          if (value === '') {
+            this.addError(key);
+          }
+          break;
+        case 'date':
+          if (value === '') {
+            this.addError(key);
+          } else {
+            const isAdult = Utils.isAdult(value);
+            if (!isAdult) {
+              this.addError('isAdult');
+            }
+          }
+          break;
+        case 'file':
+          const file = files[0];
+          if (!file) {
+            this.addError(key);
+          }
       }
     });
-    // if (this.firstName.current.value === '') {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       firstName: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
-    // if (this.lastName.current.value === '') {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       lastName: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
-    // if (this.birthDate.current.value === '') {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       birthDate: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
-    // if (this.birthDate.current.value !== '') {
-    //   const now = new Date().valueOf();
-    //   const picked = new Date(this.birthDate.current.value).valueOf();
-    //   const years = Math.floor((now - picked) / 1000 / 60 / 60 / 24 / 365);
-    //   const isAdult = years >= 18 && years <= 100;
-    //   if (!isAdult) {
-    //     this.setState((prevState) => ({
-    //       errors: {
-    //         ...prevState.errors,
-    //         isAdult: false,
-    //         toAdd: false,
-    //       },
-    //     }));
-    //   }
-    // }
-    // if (!this.consent.current.checked) {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       consent: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
-    // if (!this.notify.current.checked) {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       notify: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
-    // const file = this.profilePicture.current.files[0];
-    // if (!file) {
-    //   this.setState((prevState) => ({
-    //     errors: {
-    //       ...prevState.errors,
-    //       profilePicture: true,
-    //       toAdd: false,
-    //     },
-    //   }));
-    // }
   }
 
   handleSubmit(ev: FormEvent) {
@@ -167,7 +133,7 @@ class Form extends React.Component<InputProps, InputState> {
 
   render() {
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
+      <form className="form" ref={this.form} onSubmit={this.handleSubmit}>
         <FormItem
           info="Name: "
           error={this.state.errors.firstName}
