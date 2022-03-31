@@ -1,4 +1,5 @@
 import React, { FormEvent, RefObject } from 'react';
+import { Card } from '../../routes/FormPage';
 import './Form.css';
 
 type Error = {
@@ -11,7 +12,9 @@ type Error = {
   profilePicture?: RefObject<HTMLInputElement>;
   isAdult?: boolean;
 };
-type InputProps = Record<string, never>;
+type InputProps = {
+  addCard: (item: Card) => void;
+};
 type InputState = {
   errors: Error;
 };
@@ -105,8 +108,11 @@ class Form extends React.Component<InputProps, InputState> {
         },
       }));
     }
-    const url = URL.createObjectURL(this.profilePicture.current.files[0]);
-    console.log(url);
+    const file = this.profilePicture.current.files[0];
+    if (file) {
+      const url = URL.createObjectURL(this.profilePicture.current.files[0]);
+      console.log(url);
+    }
     return isErr;
   }
 
@@ -115,6 +121,13 @@ class Form extends React.Component<InputProps, InputState> {
     const isErr = this.validate();
     if (Object.keys(this.state.errors).length === 0 && !isErr) {
       console.log('New card!');
+      this.props.addCard({
+        firstName: this.firstName.current.value,
+        lastName: this.lastName.current.value,
+        birthDate: this.birthDate.current.value,
+        country: this.country.current.value,
+        profilePicture: this.profilePicture.current.value,
+      });
     } else {
       console.log('Get some errors: ', this.state.errors);
     }
