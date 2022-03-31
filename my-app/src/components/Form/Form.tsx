@@ -20,6 +20,7 @@ type InputProps = {
 };
 type InputState = {
   errors: Error;
+  toAdd: boolean;
 };
 
 class Form extends React.Component<InputProps, InputState> {
@@ -35,6 +36,7 @@ class Form extends React.Component<InputProps, InputState> {
     super(props);
     this.state = {
       errors: {},
+      toAdd: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.firstName = React.createRef();
@@ -47,34 +49,34 @@ class Form extends React.Component<InputProps, InputState> {
   }
 
   validate() {
-    let isErr = false;
     this.setState({
       errors: {},
+      toAdd: true,
     });
     if (this.firstName.current.value === '') {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           firstName: true,
+          toAdd: false,
         },
       }));
     }
     if (this.lastName.current.value === '') {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           lastName: true,
+          toAdd: false,
         },
       }));
     }
     if (this.birthDate.current.value === '') {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           birthDate: true,
+          toAdd: false,
         },
       }));
     }
@@ -84,51 +86,53 @@ class Form extends React.Component<InputProps, InputState> {
       const years = Math.floor((now - picked) / 1000 / 60 / 60 / 24 / 365);
       const isAdult = years >= 18 && years <= 100;
       if (!isAdult) {
-        isErr = true;
         this.setState((prevState) => ({
           errors: {
             ...prevState.errors,
             isAdult: false,
+            toAdd: false,
           },
         }));
       }
     }
     if (!this.consent.current.checked) {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           consent: true,
+          toAdd: false,
         },
       }));
     }
     if (!this.notify.current.checked) {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           notify: true,
+          toAdd: false,
         },
       }));
     }
     const file = this.profilePicture.current.files[0];
     if (!file) {
-      isErr = true;
       this.setState((prevState) => ({
         errors: {
           ...prevState.errors,
           profilePicture: true,
+          toAdd: false,
         },
       }));
     }
-    return isErr;
+    // return isErr;
   }
 
   handleSubmit(ev: FormEvent) {
     ev.preventDefault();
-    const isErr = this.validate();
-    if (Object.keys(this.state.errors).length === 0 && !isErr) {
-      console.log('New card!');
+    this.validate();
+  }
+
+  componentDidUpdate() {
+    if (Object.keys(this.state.errors).length === 0 && this.state.toAdd) {
       this.props.addCard({
         firstName: this.firstName.current.value,
         lastName: this.lastName.current.value,
@@ -136,8 +140,9 @@ class Form extends React.Component<InputProps, InputState> {
         country: this.country.current.value,
         profilePicture: this.profilePicture.current.files[0],
       });
-    } else {
-      console.log('Get some errors: ', this.state.errors);
+      this.setState({
+        toAdd: false,
+      });
     }
   }
 
