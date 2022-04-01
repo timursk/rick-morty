@@ -45,6 +45,7 @@ class Form extends React.Component<InputProps, InputState> {
       disableSubmit: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.ableSubmit = this.ableSubmit.bind(this);
     this.form = React.createRef();
   }
 
@@ -62,6 +63,7 @@ class Form extends React.Component<InputProps, InputState> {
         [key]: true,
       },
       toAdd: false,
+      disableSubmit: true,
     }));
   }
 
@@ -69,7 +71,6 @@ class Form extends React.Component<InputProps, InputState> {
     this.resetState();
     refKeys.forEach((key) => {
       const { value, type, checked, files } = this.form.current[key as keyof Form];
-      console.log(type);
       switch (type) {
         case 'checkbox':
           if (!checked) {
@@ -108,8 +109,7 @@ class Form extends React.Component<InputProps, InputState> {
   }
 
   componentDidUpdate() {
-    const errKeys = Object.keys(this.state.errors);
-    if (errKeys.length === 0 && this.state.toAdd) {
+    if (this.state.toAdd) {
       const { firstName, lastName, birthDate, country, profilePicture } = this.form.current;
       this.props.addCard({
         firstName: firstName.value,
@@ -136,11 +136,31 @@ class Form extends React.Component<InputProps, InputState> {
         [name]: false,
       },
     }));
+    this.ableSubmit(null, name);
+  }
+
+  ableSubmit(ev: FormEvent, removedKey?: string) {
+    let toAble = true;
+    Object.keys(this.state.errors).forEach((key) => {
+      if (key !== removedKey && this.state.errors[key] === true) {
+        toAble = false;
+      }
+    });
+    if (toAble) {
+      this.setState({
+        disableSubmit: false,
+      });
+    }
   }
 
   render() {
     return (
-      <form className="form" ref={this.form} onSubmit={this.handleSubmit}>
+      <form
+        className="form"
+        ref={this.form}
+        onSubmit={this.handleSubmit}
+        onChange={this.state.disableSubmit ? this.ableSubmit : null}
+      >
         {formData.map(
           ({ id, info, errorMessage, secondErrorMessage, type, name, className, labelClass }) => {
             return (
