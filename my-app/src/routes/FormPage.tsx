@@ -33,7 +33,7 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
 
   render() {
     return (
-      <>
+      <div data-testid="form-page">
         <Form addCard={this.addCard} />
         <div className="form-cards-container">
           {this.state.cardsData.map(
@@ -51,7 +51,7 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
             }
           )}
         </div>
-      </>
+      </div>
     );
   }
 }

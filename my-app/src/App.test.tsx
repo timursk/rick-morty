@@ -90,4 +90,15 @@ describe('Router', () => {
     userEvent.click(errorLink);
     expect(screen.getByTestId('error-page')).toBeInTheDocument();
   });
+
+  test('form page routing', async () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    const formLink = screen.getByTestId('Form');
+    userEvent.click(formLink);
+    expect(await screen.findByTestId('form-page')).toBeInTheDocument();
+  });
 });

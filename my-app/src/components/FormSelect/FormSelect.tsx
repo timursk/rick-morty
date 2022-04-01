@@ -15,6 +15,7 @@ export default class FormSelect extends Component<Props, State> {
         defaultValue={'Russia'}
         className={this.props.className}
         onChange={this.props.onChange}
+        data-testid={`formItem-${this.props.name}`}
       >
         <option value="Usa">Usa</option>
         <option value="Russia">Russia</option>

@@ -37,6 +37,7 @@ export default class FormItem extends Component<Props, State> {
               type={this.props.type}
               name={this.props.name}
               className={this.props.className}
+              data-testid={`formItem-${this.props.name}`}
             />
             {this.props.name === 'notify' ? <span className="slider" /> : null}
           </>
