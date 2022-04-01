@@ -118,6 +118,10 @@ class Form extends React.Component<InputProps, InputState> {
       this.setState({
         toAdd: false,
       });
+      refKeys.forEach((key) => {
+        this.form.current[key].value = '';
+        this.form.current[key].checked = false;
+      });
     }
   }
 
