@@ -22,6 +22,7 @@ type InputProps = {
 type InputState = {
   errors: Error;
   toAdd: boolean;
+  disableSubmit: boolean;
 };
 const refKeys = [
   'firstName',
@@ -41,6 +42,7 @@ class Form extends React.Component<InputProps, InputState> {
     this.state = {
       errors: {},
       toAdd: false,
+      disableSubmit: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.form = React.createRef();
@@ -67,7 +69,7 @@ class Form extends React.Component<InputProps, InputState> {
     this.resetState();
     refKeys.forEach((key) => {
       const { value, type, checked, files } = this.form.current[key as keyof Form];
-
+      console.log(type);
       switch (type) {
         case 'checkbox':
           if (!checked) {
@@ -75,6 +77,7 @@ class Form extends React.Component<InputProps, InputState> {
           }
           break;
         case 'text':
+        case 'select-one':
           if (value === '') {
             this.addError(key);
           }
@@ -94,6 +97,7 @@ class Form extends React.Component<InputProps, InputState> {
           if (!file) {
             this.addError(key);
           }
+          break;
       }
     });
   }
@@ -104,7 +108,6 @@ class Form extends React.Component<InputProps, InputState> {
   }
 
   componentDidUpdate() {
-    console.log('upd');
     const errKeys = Object.keys(this.state.errors);
     if (errKeys.length === 0 && this.state.toAdd) {
       const { firstName, lastName, birthDate, country, profilePicture } = this.form.current;
@@ -160,7 +163,7 @@ class Form extends React.Component<InputProps, InputState> {
           }
         )}
 
-        <button type="submit" className="submit-btn">
+        <button disabled={this.state.disableSubmit} type="submit" className="submit-btn">
           Submit
         </button>
       </form>

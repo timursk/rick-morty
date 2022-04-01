@@ -28,7 +28,7 @@ const formData = [
     id: 4,
     info: 'Choose country: ',
     name: 'country',
-    errorMessage: '',
+    errorMessage: '* - Select country!',
     type: 'select',
     className: 'form-input',
   },

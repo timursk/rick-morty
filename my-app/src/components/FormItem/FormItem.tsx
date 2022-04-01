@@ -25,7 +25,11 @@ export default class FormItem extends Component<Props, State> {
           {this.props.secondError && <span className="error">{this.props.secondErrorMessage}</span>}
         </p>
         {this.props.type === 'select' ? (
-          <FormSelect name={this.props.name} className={this.props.className} />
+          <FormSelect
+            name={this.props.name}
+            className={this.props.className}
+            onChange={this.props.error ? this.props.onChange : null}
+          />
         ) : (
           <>
             <input

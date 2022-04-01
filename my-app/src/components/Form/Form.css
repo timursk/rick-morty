@@ -46,6 +46,11 @@
   background: #0b7dda;
 }
 
+.submit-btn:disabled {
+  cursor: not-allowed;
+  background: #cccccc;
+}
+
 .switch input {
   opacity: 0;
   width: 0;
