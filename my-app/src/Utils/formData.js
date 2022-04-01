@@ -1,5 +1,6 @@
 const formData = [
   {
+    id: 1,
     info: 'Name: ',
     name: 'firstName',
     errorMessage: '* - Enter your name!',
@@ -7,6 +8,7 @@ const formData = [
     className: 'form-input',
   },
   {
+    id: 2,
     info: 'Surname: ',
     name: 'lastName',
     errorMessage: '* - Enter your Surname!',
@@ -14,13 +16,24 @@ const formData = [
     className: 'form-input',
   },
   {
+    id: 3,
     info: 'Date of Birth: ',
     name: 'birthDate',
     errorMessage: '* - Enter your Date!',
+    secondErrorMessage: '* - Age under 18!',
     type: 'date',
     className: 'form-input',
   },
   {
+    id: 4,
+    info: 'Choose country: ',
+    name: 'country',
+    errorMessage: '',
+    type: 'select',
+    className: 'form-input',
+  },
+  {
+    id: 5,
     info: 'Consent to the processing of personal data ',
     name: 'consent',
     errorMessage: '* - Need your consent!',
@@ -28,6 +41,7 @@ const formData = [
     labelClass: 'checkbox-item',
   },
   {
+    id: 6,
     info: 'Receive notifications ',
     name: 'notify',
     errorMessage: '* - Need your consent!',
@@ -35,6 +49,7 @@ const formData = [
     labelClass: 'checkbox-item',
   },
   {
+    id: 7,
     info: 'Profile picture ',
     name: 'profilePicture',
     errorMessage: '* - Upload image!',
