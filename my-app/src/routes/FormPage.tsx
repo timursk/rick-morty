@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from '../components/Form/Form';
 import FormCard from '../components/FormCard/FormCard';
+import './FormPage.css';
 
 export type Card = {
   firstName: string;
@@ -34,30 +35,22 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
     return (
       <>
         <Form addCard={this.addCard} />
-        {this.state.cardsData.map(
-          ({ firstName, lastName, birthDate, country, profilePicture }, idx) => {
-            return (
-              <FormCard
-                key={idx}
-                firstName={firstName}
-                lastName={lastName}
-                birthDate={birthDate}
-                country={country}
-                profilePicture={profilePicture}
-              />
-            );
-            // const url = URL.createObjectURL(profilePicture);
-            // return (
-            //   <div key={idx}>
-            //     <p>{firstName}</p>
-            //     <p>{lastName}</p>
-            //     <p>{birthDate}</p>
-            //     <p>{country}</p>
-            //     <img src={url} alt="avatar" />
-            //   </div>
-            // );
-          }
-        )}
+        <div className="form-cards-container">
+          {this.state.cardsData.map(
+            ({ firstName, lastName, birthDate, country, profilePicture }, idx) => {
+              return (
+                <FormCard
+                  key={idx}
+                  firstName={firstName}
+                  lastName={lastName}
+                  birthDate={birthDate}
+                  country={country}
+                  profilePicture={profilePicture}
+                />
+              );
+            }
+          )}
+        </div>
       </>
     );
   }

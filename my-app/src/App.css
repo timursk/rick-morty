@@ -18,7 +18,7 @@
 
 .main-container {
   min-height: 90vh;
-  margin: 0 300px;
+  /* margin: 0 300px; */
   padding: 20px;
   box-sizing: border-box;
 }

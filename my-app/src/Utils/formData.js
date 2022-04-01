@@ -46,7 +46,7 @@ const formData = [
     name: 'notify',
     errorMessage: '* - Need your consent!',
     type: 'checkbox',
-    labelClass: 'checkbox-item',
+    labelClass: 'checkbox-item switch',
   },
   {
     id: 7,

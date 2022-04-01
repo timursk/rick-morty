@@ -27,12 +27,15 @@ export default class FormItem extends Component<Props, State> {
         {this.props.type === 'select' ? (
           <FormSelect name={this.props.name} className={this.props.className} />
         ) : (
-          <input
-            onChange={this.props.error ? this.props.onChange : null}
-            type={this.props.type}
-            name={this.props.name}
-            className={this.props.className}
-          />
+          <>
+            <input
+              onChange={this.props.error ? this.props.onChange : null}
+              type={this.props.type}
+              name={this.props.name}
+              className={this.props.className}
+            />
+            {this.props.name === 'notify' ? <span className="slider" /> : null}
+          </>
         )}
       </label>
     );

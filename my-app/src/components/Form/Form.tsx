@@ -160,7 +160,9 @@ class Form extends React.Component<InputProps, InputState> {
           }
         )}
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
       </form>
     );
   }
