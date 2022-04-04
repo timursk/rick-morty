@@ -20,7 +20,7 @@ export default class FormName extends Component<Props, State> {
           type="input"
           name="firstName"
           className="form-input"
-          // data-testid={`formItem-${this.props.name}`}
+          data-testid="firstName"
         />
       </FormLabel>
     );

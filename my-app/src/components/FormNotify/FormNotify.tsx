@@ -19,7 +19,7 @@ export default class FormName extends Component<Props, State> {
           onChange={errors.isValid ? null : removeError}
           type="checkbox"
           name="notify"
-          // data-testid={`formItem-${this.props.name}`}
+          data-testid="notify"
         />
         <span className="slider" />
       </FormLabel>

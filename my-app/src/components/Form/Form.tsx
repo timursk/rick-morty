@@ -101,7 +101,7 @@ class Form extends React.Component<InputProps, InputState> {
     if (birthDate.current.value !== '') {
       const isAdult = Utils.isAdult(birthDate.current.value);
       if (!isAdult) {
-        message = startMessage + 'Wrong age(need >=18 && <=100!';
+        message = startMessage + 'Wrong age(need >=18 && <=100)!';
         this.setError('birthDate', message);
       }
     }

@@ -20,7 +20,7 @@ export default class FormName extends Component<Props, State> {
           defaultValue={'Russia'}
           className="form-input"
           onChange={errors.isValid ? null : removeError}
-          // data-testid={`formItem-${this.props.name}`}
+          data-testid="country"
         >
           <option value="Usa">Usa</option>
           <option value="Russia">Russia</option>

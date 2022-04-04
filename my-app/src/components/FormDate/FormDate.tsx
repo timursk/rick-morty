@@ -20,7 +20,7 @@ export default class FormName extends Component<Props, State> {
           type="date"
           name="birthDate"
           className="form-input"
-          // data-testid={`formItem-${this.props.name}`}
+          data-testid="birthDate"
         />
       </FormLabel>
     );
