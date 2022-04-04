@@ -1,4 +1,4 @@
-import React, { Component, RefObject } from 'react';
+import React, { Component } from 'react';
 import { FormItemProps } from '../../utils/types';
 import FormLabel from '../FormLabel/FormLabel';
 
