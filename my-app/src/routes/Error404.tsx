@@ -1,14 +1,10 @@
 import React from 'react';
 import gif from '../assets/error404.gif';
+import './Error404.css';
 
 const Error404 = () => {
   return (
-    <img
-      data-testid="error-page"
-      style={{ margin: '0 auto', display: 'block' }}
-      src={gif}
-      alt="this slowpoke moves"
-    />
+    <img data-testid="error-page" className="error-image" src={gif} alt="this slowpoke moves" />
   );
 };
 

@@ -1,12 +1,13 @@
 import React, { ChangeEventHandler, Component, FormEvent } from 'react';
 import { Error, RefItems } from '../Form/Form';
-import FormConsent from '../FormConsent/FormConsent';
-import FormCountry from '../FormCountry/FormCountry';
-import FormDate from '../FormDate/FormDate';
-import FormName from '../FormName/FormName';
-import FormNotify from '../FormNotify/FormNotify';
-import FormPicture from '../FormPicture/FormPicture';
-import FormSurname from '../FormSurname/FormSurname';
+import FormConsent from '../FormItems/FormConsent';
+import FormCountry from '../FormItems/FormCountry';
+import FormDate from '../FormItems/FormDate';
+import FormName from '../FormItems/FormName';
+import FormNotify from '../FormItems/FormNotify';
+import FormPicture from '../FormItems/FormPicture';
+import FormSurname from '../FormItems/FormSurname';
+import './FormComponent.css';
 
 type Props = {
   refItems: RefItems;

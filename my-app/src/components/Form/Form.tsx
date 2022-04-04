@@ -3,14 +3,12 @@ import { Card } from '../../routes/FormPage';
 import { ErrorInitial } from '../../utils/constants';
 import { Utils } from '../../utils/utils';
 import FormComponent from '../FormComponent/FormComponent';
-import './Form.css';
 
 type ErrorItem = {
   isValid: boolean;
   message: string;
 };
 export type Error = {
-  // [key: string]: boolean;
   firstName: ErrorItem;
   lastName: ErrorItem;
   birthDate: ErrorItem;

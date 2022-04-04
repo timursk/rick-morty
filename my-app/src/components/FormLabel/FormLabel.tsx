@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './FormLabel.css';
 
 type Props = {
   labelClass?: string;
