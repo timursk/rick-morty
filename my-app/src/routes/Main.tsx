@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../components/Card/Card';
 import Input from '../components/Input/Input';
 import { getImages } from '../services/CardService';
-import { Utils } from '../Utils/Utils';
+import { Utils } from '../utils/utils';
 
 export type MainData = {
   albumId: number;

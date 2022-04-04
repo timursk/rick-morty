@@ -1,20 +1,23 @@
-import React, { FormEvent, RefObject } from 'react';
+import React, { ChangeEvent, FormEvent, RefObject } from 'react';
 import { Card } from '../../routes/FormPage';
-import formData from '../../Utils/formData';
-import { Utils } from '../../Utils/Utils';
-import FormItem from '../FormItem/FormItem';
+import { ErrorInitial } from '../../utils/constants';
+import { Utils } from '../../utils/utils';
+import FormComponent from '../FormComponent/FormComponent';
 import './Form.css';
 
-type Error = {
-  [key: string]: boolean;
-  firstName?: boolean;
-  lastName?: boolean;
-  birthDate?: boolean;
-  country?: boolean;
-  consent?: boolean;
-  notify?: boolean;
-  profilePicture?: boolean;
-  isAdult?: boolean;
+type ErrorItem = {
+  isValid: boolean;
+  message: string;
+};
+export type Error = {
+  // [key: string]: boolean;
+  firstName: ErrorItem;
+  lastName: ErrorItem;
+  birthDate: ErrorItem;
+  country: ErrorItem;
+  consent: ErrorItem;
+  notify: ErrorItem;
+  profilePicture: ErrorItem;
 };
 type InputProps = {
   addCard: (item: Card) => void;
@@ -24,169 +27,193 @@ type InputState = {
   toAdd: boolean;
   disableSubmit: boolean;
 };
-const refKeys = [
-  'firstName',
-  'lastName',
-  'birthDate',
-  'country',
-  'consent',
-  'notify',
-  'profilePicture',
-];
+export type RefItems = {
+  form: RefObject<HTMLFormElement>;
+  firstName: RefObject<HTMLInputElement>;
+  lastName: RefObject<HTMLInputElement>;
+  birthDate: RefObject<HTMLInputElement>;
+  country: RefObject<HTMLSelectElement>;
+  consent: RefObject<HTMLInputElement>;
+  notify: RefObject<HTMLInputElement>;
+  profilePicture: RefObject<HTMLInputElement>;
+};
 
 class Form extends React.Component<InputProps, InputState> {
-  form: RefObject<HTMLFormElement>;
+  refItems: RefItems;
 
   constructor(props: InputProps) {
     super(props);
     this.state = {
-      errors: {},
+      errors: {
+        ...ErrorInitial,
+      },
       toAdd: false,
       disableSubmit: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.ableSubmit = this.ableSubmit.bind(this);
-    this.form = React.createRef();
+    this.refItems = {
+      form: React.createRef(),
+      firstName: React.createRef(),
+      lastName: React.createRef(),
+      birthDate: React.createRef(),
+      country: React.createRef(),
+      consent: React.createRef(),
+      notify: React.createRef(),
+      profilePicture: React.createRef(),
+    };
   }
 
-  resetState() {
-    this.setState({
-      errors: {},
-      toAdd: true,
-    });
-  }
-
-  addError(key: string) {
+  setError(key: string, message: string) {
     this.setState((prevState) => ({
       errors: {
         ...prevState.errors,
-        [key]: true,
+        [key]: {
+          isValid: false,
+          message,
+        },
       },
-      toAdd: false,
       disableSubmit: true,
+      toAdd: false,
     }));
   }
 
   validate() {
-    this.resetState();
-    refKeys.forEach((key) => {
-      const { value, type, checked, files } = this.form.current[key as keyof Form];
-      switch (type) {
-        case 'checkbox':
-          if (!checked) {
-            this.addError(key);
-          }
-          break;
-        case 'text':
-        case 'select-one':
-          if (value === '') {
-            this.addError(key);
-          }
-          break;
-        case 'date':
-          if (value === '') {
-            this.addError(key);
-          } else {
-            const isAdult = Utils.isAdult(value);
-            if (!isAdult) {
-              this.addError('isAdult');
-            }
-          }
-          break;
-        case 'file':
-          const file = files[0];
-          if (!file) {
-            this.addError(key);
-          }
-          break;
+    const { firstName, lastName, birthDate, country, consent, notify, profilePicture } =
+      this.refItems;
+    const startMessage = ' * - ';
+    let message = '';
+
+    if (firstName.current.value.length < 2) {
+      message = startMessage + 'Invalid name value!';
+      this.setError('firstName', message);
+    }
+
+    if (lastName.current.value.length < 2) {
+      message = startMessage + 'Invalid surname value!';
+      this.setError('lastName', message);
+    }
+
+    if (birthDate.current.value === '') {
+      message = startMessage + 'Enter date!';
+      this.setError('birthDate', message);
+    }
+    if (birthDate.current.value !== '') {
+      const isAdult = Utils.isAdult(birthDate.current.value);
+      if (!isAdult) {
+        message = startMessage + 'Wrong age(need >=18 && <=100!';
+        this.setError('birthDate', message);
       }
-    });
+    }
+
+    if (country.current.value === '') {
+      message = startMessage + 'Pick country!';
+      this.setError('country', message);
+    }
+
+    if (!consent.current.checked) {
+      message = startMessage + 'need consent!';
+      this.setError('consent', message);
+    }
+
+    if (!notify.current.checked) {
+      message = startMessage + 'need consent!';
+      this.setError('notify', message);
+    }
+
+    if (!profilePicture.current.files[0]) {
+      message = startMessage + 'Upload image!';
+      this.setError('profilePicture', message);
+    }
   }
 
   handleSubmit(ev: FormEvent) {
     ev.preventDefault();
+    this.setState({
+      toAdd: true,
+    });
     this.validate();
   }
 
   componentDidUpdate() {
-    if (this.state.toAdd) {
-      const { firstName, lastName, birthDate, country, profilePicture } = this.form.current;
-      this.props.addCard({
-        firstName: firstName.value,
-        lastName: lastName.value,
-        birthDate: birthDate.value,
-        country: country.value,
-        profilePicture: profilePicture.files[0],
+    const { disableSubmit, errors, toAdd } = this.state;
+    const { addCard } = this.props;
+
+    if (disableSubmit) {
+      for (const key in errors) {
+        if (!errors[key as keyof Error].isValid) {
+          return;
+        }
+      }
+      this.setState({ disableSubmit: false });
+      return;
+    }
+
+    if (toAdd) {
+      const { firstName, lastName, birthDate, country, profilePicture } = this.refItems;
+      addCard({
+        firstName: firstName.current.value,
+        lastName: lastName.current.value,
+        birthDate: birthDate.current.value,
+        country: country.current.value,
+        profilePicture: profilePicture.current.files[0],
       });
       this.setState({
         toAdd: false,
       });
-      refKeys.forEach((key) => {
-        this.form.current[key].value = '';
-        this.form.current[key].checked = false;
-      });
+      this.clearForm();
     }
   }
 
-  removeError(target: HTMLInputElement) {
-    const { name } = target;
+  clearForm() {
+    for (const key in this.refItems) {
+      const elem = this.refItems[key as keyof RefItems].current;
+      elem.value = '';
+      if (elem.type === 'checkbox') {
+        (elem as HTMLInputElement).checked = false;
+      }
+    }
+  }
+
+  removeError(ev: ChangeEvent) {
+    const { name } = ev.target as HTMLInputElement;
     this.setState((prevState) => ({
       errors: {
         ...prevState.errors,
-        [name]: false,
+        [name]: {
+          isValid: true,
+          message: '',
+        },
       },
     }));
-    this.ableSubmit(null, name);
   }
 
-  ableSubmit(ev: FormEvent, removedKey?: string) {
-    let toAble = true;
-    Object.keys(this.state.errors).forEach((key) => {
-      if (key !== removedKey && this.state.errors[key] === true) {
-        toAble = false;
+  ableSubmit() {
+    const { errors } = this.state;
+
+    for (const key in errors) {
+      if (!errors[key as keyof Error].isValid) {
+        return;
       }
-    });
-    if (toAble) {
-      this.setState({
-        disableSubmit: false,
-      });
     }
+
+    this.setState({
+      disableSubmit: false,
+    });
   }
 
   render() {
     return (
-      <form
-        className="form"
-        ref={this.form}
-        onSubmit={this.handleSubmit}
-        onChange={this.state.disableSubmit ? this.ableSubmit : null}
-      >
-        {formData.map(
-          ({ id, info, errorMessage, secondErrorMessage, type, name, className, labelClass }) => {
-            return (
-              <FormItem
-                key={id}
-                info={info}
-                error={this.state.errors[name]}
-                secondError={type === 'date' ? this.state.errors.isAdult : null}
-                errorMessage={errorMessage}
-                secondErrorMessage={secondErrorMessage}
-                type={type}
-                name={name}
-                className={className}
-                labelClass={labelClass}
-                onChange={(event) => {
-                  this.removeError(event.target);
-                }}
-              />
-            );
-          }
-        )}
-
-        <button disabled={this.state.disableSubmit} type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
+      <FormComponent
+        refItems={this.refItems}
+        errors={this.state.errors}
+        handleSubmit={this.handleSubmit}
+        disableSubmit={this.state.disableSubmit}
+        ableSubmit={this.ableSubmit}
+        removeError={(ev) => {
+          this.removeError(ev);
+        }}
+      />
     );
   }
 }
