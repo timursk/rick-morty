@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import './Input.css';
 
-type InputProps = Record<string, never>;
+type InputProps = {
+  refInput: RefObject<HTMLInputElement>;
+};
 type InputState = { value: string; defaultValue: string };
 
 class Input extends React.Component<InputProps, InputState> {
@@ -40,6 +42,7 @@ class Input extends React.Component<InputProps, InputState> {
           name="input"
           className="input"
           autoComplete="off"
+          ref={this.props.refInput}
           defaultValue={this.state.defaultValue}
           onChange={(ev) => {
             this.set(ev.target.value);

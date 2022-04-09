@@ -22,3 +22,8 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+.loader {
+  display: block;
+  margin: 0 auto;
+}
