@@ -1,18 +1,11 @@
 import React from 'react';
 import Card from '../components/Card/Card';
 import Input from '../components/Input/Input';
-import { getImages } from '../services/CardService';
-import { Utils } from '../utils/utils';
+import { getAllCharacters, getCharacterByName } from '../services/CardService';
+import { Character } from '../utils/types';
 
-export type MainData = {
-  albumId: number;
-  id: number;
-  thumbnailUrl: string;
-  title: string;
-  url: string;
-};
 type MainProps = Record<string, never>;
-type MainState = { loading: boolean; data: MainData[] };
+type MainState = { loading: boolean; data: Character[] };
 
 class Main extends React.Component<MainProps, MainState> {
   constructor(props: MainProps) {
@@ -24,8 +17,8 @@ class Main extends React.Component<MainProps, MainState> {
   }
 
   componentDidMount() {
-    getImages().then((result) => {
-      const data = Utils.getRandomItems(result, 10);
+    getAllCharacters().then((result) => {
+      const data = result.results;
       this.setState({
         loading: false,
         data,
@@ -34,7 +27,8 @@ class Main extends React.Component<MainProps, MainState> {
   }
 
   render() {
-    if (this.state.loading) {
+    const { loading, data } = this.state;
+    if (loading) {
       return <h2>Loading</h2>;
     }
 
@@ -42,9 +36,10 @@ class Main extends React.Component<MainProps, MainState> {
       <div data-testid="main-page">
         <Input />
         <div className="cards-container">
-          {this.state.data.map((item) => {
-            return <Card item={item} key={item.id} />;
-          })}
+          {data &&
+            data.map((item) => {
+              return <Card item={item} key={item.id} />;
+            })}
         </div>
       </div>
     );

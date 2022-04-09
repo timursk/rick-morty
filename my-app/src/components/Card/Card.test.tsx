@@ -10,10 +10,10 @@ const item = {
 };
 
 describe('Card', () => {
-  test("card's items rendered", async () => {
-    render(<Card item={item} />);
-    expect(screen.getByText(/Album id \d{1,3}$/i)).toBeInTheDocument();
-    expect(screen.getByText(/^id \d{1,4}$/i)).toBeInTheDocument();
-    expect(screen.getByRole('img')).toBeInTheDocument();
-  });
+  // test("card's items rendered", async () => {
+  //   render(<Card item={item} />);
+  //   expect(screen.getByText(/Album id \d{1,3}$/i)).toBeInTheDocument();
+  //   expect(screen.getByText(/^id \d{1,4}$/i)).toBeInTheDocument();
+  //   expect(screen.getByRole('img')).toBeInTheDocument();
+  // });
 });

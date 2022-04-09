@@ -1,9 +1,9 @@
 import React from 'react';
-import { MainData } from '../../routes/Main';
+import { Character } from '../../utils/types';
 import './Card.css';
 
 type CardProps = {
-  item: MainData;
+  item: Character;
 };
 type CardState = Record<string, never>;
 
@@ -13,12 +13,10 @@ class Card extends React.Component<CardProps, CardState> {
   }
 
   render() {
+    const { item } = this.props;
     return (
       <div className="card">
-        <img className="card-img" src={this.props.item.thumbnailUrl} alt="item" />
-        <p>Album id {this.props.item.albumId}</p>
-        <p>ID {this.props.item.id}</p>
-        <p>{this.props.item.title}</p>
+        <img className="card-img" src={item.image} alt="item" />
       </div>
     );
   }
