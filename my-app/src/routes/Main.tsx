@@ -53,13 +53,14 @@ class Main extends React.Component<MainProps, MainState> {
         </form>
         {loading ? (
           <img className="loader" src={loader} alt="loader" />
-        ) : (
+        ) : data ? (
           <div className="cards-container">
-            {data &&
-              data.map((item) => {
-                return <Card item={item} key={item.id} />;
-              })}
+            {data.map((item) => {
+              return <Card item={item} key={item.id} />;
+            })}
           </div>
+        ) : (
+          <p className="info-error">no info</p>
         )}
       </div>
     );
