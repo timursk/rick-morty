@@ -4,9 +4,15 @@ import Input from '../components/Input/Input';
 import { getAllCharacters, getCharacterByName } from '../services/CardService';
 import { Character } from '../utils/types';
 import loader from '../assets/loading.svg';
+import ModalCard from '../components/ModalCard/ModalCard';
 
 type MainProps = Record<string, never>;
-type MainState = { loading: boolean; data: Character[] };
+type MainState = {
+  loading: boolean;
+  data: Character[];
+  showModal: boolean;
+  modalContent: Character;
+};
 
 class Main extends React.Component<MainProps, MainState> {
   input: RefObject<HTMLInputElement>;
@@ -15,8 +21,12 @@ class Main extends React.Component<MainProps, MainState> {
     this.state = {
       loading: true,
       data: null,
+      showModal: false,
+      modalContent: null,
     };
     this.input = createRef();
+    this.handleShow = this.handleShow.bind(this);
+    this.handleHide = this.handleHide.bind(this);
   }
 
   componentDidMount() {
@@ -43,8 +53,20 @@ class Main extends React.Component<MainProps, MainState> {
     });
   }
 
+  handleShow(item: Character) {
+    item &&
+      this.setState({
+        showModal: true,
+        modalContent: item,
+      });
+  }
+
+  handleHide() {
+    this.setState({ showModal: false });
+  }
+
   render() {
-    const { loading, data } = this.state;
+    const { loading, data, showModal, modalContent } = this.state;
 
     return (
       <div data-testid="main-page">
@@ -56,12 +78,13 @@ class Main extends React.Component<MainProps, MainState> {
         ) : data ? (
           <div className="cards-container">
             {data.map((item) => {
-              return <Card item={item} key={item.id} />;
+              return <Card onClick={this.handleShow} item={item} key={item.id} />;
             })}
           </div>
         ) : (
           <p className="info-error">no info</p>
         )}
+        {showModal && <ModalCard character={modalContent} onClick={this.handleHide} />}
       </div>
     );
   }

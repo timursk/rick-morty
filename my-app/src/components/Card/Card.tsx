@@ -4,6 +4,7 @@ import './Card.css';
 
 type CardProps = {
   item: Character;
+  onClick: (item: Character) => void;
 };
 type CardState = Record<string, never>;
 
@@ -13,9 +14,9 @@ class Card extends React.Component<CardProps, CardState> {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, onClick } = this.props;
     return (
-      <div className="card">
+      <div onClick={() => onClick(item)} className="card">
         <img className="card-img" src={item.image} alt="item" />
       </div>
     );
