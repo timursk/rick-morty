@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Form from '../components/Form/Form';
 import FormCard from '../components/FormCard/FormCard';
 import './FormPage.css';
@@ -11,47 +11,37 @@ export type Card = {
   profilePicture: File;
 };
 
-type FormPageProps = Record<string, never>;
-type FormPageState = {
-  cardsData: Card[];
+const FormPage = () => {
+  const [cardsData, setCardsData] = useState<Card[]>(null);
+
+  const addCard = (card: Card) => {
+    if (!cardsData) {
+      setCardsData([card]);
+      return;
+    }
+    setCardsData(() => [...cardsData, card]);
+  };
+
+  return (
+    <div data-testid="form-page">
+      <Form addCard={addCard} />
+      <div className="form-cards-container">
+        {cardsData &&
+          cardsData.map(({ firstName, lastName, birthDate, country, profilePicture }, idx) => {
+            return (
+              <FormCard
+                key={idx}
+                firstName={firstName}
+                lastName={lastName}
+                birthDate={birthDate}
+                country={country}
+                profilePicture={profilePicture}
+              />
+            );
+          })}
+      </div>
+    </div>
+  );
 };
 
-export default class FormPage extends Component<FormPageProps, FormPageState> {
-  constructor(props: FormPageProps) {
-    super(props);
-    this.addCard = this.addCard.bind(this);
-    this.state = {
-      cardsData: [],
-    };
-  }
-
-  addCard(card: Card) {
-    this.setState(({ cardsData }) => ({
-      cardsData: [...cardsData, card],
-    }));
-  }
-
-  render() {
-    return (
-      <div data-testid="form-page">
-        <Form addCard={this.addCard} />
-        <div className="form-cards-container">
-          {this.state.cardsData.map(
-            ({ firstName, lastName, birthDate, country, profilePicture }, idx) => {
-              return (
-                <FormCard
-                  key={idx}
-                  firstName={firstName}
-                  lastName={lastName}
-                  birthDate={birthDate}
-                  country={country}
-                  profilePicture={profilePicture}
-                />
-              );
-            }
-          )}
-        </div>
-      </div>
-    );
-  }
-}
+export default FormPage;
