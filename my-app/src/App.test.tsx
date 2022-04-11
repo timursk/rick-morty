@@ -13,10 +13,6 @@ describe('App', () => {
       </MemoryRouter>
     );
     expect(screen.getByTestId('loader')).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByRole('textbox')).toBeInTheDocument();
-      expect(screen.getAllByTestId('card-item')).toHaveLength(20);
-    });
   });
 
   beforeEach(() => {
