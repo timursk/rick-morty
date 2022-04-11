@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = Record<string, unknown>;
-type State = null;
 let modalRoot = document.getElementById('modal-root');
 if (!modalRoot) {
   modalRoot = document.createElement('div');
@@ -10,22 +9,17 @@ if (!modalRoot) {
   document.body.appendChild(modalRoot);
 }
 
-export default class Modal extends Component<Props, State> {
-  el: HTMLDivElement;
-  constructor(props: Props) {
-    super(props);
-    this.el = document.createElement('div');
-  }
+const Modal = (props: Props) => {
+  const el = document.createElement('div');
 
-  componentDidMount(): void {
-    modalRoot.appendChild(this.el);
-  }
+  useEffect(() => {
+    modalRoot.appendChild(el);
+    return () => {
+      modalRoot.removeChild(el);
+    };
+  }, [el]);
 
-  componentWillUnmount(): void {
-    modalRoot.removeChild(this.el);
-  }
+  return ReactDOM.createPortal(props.children, el);
+};
 
-  render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
-  }
-}
+export default Modal;
