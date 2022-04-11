@@ -20,4 +20,10 @@ describe('Main page', () => {
       expect(item).toBeInTheDocument();
     });
   });
+
+  test('API error rendered', async () => {
+    render(<Main />);
+    userEvent.type(screen.getByRole('textbox'), 'ddssdds{enter}');
+    expect(await screen.findByText(/no info/i)).toBeInTheDocument();
+  });
 });

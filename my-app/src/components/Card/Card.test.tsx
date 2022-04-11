@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Card from './Card';
 
-const item = {
+export const fakeItem = {
   created: 'test',
   episode: ['test1', 'test2'],
   gender: 'test',
@@ -24,8 +25,11 @@ const item = {
 
 describe('Card', () => {
   test("card's items rendered", () => {
-    render(<Card item={item} onClick={() => {}} />);
+    const mockFn = jest.fn(() => {});
+    render(<Card item={fakeItem} onClick={mockFn} />);
     expect(screen.getByTestId('card-item')).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
+    userEvent.click(screen.getByTestId('card-item'));
+    expect(mockFn).toBeCalled();
   });
 });

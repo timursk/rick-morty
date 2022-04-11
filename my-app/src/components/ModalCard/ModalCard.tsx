@@ -21,7 +21,11 @@ export default class ModalCard extends Component<Props, State> {
     return (
       <Modal>
         <div onClick={onClick} className="modal-container">
-          <div onClick={(ev) => this.handleClick(ev)} className="card modal-card">
+          <div
+            onClick={(ev) => this.handleClick(ev)}
+            className="card modal-card"
+            data-testid="modal-card"
+          >
             <img className="card-img modal-card__img" src={image} alt="item" />
             <div className="modal-card__info">
               <p>

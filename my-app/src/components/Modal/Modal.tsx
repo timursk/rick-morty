@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom';
 
 type Props = Record<string, unknown>;
 type State = null;
-const modalRoot = document.getElementById('modal-root');
+let modalRoot = document.getElementById('modal-root');
+if (!modalRoot) {
+  modalRoot = document.createElement('div');
+  modalRoot.setAttribute('id', 'modal-root');
+  document.body.appendChild(modalRoot);
+}
 
 export default class Modal extends Component<Props, State> {
   el: HTMLDivElement;
