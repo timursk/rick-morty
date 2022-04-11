@@ -15,6 +15,7 @@
   flex-direction: row;
   border-radius: 5px;
   background-color: rgb(56 150 255 / 76%);
+  cursor: default;
 }
 
 .modal-card__img {
