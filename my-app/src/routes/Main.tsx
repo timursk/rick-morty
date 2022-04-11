@@ -74,7 +74,7 @@ class Main extends React.Component<MainProps, MainState> {
           <Input refInput={this.input} />
         </form>
         {loading ? (
-          <img className="loader" src={loader} alt="loader" />
+          <img className="loader" src={loader} alt="loader" data-testid="loader" />
         ) : data ? (
           <div className="cards-container">
             {data.map((item) => {

@@ -16,7 +16,7 @@ class Card extends React.Component<CardProps, CardState> {
   render() {
     const { item, onClick } = this.props;
     return (
-      <div onClick={() => onClick(item)} className="card">
+      <div onClick={() => onClick(item)} className="card" data-testid="card-item">
         <img className="card-img" src={item.image} alt="item" />
       </div>
     );

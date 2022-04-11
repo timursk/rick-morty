@@ -2,18 +2,29 @@ import { render, screen } from '@testing-library/react';
 import Card from './Card';
 
 const item = {
-  albumId: 22,
-  id: 1111,
-  thumbnailUrl: 'https://via.placeholder.com/150/198fff',
-  title: 'sed at dolorum quibusdam',
-  url: 'https://via.placeholder.com/150/198fff',
+  created: 'test',
+  episode: ['test1', 'test2'],
+  gender: 'test',
+  id: 222,
+  image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
+  location: {
+    name: 'test',
+    url: 'test',
+  },
+  name: 'test',
+  origin: {
+    name: 'test',
+    url: 'test',
+  },
+  species: 'test',
+  status: 'test',
+  type: 'test',
+  url: 'test',
 };
 
 describe('Card', () => {
-  // test("card's items rendered", async () => {
-  //   render(<Card item={item} />);
-  //   expect(screen.getByText(/Album id \d{1,3}$/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/^id \d{1,4}$/i)).toBeInTheDocument();
-  //   expect(screen.getByRole('img')).toBeInTheDocument();
-  // });
+  test("card's items rendered", () => {
+    render(<Card item={item} onClick={() => {}} />);
+    expect(screen.getByRole('img')).toBeInTheDocument();
+  });
 });

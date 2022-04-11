@@ -12,10 +12,10 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     );
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toBeInTheDocument();
-      expect(screen.getAllByText(/Album id \d{1,3}$/i)).toHaveLength(10);
-      expect(screen.getAllByText(/^id \d{1,4}$/i)).toHaveLength(10);
+      expect(screen.getAllByTestId('card-item')).toHaveLength(20);
     });
   });
 
