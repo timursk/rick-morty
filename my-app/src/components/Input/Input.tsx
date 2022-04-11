@@ -1,56 +1,52 @@
-import React, { RefObject } from 'react';
+import React, { RefObject, useCallback, useEffect, useState } from 'react';
 import './Input.css';
 
 type InputProps = {
   refInput: RefObject<HTMLInputElement>;
 };
-type InputState = { value: string; defaultValue: string };
 
-class Input extends React.Component<InputProps, InputState> {
-  constructor(props: InputProps) {
-    super(props);
-    this.state = { defaultValue: '', value: '' };
-  }
+const Input = (props: InputProps) => {
+  const [value, setValue] = useState('');
+  const [defaultValue, setDefaultValue] = useState('');
+  const [firstRender, setFirstRender] = useState(true);
 
-  componentDidMount() {
-    const str = localStorage.getItem('input');
-    if (str) {
-      this.setState({
-        defaultValue: str,
-        value: str,
-      });
+  const addToStorage = useCallback(() => {
+    localStorage.setItem('input', value);
+  }, [value]);
+
+  useEffect(() => {
+    if (firstRender) {
+      const str = localStorage.getItem('input');
+
+      if (str) {
+        setValue(str);
+        setDefaultValue(str);
+      }
+      setFirstRender(false);
     }
-    window.addEventListener('beforeunload', this.componentWillUnmount.bind(this));
-  }
+    window.addEventListener('beforeunload', addToStorage);
 
-  componentWillUnmount() {
-    localStorage.setItem('input', this.state.value);
-    window.removeEventListener('beforeunload', this.componentWillUnmount.bind(this));
-  }
+    return () => {
+      addToStorage();
+      window.removeEventListener('beforeunload', addToStorage);
+    };
+  }, [value, addToStorage, firstRender]);
 
-  set(item: string) {
-    this.setState({
-      value: item,
-    });
-  }
-
-  render() {
-    return (
-      <div className="input-container">
-        <input
-          type="text"
-          name="input"
-          className="input"
-          autoComplete="off"
-          ref={this.props.refInput}
-          defaultValue={this.state.defaultValue}
-          onChange={(ev) => {
-            this.set(ev.target.value);
-          }}
-        />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="input-container">
+      <input
+        type="text"
+        name="input"
+        className="input"
+        autoComplete="off"
+        ref={props.refInput}
+        defaultValue={defaultValue}
+        onChange={(ev) => {
+          setValue(ev.target.value);
+        }}
+      />
+    </div>
+  );
+};
 
 export default Input;
