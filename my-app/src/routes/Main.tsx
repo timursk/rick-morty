@@ -1,4 +1,4 @@
-import React, { createRef, FormEvent, RefObject } from 'react';
+import React, { createRef, FormEvent, useEffect, useRef, useState } from 'react';
 import Card from '../components/Card/Card';
 import Input from '../components/Input/Input';
 import { getAllCharacters, getCharacterByName } from '../services/CardService';
@@ -7,96 +7,72 @@ import loader from '../assets/loading.svg';
 import ModalCard from '../components/ModalCard/ModalCard';
 import './Main.css';
 
-type MainProps = Record<string, never>;
-type MainState = {
-  loading: boolean;
-  data: Character[];
-  showModal: boolean;
-  modalContent: Character;
-};
+const Main = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<Character[]>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<Character>(null);
+  const input = createRef<HTMLInputElement>();
+  const _isMounted = useRef<boolean>(true);
 
-class Main extends React.Component<MainProps, MainState> {
-  input: RefObject<HTMLInputElement>;
-  _isMounted: boolean;
-  constructor(props: MainProps) {
-    super(props);
-    this.state = {
-      loading: true,
-      data: null,
-      showModal: false,
-      modalContent: null,
-    };
-    this.input = createRef();
-    this.handleShow = this.handleShow.bind(this);
-    this.handleHide = this.handleHide.bind(this);
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
+  useEffect(() => {
     getAllCharacters().then((result) => {
-      const data = result.results;
-      if (this._isMounted) {
-        this.setState({
-          loading: false,
-          data,
-        });
+      if (_isMounted.current) {
+        const data = result.results;
+        setLoading(false);
+        setData(data);
       }
     });
-  }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+    return () => {
+      _isMounted.current = false;
+    };
+  }, []);
 
-  handleSubmit(ev: FormEvent) {
+  const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
-    const name = this.input.current.value;
-    this.setState({ loading: true });
+    const name = input.current.value;
+    setLoading(true);
 
     getCharacterByName(name).then((result) => {
-      const data = result.results;
-      this.setState({
-        loading: false,
-        data,
-      });
+      if (_isMounted.current) {
+        const data = result.results;
+        setLoading(false);
+        setData(data);
+      }
     });
-  }
+  };
 
-  handleShow(item: Character) {
-    item &&
-      this.setState({
-        showModal: true,
-        modalContent: item,
-      });
-  }
+  const handleShow = (item: Character) => {
+    if (item) {
+      setShowModal(true);
+      setModalContent(item);
+    }
+  };
 
-  handleHide() {
-    this.setState({ showModal: false });
-  }
+  const handleHide = () => {
+    setShowModal(false);
+  };
 
-  render() {
-    const { loading, data, showModal, modalContent } = this.state;
-
-    return (
-      <div data-testid="main-page">
-        <form onSubmit={(ev) => this.handleSubmit(ev)}>
-          <Input refInput={this.input} />
-        </form>
-        {loading ? (
-          <img className="loader" src={loader} alt="loader" data-testid="loader" />
-        ) : data ? (
-          <div className="cards-container">
-            {data.map((item) => {
-              return <Card onClick={this.handleShow} item={item} key={item.id} />;
-            })}
-          </div>
-        ) : (
-          <p className="info-error">no info</p>
-        )}
-        {showModal && <ModalCard character={modalContent} onClick={this.handleHide} />}
-      </div>
-    );
-  }
-}
+  return (
+    <div data-testid="main-page">
+      <form onSubmit={(ev) => handleSubmit(ev)}>
+        <Input refInput={input} />
+      </form>
+      {loading ? (
+        <img className="loader" src={loader} alt="loader" data-testid="loader" />
+      ) : data ? (
+        <div className="cards-container">
+          {data.map((item) => {
+            return <Card onClick={handleShow} item={item} key={item.id} />;
+          })}
+        </div>
+      ) : (
+        <p className="info-error">no info</p>
+      )}
+      {showModal && <ModalCard character={modalContent} onClick={handleHide} />}
+    </div>
+  );
+};
 
 export default Main;
