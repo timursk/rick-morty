@@ -25,6 +25,7 @@ const item = {
 describe('Card', () => {
   test("card's items rendered", () => {
     render(<Card item={item} onClick={() => {}} />);
+    expect(screen.getByTestId('card-item')).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
 });

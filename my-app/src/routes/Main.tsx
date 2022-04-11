@@ -5,6 +5,7 @@ import { getAllCharacters, getCharacterByName } from '../services/CardService';
 import { Character } from '../utils/types';
 import loader from '../assets/loading.svg';
 import ModalCard from '../components/ModalCard/ModalCard';
+import './Main.css';
 
 type MainProps = Record<string, never>;
 type MainState = {
@@ -16,6 +17,7 @@ type MainState = {
 
 class Main extends React.Component<MainProps, MainState> {
   input: RefObject<HTMLInputElement>;
+  _isMounted: boolean;
   constructor(props: MainProps) {
     super(props);
     this.state = {
@@ -30,13 +32,20 @@ class Main extends React.Component<MainProps, MainState> {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     getAllCharacters().then((result) => {
       const data = result.results;
-      this.setState({
-        loading: false,
-        data,
-      });
+      if (this._isMounted) {
+        this.setState({
+          loading: false,
+          data,
+        });
+      }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleSubmit(ev: FormEvent) {
