@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useEffect, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import './Input.css';
 
 type InputProps = {
@@ -6,31 +6,24 @@ type InputProps = {
 };
 
 const Input = (props: InputProps) => {
-  const [value, setValue] = useState('');
   const [defaultValue, setDefaultValue] = useState('');
-  const [firstRender, setFirstRender] = useState(true);
+  const refSearchValue = useRef<string>(localStorage.getItem('input') || '');
 
-  const addToStorage = useCallback(() => {
-    localStorage.setItem('input', value);
-  }, [value]);
+  const addToStorage = () => {
+    localStorage.setItem('input', refSearchValue.current);
+  };
 
   useEffect(() => {
-    if (firstRender) {
-      const str = localStorage.getItem('input');
+    const str = localStorage.getItem('input');
+    str && setDefaultValue(str);
 
-      if (str) {
-        setValue(str);
-        setDefaultValue(str);
-      }
-      setFirstRender(false);
-    }
     window.addEventListener('beforeunload', addToStorage);
 
     return () => {
       addToStorage();
       window.removeEventListener('beforeunload', addToStorage);
     };
-  }, [value, addToStorage, firstRender]);
+  }, []);
 
   return (
     <div className="input-container">
@@ -42,7 +35,7 @@ const Input = (props: InputProps) => {
         ref={props.refInput}
         defaultValue={defaultValue}
         onChange={(ev) => {
-          setValue(ev.target.value);
+          refSearchValue.current = ev.target.value;
         }}
       />
     </div>
