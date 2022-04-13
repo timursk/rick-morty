@@ -7,7 +7,7 @@ type InputProps = {
 
 const Input = (props: InputProps) => {
   const [defaultValue, setDefaultValue] = useState('');
-  const refSearchValue = useRef<string>(localStorage.getItem('input') || '');
+  const refSearchValue = useRef<string>();
 
   const addToStorage = () => {
     localStorage.setItem('input', refSearchValue.current);
@@ -15,7 +15,10 @@ const Input = (props: InputProps) => {
 
   useEffect(() => {
     const str = localStorage.getItem('input');
-    str && setDefaultValue(str);
+    if (str) {
+      refSearchValue.current = str;
+      setDefaultValue(str);
+    }
 
     window.addEventListener('beforeunload', addToStorage);
 
