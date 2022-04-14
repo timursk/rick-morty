@@ -1,4 +1,5 @@
 import React, { ChangeEventHandler, Component, FormEvent } from 'react';
+import { UseFormHandleSubmit, FieldValues, SubmitHandler, UseFormRegister } from 'react-hook-form';
 import { Error, RefItems } from '../Form/Form';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
@@ -10,61 +11,48 @@ import FormSurname from '../FormItems/FormSurname';
 import './FormComponent.css';
 
 type Props = {
-  refItems: RefItems;
-  errors: Error;
+  handleSubmit: (e?: FormEvent<HTMLFormElement>) => Promise<void>;
+  register: UseFormRegister<FieldValues>;
+  errors: { [x: string]: unknown };
   disableSubmit: boolean;
-  handleSubmit: (ev: FormEvent) => void;
+  // refItems: RefItems;
   ableSubmit: (ev: FormEvent, removedKey?: string) => void;
-  removeError: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  // removeError: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
 };
-type State = null;
 
-export default class FormComponent extends Component<Props, State> {
-  render() {
-    const { refItems, errors, disableSubmit, handleSubmit, ableSubmit, removeError } = this.props;
-    return (
-      <form
-        className="form"
-        ref={refItems.form}
-        onSubmit={handleSubmit}
-        onChange={disableSubmit ? ableSubmit : null}
-      >
-        <FormName
-          refInput={refItems.firstName}
-          errors={errors.firstName}
-          removeError={removeError}
-        />
-        <FormSurname
-          refInput={refItems.lastName}
-          errors={errors.lastName}
-          removeError={removeError}
-        />
-        <FormDate
-          refInput={refItems.birthDate}
-          errors={errors.birthDate}
-          removeError={removeError}
-        />
-        <FormCountry
-          refInput={refItems.country}
-          errors={errors.country}
-          removeError={removeError}
-        />
-        <FormConsent
-          refInput={refItems.consent}
-          errors={errors.consent}
-          removeError={removeError}
-        />
-        <FormNotify refInput={refItems.notify} errors={errors.notify} removeError={removeError} />
-        <FormPicture
-          refInput={refItems.profilePicture}
-          errors={errors.profilePicture}
-          removeError={removeError}
-        />
+const FormComponent = (props: Props) => {
+  const { handleSubmit, errors, register, disableSubmit, ableSubmit } = props;
+  return (
+    <form
+      className="form"
+      // ref={refItems.form}
+      onSubmit={handleSubmit}
+      onChange={disableSubmit ? ableSubmit : null}
+    >
+      <input defaultValue="test" {...(register('s'), { minLength: 2 })} />
+      <input defaultValue="test2" {...register('123')} />
+      {errors.test2 && <span>This field is required</span>}
+      {/* <FormName refInput={refItems.firstName} errors={errors.firstName} removeError={removeError} />
+      <FormSurname
+        refInput={refItems.lastName}
+        errors={errors.lastName}
+        removeError={removeError}
+      />
+      <FormDate refInput={refItems.birthDate} errors={errors.birthDate} removeError={removeError} />
+      <FormCountry refInput={refItems.country} errors={errors.country} removeError={removeError} />
+      <FormConsent refInput={refItems.consent} errors={errors.consent} removeError={removeError} />
+      <FormNotify refInput={refItems.notify} errors={errors.notify} removeError={removeError} />
+      <FormPicture
+        refInput={refItems.profilePicture}
+        errors={errors.profilePicture}
+        removeError={removeError}
+      /> */}
 
-        <button disabled={disableSubmit} type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
-    );
-  }
-}
+      <button disabled={disableSubmit} type="submit" className="submit-btn">
+        Submit
+      </button>
+    </form>
+  );
+};
+
+export default FormComponent;
