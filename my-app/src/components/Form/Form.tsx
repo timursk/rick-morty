@@ -10,9 +10,10 @@ import React, {
 } from 'react';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { Card } from '../../routes/FormPage';
-import { ErrorInitial } from '../../utils/constants';
+import { ErrorInitial, ErrorMessage } from '../../utils/constants';
 import { Utils } from '../../utils/utils';
 import FormComponent from '../FormComponent/FormComponent';
+import FormLabel from '../FormLabel/FormLabel';
 
 type ErrorItem = {
   isValid: boolean;
@@ -76,6 +77,7 @@ const Form = (props: InputProps) => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
@@ -163,7 +165,7 @@ const Form = (props: InputProps) => {
   //   setErrors(newErrors);
   // };
 
-  const ableSubmit = () => {
+  const handleFormChange = () => {
     // for (const key in errors) {
     //   if (!errors[key as keyof Error].isValid) {
     //     return;
@@ -213,10 +215,129 @@ const Form = (props: InputProps) => {
     <form
       className="form"
       onSubmit={handleSubmit(onSubmit)}
-      onChange={disableSubmit ? ableSubmit : null}
+      onChange={disableSubmit ? handleFormChange : null}
     >
-      <input {...register('exampleRequired', { maxLength: 2 })} />
-      {errors.exampleRequired && <span>This field is required</span>}
+      <FormLabel>
+        <p>
+          Name:
+          {errors.firstName && <span className="error">{errors.firstName.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('firstName', {
+            minLength: { value: 3, message: ErrorMessage.firstName },
+            required: ErrorMessage.firstName,
+            pattern: { value: /[A-Za-z]/, message: ErrorMessage.firstName },
+          })}
+          type="text"
+          className="form-input"
+          data-testid="firstName"
+        />
+      </FormLabel>
+      <FormLabel>
+        <p>
+          Surname:
+          {errors.lastName && <span className="error">{errors.lastName.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('lastName', {
+            minLength: { value: 3, message: ErrorMessage.lastName },
+            required: ErrorMessage.lastName,
+            pattern: { value: /[A-Za-z]/, message: ErrorMessage.lastName },
+          })}
+          type="text"
+          className="form-input"
+          data-testid="lastName"
+        />
+      </FormLabel>
+      <FormLabel>
+        <p>
+          Date of birth:
+          {errors.birthDate && <span className="error">{errors.birthDate.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('birthDate', {
+            required: ErrorMessage.birthDate,
+          })}
+          type="date"
+          className="form-input"
+          data-testid="birthDate"
+        />
+      </FormLabel>
+      <FormLabel>
+        <p>
+          Choose country:
+          {errors.country && <span className="error">{errors.country.message}</span>}
+        </p>
+        <select
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('country', {
+            required: ErrorMessage.country,
+          })}
+          defaultValue={'Russia'}
+          className="form-input"
+          data-testid="country"
+        >
+          <option value="Usa">Usa</option>
+          <option value="Russia">Russia</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Germany">Germany</option>
+        </select>
+      </FormLabel>
+      <FormLabel labelClass="checkbox-item">
+        <p>
+          Consent to the processing of personal data :
+          {errors.consent && <span className="error">{errors.consent.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('consent', {
+            required: ErrorMessage.consent,
+            validate: (value) => value === true || ErrorMessage.consent,
+          })}
+          type="checkbox"
+          data-testid="consent"
+        />
+      </FormLabel>
+      <FormLabel labelClass="checkbox-item switch">
+        <p>
+          Receive notifications:
+          {errors.notify && <span className="error">{errors.notify.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('notify', {
+            required: ErrorMessage.notify,
+            validate: (value) => value === true || ErrorMessage.notify,
+          })}
+          type="checkbox"
+          data-testid="notify"
+        />
+        <span className="slider" />
+      </FormLabel>
+      <FormLabel>
+        <p>
+          Profile picture:
+          {errors.profilePicture && <span className="error">{errors.profilePicture.message}</span>}
+        </p>
+        <input
+          // ref={refInput}
+          // onChange={errors.isValid ? null : removeError}
+          {...register('profilePicture', {
+            required: ErrorMessage.profilePicture,
+          })}
+          type="file"
+          data-testid="profilePicture"
+        />
+      </FormLabel>
 
       <button disabled={disableSubmit} type="submit" className="submit-btn">
         Submit
