@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, Component, FormEvent } from 'react';
 import { UseFormHandleSubmit, FieldValues, SubmitHandler, UseFormRegister } from 'react-hook-form';
-import { Error, RefItems } from '../Form/Form';
+import { Error } from '../Form/Form';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
 import FormDate from '../FormItems/FormDate';
