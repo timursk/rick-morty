@@ -1,6 +1,9 @@
-import { UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 import { Inputs } from '../components/Form/Form';
-import { FormErrors } from '../components/FormComponent/FormComponent';
+
+export type FormErrors = {
+  [x in keyof Inputs]?: FieldError;
+};
 
 export type FormItemProps = {
   errors: FormErrors;

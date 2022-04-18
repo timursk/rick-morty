@@ -1,5 +1,6 @@
 import React, { FormEvent } from 'react';
-import { UseFormRegister, FieldError } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
+import { FormErrors } from '../../utils/types';
 import { Inputs } from '../Form/Form';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
@@ -9,10 +10,6 @@ import FormNotify from '../FormItems/FormNotify';
 import FormPicture from '../FormItems/FormPicture';
 import FormSurname from '../FormItems/FormSurname';
 import './FormComponent.css';
-
-export type FormErrors = {
-  [x in keyof Inputs]?: FieldError;
-};
 
 type Props = {
   onSubmit: (e?: FormEvent<HTMLFormElement>) => Promise<void>;
