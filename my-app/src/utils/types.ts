@@ -1,21 +1,10 @@
-import { ChangeEventHandler, RefObject } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { Inputs } from '../components/Form/Form';
+import { FormErrors } from '../components/FormComponent/FormComponent';
 
 export type FormItemProps = {
-  refInput: RefObject<HTMLInputElement>;
-  errors: {
-    isValid: boolean;
-    message: string;
-  };
-  removeError: ChangeEventHandler<HTMLInputElement>;
-};
-
-export type FormItemSelectProps = {
-  refInput: RefObject<HTMLSelectElement>;
-  errors: {
-    isValid: boolean;
-    message: string;
-  };
-  removeError: ChangeEventHandler<HTMLSelectElement>;
+  errors: FormErrors;
+  register: UseFormRegister<Inputs>;
 };
 
 export type Character = {

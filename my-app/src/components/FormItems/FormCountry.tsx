@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import { FormItemSelectProps } from '../../utils/types';
+import { ErrorMessage } from '../../utils/constants';
+import { FormItemProps } from '../../utils/types';
 import FormLabel from '../FormLabel/FormLabel';
 
-type Props = FormItemSelectProps;
+type Props = FormItemProps;
 type State = null;
 
 export default class FormName extends Component<Props, State> {
   render() {
-    const { refInput, errors, removeError } = this.props;
+    const { errors, register } = this.props;
     return (
       <FormLabel>
         <p>
           Choose country:
-          {!errors.isValid && <span className="error">{errors.message}</span>}
+          {errors.country && <span className="error">{errors.country.message}</span>}
         </p>
         <select
-          ref={refInput}
-          name="country"
+          {...register('country', {
+            required: ErrorMessage.country,
+          })}
           defaultValue={'Russia'}
           className="form-input"
-          onChange={errors.isValid ? null : removeError}
           data-testid="country"
         >
           <option value="Usa">Usa</option>

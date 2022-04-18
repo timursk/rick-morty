@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Utils } from '../../utils/utils';
+import { isAdult } from '../../utils/utils';
 import Form from './Form';
 
 const addCard = jest.fn(() => null);
@@ -41,10 +41,10 @@ describe('Form', () => {
   });
 
   test('utils isAdult', () => {
-    expect(Utils.isAdult('11-11-2000')).toBe(true);
-    expect(Utils.isAdult('01-01-1990')).toBe(true);
-    expect(Utils.isAdult('10-11-2010')).toBe(false);
-    expect(Utils.isAdult('30-11-2030')).toBe(false);
+    expect(isAdult('11-11-2000')).toBe(true);
+    expect(isAdult('01-01-1990')).toBe(true);
+    expect(isAdult('10-11-2010')).toBe(false);
+    expect(isAdult('30-11-2030')).toBe(false);
   });
 
   test('error adult', () => {
