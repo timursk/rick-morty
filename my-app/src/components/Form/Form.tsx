@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Card } from '../../routes/FormPage';
 import FormComponent from '../FormComponent/FormComponent';
@@ -21,7 +21,7 @@ export type Inputs = {
 const Form = (props: InputProps) => {
   const [isSubmitDisable, setSubmitDisable] = useState(false);
   const { register, handleSubmit, formState, reset } = useForm<Inputs>();
-  const { errors, isDirty, isValid } = formState;
+  const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     const { firstName, lastName, birthDate, country, profilePicture } = data;
@@ -35,13 +35,16 @@ const Form = (props: InputProps) => {
       profilePicture: profilePicture[0],
     });
 
-    reset();
     setSubmitDisable(false);
   };
 
   const onError = () => {
     setSubmitDisable(true);
   };
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <FormComponent
