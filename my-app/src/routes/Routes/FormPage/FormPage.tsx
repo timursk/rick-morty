@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Form from '../../../components/Form/Form';
 import FormCard from '../../../components/FormCard/FormCard';
 import './FormPage.css';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 import { LocalStorageMock } from '@react-mock/localstorage';
@@ -12,7 +12,7 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     );
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
+    expect(await screen.findByTestId('loader')).toBeInTheDocument();
   });
 
   beforeEach(() => {
@@ -76,15 +76,13 @@ describe('Router', () => {
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
   });
 
-  test('error page routing', () => {
+  test('error page routing', async () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/404']}>
         <App />
       </MemoryRouter>
     );
-    const errorLink = screen.getByTestId('404');
-    userEvent.click(errorLink);
-    expect(screen.getByTestId('error-page')).toBeInTheDocument();
+    expect(await screen.findByTestId('error-page')).toBeInTheDocument();
   });
 
   test('form page routing', async () => {
