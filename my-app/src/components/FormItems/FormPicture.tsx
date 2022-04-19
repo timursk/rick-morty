@@ -13,7 +13,12 @@ const FormPicture = (props: FormItemProps) => {
       </p>
       <input
         {...register('profilePicture', {
-          required: ErrorMessage.profilePicture,
+          validate: (data) => {
+            if (data && data.length && data[0]) {
+              return true;
+            }
+            return ErrorMessage.profilePicture;
+          },
         })}
         type="file"
         data-testid="profilePicture"

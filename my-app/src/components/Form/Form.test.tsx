@@ -1,13 +1,28 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
 import { isAdult } from '../../utils/utils';
 import Form from './Form';
 
 const addCard = jest.fn(() => null);
 
 describe('Form', () => {
-  test("form's items rendered", () => {
-    render(<Form addCard={addCard} />);
+  let container: HTMLDivElement;
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(container);
+    container = null;
+  });
+
+  test("form's items rendered", async () => {
+    await act(async () => {
+      ReactDOM.render(<Form addCard={addCard} />, container);
+    });
     expect(screen.getByTestId('firstName')).toHaveValue('');
     expect(screen.getByTestId('lastName')).toHaveValue('');
     expect(screen.getByTestId('birthDate')).toHaveValue('');
@@ -27,12 +42,13 @@ describe('Form', () => {
     expect(btn).toBeEnabled();
   });
 
-  test('error messages', () => {
-    render(<Form addCard={addCard} />);
-    const btn = screen.getByRole('button');
-    userEvent.type(screen.getByTestId('firstName'), 'blablabla');
-    userEvent.clear(screen.getByTestId('firstName'));
-    userEvent.click(btn);
+  test('error messages', async () => {
+    await act(async () => {
+      ReactDOM.render(<Form addCard={addCard} />, container);
+    });
+    await act(async () => userEvent.type(screen.getByTestId('firstName'), 's'));
+    await act(async () => userEvent.click(screen.getByRole('button')));
+
     expect(screen.getByText(/Invalid name value/i)).toBeInTheDocument();
     expect(screen.getByText(/Invalid surname value/i)).toBeInTheDocument();
     expect(screen.getByText(/Enter date/i)).toBeInTheDocument();
@@ -47,31 +63,25 @@ describe('Form', () => {
     expect(isAdult('30-11-2030')).toBe(false);
   });
 
-  test('error adult', () => {
-    render(<Form addCard={addCard} />);
-    const btn = screen.getByRole('button');
-    userEvent.type(screen.getByTestId('firstName'), 'blablabla');
-    userEvent.type(screen.getByTestId('birthDate'), '2020-11-11');
-    userEvent.click(btn);
-    expect(screen.getByText(/Wrong age/i));
-  });
-
-  test('form clearing', () => {
+  test('form clearing', async () => {
     const fakeFile = new File(['photo'], 'photo.png', { type: 'image/png' });
-    render(<Form addCard={addCard} />);
-    userEvent.type(screen.getByTestId('firstName'), 'test');
-    userEvent.type(screen.getByTestId('lastName'), 'surname');
-    userEvent.type(screen.getByTestId('birthDate'), '1990-10-10');
-    userEvent.type(screen.getByTestId('country'), 'Sweden');
-    userEvent.click(screen.getByTestId('consent'));
-    userEvent.click(screen.getByTestId('notify'));
-    userEvent.upload(screen.getByTestId('profilePicture'), fakeFile);
-    userEvent.click(screen.getByRole('button'));
-
+    await act(async () => {
+      ReactDOM.render(<Form addCard={addCard} />, container);
+    });
+    await act(async () => {
+      userEvent.type(screen.getByTestId('firstName'), 'test');
+      userEvent.type(screen.getByTestId('lastName'), 'surname');
+      userEvent.type(screen.getByTestId('birthDate'), '1990-10-10');
+      userEvent.type(screen.getByTestId('country'), 'Sweden');
+      userEvent.click(screen.getByTestId('consent'));
+      userEvent.click(screen.getByTestId('notify'));
+      userEvent.upload(screen.getByTestId('profilePicture'), fakeFile);
+      fireEvent.submit(screen.getByRole('button'));
+    });
     expect(screen.getByTestId('firstName')).toHaveValue('');
     expect(screen.getByTestId('lastName')).toHaveValue('');
     expect(screen.getByTestId('birthDate')).toHaveValue('');
-    expect(screen.getByTestId('country')).not.toHaveValue('Russia');
+    expect(screen.getByTestId('country')).toHaveValue('Russia');
     expect(screen.getByTestId('consent')).not.toBeChecked();
     expect(screen.getByTestId('notify')).not.toBeChecked();
     expect(screen.getByTestId('profilePicture')).toHaveValue('');
