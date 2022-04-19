@@ -43,7 +43,16 @@ const Form = (props: InputProps) => {
   };
 
   useEffect(() => {
-    reset();
+    reset({
+      form: '',
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      country: 'Russia',
+      consent: false,
+      notify: false,
+      profilePicture: null,
+    });
   }, [isSubmitSuccessful, reset]);
 
   return (
