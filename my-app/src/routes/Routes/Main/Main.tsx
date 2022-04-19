@@ -1,10 +1,10 @@
 import React, { createRef, FormEvent, useEffect, useRef, useState } from 'react';
-import Card from '../components/Card/Card';
-import Input from '../components/Input/Input';
-import { getAllCharacters, getCharacterByName } from '../services/CardService';
-import { Character } from '../utils/types';
-import loader from '../assets/loading.svg';
-import ModalCard from '../components/ModalCard/ModalCard';
+import Card from '../../../components/Card/Card';
+import Input from '../../../components/Input/Input';
+import { getAllCharacters, getCharacterByName } from '../../../services/CardService';
+import { Character } from '../../../utils/types';
+import loader from '../../../assets/loading.svg';
+import ModalCard from '../../../components/ModalCard/ModalCard';
 import './Main.css';
 
 const Main = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Card } from '../../routes/FormPage';
+import { Card } from '../../routes/Routes/FormPage/FormPage';
 import FormComponent from '../FormComponent/FormComponent';
 
 type InputProps = {

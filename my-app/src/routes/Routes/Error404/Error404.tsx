@@ -1,5 +1,5 @@
 import React from 'react';
-import gif from '../assets/error404.gif';
+import gif from '../../../assets/error404.gif';
 import './Error404.css';
 
 const Error404 = () => {

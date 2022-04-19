@@ -1,14 +1,10 @@
 import './App.css';
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import About from './routes/About';
-import Error404 from './routes/Error404';
-import Main from './routes/Main';
-import FormPage from './routes/FormPage';
+import { NavLink } from 'react-router-dom';
+import RoutesComponent from './routes/RoutesComponent';
 
 const links = [
   { link: '/', name: 'Main' },
   { link: '/about', name: 'About' },
-  { link: '/404', name: '404' },
   { link: '/form', name: 'Form' },
 ];
 
@@ -36,13 +32,7 @@ function App() {
         </nav>
       </header>
       <main className="main-container">
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/404" element={<Error404 />} />
-          <Route path="/form" element={<FormPage />} />
-          <Route path="*" element={<Navigate to="/404" replace />} />
-        </Routes>
+        <RoutesComponent />
       </main>
     </>
   );
