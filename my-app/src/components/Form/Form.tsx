@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Card } from '../../routes/Routes/FormPage/FormPage';
+import AppContext from '../../store/store';
 import FormComponent from '../FormComponent/FormComponent';
 
 type InputProps = {
@@ -8,19 +9,27 @@ type InputProps = {
 };
 
 export type Inputs = {
-  form: string;
+  [key: string]: string | boolean | FileList;
+  // [key: string]: string | boolean | File;
   firstName: string;
   lastName: string;
   birthDate: string;
   country: string;
   consent: boolean;
   notify: boolean;
+  // profilePicture: File;
   profilePicture: FileList;
 };
 
 const Form = (props: InputProps) => {
+  const { state, dispatch } = useContext(AppContext);
   const [isSubmitDisable, setSubmitDisable] = useState(false);
-  const { register, handleSubmit, formState, reset } = useForm<Inputs>();
+  const { register, handleSubmit, formState, reset } = useForm<Inputs>({
+    defaultValues: {
+      ...state,
+    },
+  });
+  console.log(state);
   const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
@@ -43,16 +52,16 @@ const Form = (props: InputProps) => {
   };
 
   useEffect(() => {
-    reset({
-      form: '',
-      firstName: '',
-      lastName: '',
-      birthDate: '',
-      country: 'Russia',
-      consent: false,
-      notify: false,
-      profilePicture: null,
-    });
+    isSubmitSuccessful &&
+      reset({
+        firstName: '',
+        lastName: '',
+        birthDate: '',
+        country: 'Russia',
+        consent: false,
+        notify: false,
+        profilePicture: null,
+      });
   }, [isSubmitSuccessful, reset]);
 
   return (

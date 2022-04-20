@@ -1,5 +1,8 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useContext, useEffect, useRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
+import AppContext from '../../store/store';
+import { actionTypes } from '../../types/actionTypes';
+import Content from '../../types/content';
 import { FormErrors } from '../../utils/types';
 import { Inputs } from '../Form/Form';
 import FormConsent from '../FormItems/FormConsent';
@@ -20,10 +23,54 @@ type Props = {
   isSubmitDisable: boolean;
 };
 
+const formInitial: Partial<Content> = {
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+  country: '',
+  consent: false,
+  notify: false,
+  profilePicture: null,
+};
+
 const FormComponent = (props: Props) => {
+  const { state, dispatch } = useContext(AppContext);
+  const refFormValues = useRef<Partial<Content>>(state);
   const { onSubmit, errors, register, isDirty, isValid, isSubmitDisable } = props;
+
+  useEffect(() => {
+    const saveValue = () => {
+      dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
+    };
+
+    window.addEventListener('beforeunload', saveValue);
+
+    return () => {
+      saveValue();
+      window.removeEventListener('beforeunload', saveValue);
+    };
+  }, [dispatch]);
+
   return (
-    <form className="form" onSubmit={onSubmit}>
+    <form
+      className="form"
+      onSubmit={onSubmit}
+      onChange={(e: FormEvent) => {
+        const target = e.target as HTMLInputElement;
+        const name = target.name as keyof Content;
+        let value: string | boolean | FileList;
+
+        if (target.type === 'checkbox') {
+          value = target.checked;
+        } else if (target.type === 'file') {
+          value = target.files;
+        } else {
+          value = target.value;
+        }
+
+        refFormValues.current[name] = value;
+      }}
+    >
       <FormName errors={errors} register={register} />
       <FormSurname errors={errors} register={register} />
       <FormDate errors={errors} register={register} />
