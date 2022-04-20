@@ -11,18 +11,18 @@ const Input = (props: InputProps) => {
   const { state, dispatch } = useContext(AppContext);
   const refSearchValue = useRef<string>(state.searchValue);
 
-  const saveValue = () => {
-    dispatch({ type: actionTypes.INPUT, payload: refSearchValue.current });
-  };
-
   useEffect(() => {
+    const saveValue = () => {
+      dispatch({ type: actionTypes.INPUT, payload: refSearchValue.current });
+    };
+
     window.addEventListener('beforeunload', saveValue);
 
     return () => {
       saveValue();
       window.removeEventListener('beforeunload', saveValue);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="input-container">
