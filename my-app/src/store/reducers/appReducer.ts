@@ -13,6 +13,13 @@ const appReducer: Reducer<State, Action> = (state, action) => {
         ...state,
       };
     }
+    case actionTypes.INPUT: {
+      console.log('REDUCER', action.payload);
+      return {
+        ...state,
+        searchValue: action.payload,
+      };
+    }
     default:
       return state;
   }

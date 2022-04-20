@@ -1,4 +1,6 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useContext, useEffect, useRef } from 'react';
+import AppContext from '../../store/store';
+import { actionTypes } from '../../types/actionTypes';
 import './Input.css';
 
 type InputProps = {
@@ -6,25 +8,19 @@ type InputProps = {
 };
 
 const Input = (props: InputProps) => {
-  const [defaultValue, setDefaultValue] = useState('');
-  const refSearchValue = useRef<string>();
+  const { state, dispatch } = useContext(AppContext);
+  const refSearchValue = useRef<string>(state.searchValue);
 
-  const addToStorage = () => {
-    localStorage.setItem('input', refSearchValue.current);
+  const saveValue = () => {
+    dispatch({ type: actionTypes.INPUT, payload: refSearchValue.current });
   };
 
   useEffect(() => {
-    const str = localStorage.getItem('input');
-    if (str) {
-      refSearchValue.current = str;
-      setDefaultValue(str);
-    }
-
-    window.addEventListener('beforeunload', addToStorage);
+    window.addEventListener('beforeunload', saveValue);
 
     return () => {
-      addToStorage();
-      window.removeEventListener('beforeunload', addToStorage);
+      saveValue();
+      window.removeEventListener('beforeunload', saveValue);
     };
   }, []);
 
@@ -36,7 +32,7 @@ const Input = (props: InputProps) => {
         className="input"
         autoComplete="off"
         ref={props.refInput}
-        defaultValue={defaultValue}
+        defaultValue={state.searchValue}
         onChange={(ev) => {
           refSearchValue.current = ev.target.value;
         }}
