@@ -1,10 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import RoutesComponent from './routes/RoutesComponent';
-import React, { useReducer } from 'react';
+import React from 'react';
 import './App.css';
-import AppContext from './store/store';
-import initialState from './store/initialState';
-import appReducer from './store/reducers/appReducer';
+import AppProvider from './components/AppProvider/AppProvider';
 
 const links = [
   { link: '/', name: 'Main' },
@@ -13,9 +11,8 @@ const links = [
 ];
 
 function App() {
-  const [state, dispatch] = useReducer(appReducer, initialState);
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppProvider>
       <header className="App-header">
         <nav className="header-container">
           {links.map((item, id) => {
@@ -39,7 +36,7 @@ function App() {
       <main className="main-container">
         <RoutesComponent />
       </main>
-    </AppContext.Provider>
+    </AppProvider>
   );
 }
 
