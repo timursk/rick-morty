@@ -10,14 +10,12 @@ type InputProps = {
 
 export type Inputs = {
   [key: string]: string | boolean | FileList;
-  // [key: string]: string | boolean | File;
   firstName: string;
   lastName: string;
   birthDate: string;
   country: string;
   consent: boolean;
   notify: boolean;
-  // profilePicture: File;
   profilePicture: FileList;
 };
 
@@ -29,7 +27,7 @@ const Form = (props: InputProps) => {
       ...state,
     },
   });
-  console.log(state);
+
   const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {

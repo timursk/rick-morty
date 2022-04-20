@@ -23,16 +23,6 @@ type Props = {
   isSubmitDisable: boolean;
 };
 
-const formInitial: Partial<Content> = {
-  firstName: '',
-  lastName: '',
-  birthDate: '',
-  country: '',
-  consent: false,
-  notify: false,
-  profilePicture: null,
-};
-
 const FormComponent = (props: Props) => {
   const { state, dispatch } = useContext(AppContext);
   const refFormValues = useRef<Partial<Content>>(state);
