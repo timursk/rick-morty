@@ -6,6 +6,7 @@ import { Character } from '../../../utils/types';
 import loader from '../../../assets/loading.svg';
 import ModalCard from '../../../components/ModalCard/ModalCard';
 import './Main.css';
+import MainSwitch from '../../../components/MainSwitch/MainSwitch';
 
 const Main = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -59,6 +60,9 @@ const Main = () => {
       <form onSubmit={(ev) => handleSubmit(ev)}>
         <Input refInput={input} />
       </form>
+
+      <MainSwitch />
+
       {loading ? (
         <img className="loader" src={loader} alt="loader" data-testid="loader" />
       ) : data ? (
