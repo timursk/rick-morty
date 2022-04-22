@@ -10,7 +10,7 @@
   background-color: rgba(0,0,0,0.5);
 }
 
-.modal-card {
+.card.modal-card {
   position: relative;
   flex-direction: row;
   border-radius: 5px;

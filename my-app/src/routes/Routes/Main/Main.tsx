@@ -7,6 +7,7 @@ import loader from '../../../assets/loading.svg';
 import ModalCard from '../../../components/ModalCard/ModalCard';
 import './Main.css';
 import MainSwitch from '../../../components/MainSwitch/MainSwitch';
+import CardsContainer from '../../../components/CardsContainer/CardsContainer';
 
 const Main = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,8 +21,8 @@ const Main = () => {
     getAllCharacters().then((result) => {
       if (_isMounted.current) {
         const data = result.results;
-        setLoading(false);
         setData(data);
+        setLoading(false);
       }
     });
 
@@ -38,8 +39,8 @@ const Main = () => {
     getCharacterByName(name).then((result) => {
       if (_isMounted.current) {
         const data = result.results;
-        setLoading(false);
         setData(data);
+        setLoading(false);
       }
     });
   };
@@ -62,18 +63,13 @@ const Main = () => {
       </form>
 
       <MainSwitch />
+      <CardsContainer
+        loading={loading}
+        setLoading={setLoading}
+        data={data}
+        handleShow={handleShow}
+      />
 
-      {loading ? (
-        <img className="loader" src={loader} alt="loader" data-testid="loader" />
-      ) : data ? (
-        <div className="cards-container">
-          {data.map((item) => {
-            return <Card onClick={handleShow} item={item} key={item.id} />;
-          })}
-        </div>
-      ) : (
-        <p className="info-error">no info</p>
-      )}
       {showModal && <ModalCard character={modalContent} onClick={handleHide} />}
     </div>
   );

@@ -2,7 +2,7 @@ import { Reducer } from 'react';
 import Content from '../../types/content';
 import { actionTypes } from '../../types/actionTypes';
 import appAction from '../../types/appAction';
-import { Inputs } from '../../components/Form/Form';
+import sortTypes from '../../types/sortTypes';
 
 type State = Content;
 type Action = appAction;
@@ -25,11 +25,16 @@ const appReducer: Reducer<State, Action> = (state, action) => {
     case actionTypes.FORM: {
       console.log('REDUCER', action.payload);
       const formValues = action.payload as Partial<Content>;
-      // const profilePicture = formValues.profilePicture ? formValues.profilePicture[0] : null;
       return {
         ...state,
         ...formValues,
-        // profilePicture,
+      };
+    }
+    case actionTypes.SORT: {
+      const sort = action.payload as sortTypes;
+      return {
+        ...state,
+        sort,
       };
     }
     default:

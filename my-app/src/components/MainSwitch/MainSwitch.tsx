@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import AppContext from '../../store/store';
+import { actionTypes } from '../../types/actionTypes';
+import sortTypes from '../../types/sortTypes';
 import './MainSwitch.css';
 
+const radioValues = Object.values(sortTypes);
+
 const MainSwitch = () => {
+  const { state, dispatch } = useContext(AppContext);
   const [isDisplay, setDisplay] = useState(false);
-  const [selected, setSelected] = useState('none');
+  const [selected, setSelected] = useState<sortTypes>(radioValues[0]);
+
+  const handleClick = (item: sortTypes) => {
+    setSelected(item);
+    setDisplay(false);
+    dispatch({ type: actionTypes.SORT, payload: item });
+  };
+
   return (
     <div className="main-switch">
       <div className="main-sort">
@@ -15,45 +28,18 @@ const MainSwitch = () => {
             setDisplay(!isDisplay);
           }}
         >
-          {selected}
+          {state.sort}
         </a>
         {isDisplay && (
           <div className="main-sort__switcher">
-            <label
-              onClick={() => {
-                setSelected('name');
-                setDisplay(false);
-              }}
-            >
-              <input type="radio" />
-              name
-            </label>
-            <label
-              onClick={() => {
-                setSelected('popular');
-                setDisplay(false);
-              }}
-            >
-              <input type="radio" />
-              popular
-            </label>
-            <label
-              onClick={() => {
-                setSelected('place');
-                setDisplay(false);
-              }}
-            >
-              <input type="radio" />
-              place
-            </label>
+            {radioValues.map((item, id) => (
+              <label key={id} onClick={() => handleClick(item)}>
+                <input type="radio" />
+                {item}
+              </label>
+            ))}
           </div>
         )}
-        {/* <select className="main-sort" defaultValue={'0'}>
-          <option value="0">None</option>
-          <option value="1">Popular</option>
-          <option value="2">Name</option>
-          <option value="3">Best</option>
-        </select> */}
       </div>
     </div>
   );
