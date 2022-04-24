@@ -1,3 +1,4 @@
+import { pageNumbers } from '../components/Pagination/Pagination';
 import sortTypes from '../types/sortTypes';
 import { Character } from './types';
 
@@ -34,4 +35,17 @@ export const sortByType = (sort: sortTypes, data: Character[]) => {
       return arr;
     }
   }
+};
+
+export const reducePages = (arr: pageNumbers[], currentPage: number) => {
+  const currentId = currentPage - 1;
+  const length = arr.length;
+
+  if (currentPage === 1) {
+    return arr.slice(0, 3);
+  }
+  if (currentPage === arr[length - 1].number) {
+    return arr.slice(length - 3, length);
+  }
+  return arr.slice(currentId - 1, currentId + 2);
 };

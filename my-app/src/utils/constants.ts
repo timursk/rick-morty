@@ -8,3 +8,5 @@ export enum ErrorMessage {
   notify = ' * - need consent!',
   profilePicture = ' * - Upload image!',
 }
+
+export const ApiMaxCards = 20;

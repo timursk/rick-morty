@@ -20,7 +20,7 @@ export type Inputs = {
 };
 
 const Form = (props: InputProps) => {
-  const { state, dispatch } = useContext(AppContext);
+  const { state } = useContext(AppContext);
   const [isSubmitDisable, setSubmitDisable] = useState(false);
   const { register, handleSubmit, formState, reset } = useForm<Inputs>({
     defaultValues: {

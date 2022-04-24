@@ -4,6 +4,7 @@ export default interface Content {
   [key: string]: string | boolean | FileList | null;
   searchValue: string;
   sort: sortTypes;
+  perPage: string;
   form: string;
   firstName: string;
   lastName: string;

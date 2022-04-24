@@ -22,7 +22,7 @@ const CardsContainer = (props: Props) => {
   }, [data]);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.length) {
       setLoading(true);
       const sorted = sortByType(state.sort, data);
       setSortedData(sorted);

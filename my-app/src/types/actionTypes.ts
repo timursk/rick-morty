@@ -3,4 +3,5 @@ export enum actionTypes {
   INPUT = 'INPUT',
   FORM = 'FORM',
   SORT = 'SORT',
+  PER_PAGE = 'PER_PAGE',
 }

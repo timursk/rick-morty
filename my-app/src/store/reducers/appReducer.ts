@@ -37,6 +37,13 @@ const appReducer: Reducer<State, Action> = (state, action) => {
         sort,
       };
     }
+    case actionTypes.PER_PAGE: {
+      const { perPage } = action.payload as Partial<Content>;
+      return {
+        ...state,
+        perPage,
+      };
+    }
     default:
       return state;
   }
