@@ -1,8 +1,8 @@
 import { Reducer } from 'react';
-import Content from '../../types/content';
-import { actionTypes } from '../../types/actionTypes';
-import appAction from '../../types/appAction';
-import sortTypes from '../../types/sortTypes';
+import Content from '../../types/store/content';
+import { actionTypes } from '../../types/store/actionTypes';
+import appAction from '../../types/store/appAction';
+import sortTypes from '../../types/store/sortTypes';
 
 type State = Content;
 type Action = appAction;

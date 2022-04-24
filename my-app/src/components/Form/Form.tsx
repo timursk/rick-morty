@@ -1,22 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Card } from '../../routes/Routes/FormPage/FormPage';
 import AppContext from '../../store/store';
+import { formCardType } from '../../types/form/formCardType';
+import { Inputs } from '../../types/form/inputs';
 import FormComponent from '../FormComponent/FormComponent';
 
 type InputProps = {
-  addCard: (item: Card) => void;
-};
-
-export type Inputs = {
-  [key: string]: string | boolean | FileList;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  country: string;
-  consent: boolean;
-  notify: boolean;
-  profilePicture: FileList;
+  addCard: (item: formCardType) => void;
 };
 
 const Form = (props: InputProps) => {

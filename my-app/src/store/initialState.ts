@@ -1,5 +1,5 @@
-import Content from '../types/content';
-import sortTypes from '../types/sortTypes';
+import Content from '../types/store/content';
+import sortTypes from '../types/store/sortTypes';
 import { ApiMaxCards } from '../utils/constants';
 
 const initialState: Content = {

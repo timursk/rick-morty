@@ -1,7 +1,8 @@
 import React, { Dispatch, MouseEvent, SetStateAction } from 'react';
-import paginationInfo from '../../types/paginationInfo';
+import paginationInfo from '../../types/switch/paginationInfo';
 import { ApiMaxCards } from '../../utils/constants';
 import { reducePages } from '../../utils/utils';
+import { pageNumbers } from '../../types/switch/pageNumbers';
 import './Pagination.css';
 
 type Props = {
@@ -13,11 +14,6 @@ type Props = {
   setApiPage: Dispatch<SetStateAction<number>>;
   currentLink: string;
   setCurrentLink: Dispatch<SetStateAction<string>>;
-};
-
-export type pageNumbers = {
-  number: number;
-  linkApiPage: number;
 };
 
 const Pagination = (props: Props) => {

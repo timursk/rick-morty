@@ -5,14 +5,14 @@ import {
   getCharactersByLink,
   getCharactersByPage,
 } from '../../../services/CardService';
-import { Character } from '../../../utils/types';
 import ModalCard from '../../../components/ModalCard/ModalCard';
 import MainSwitch from '../../../components/MainSwitch/MainSwitch';
 import CardsContainer from '../../../components/CardsContainer/CardsContainer';
 import Pagination from '../../../components/Pagination/Pagination';
-import paginationInfo from '../../../types/paginationInfo';
+import paginationInfo from '../../../types/switch/paginationInfo';
 import { ApiMaxCards } from '../../../utils/constants';
 import './Main.css';
+import { Character } from '../../../types/apiTypes/character';
 
 const Main = () => {
   const [loading, setLoading] = useState<boolean>(true);

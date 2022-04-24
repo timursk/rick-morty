@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { Character } from '../../utils/types';
+import { Character } from '../../types/apiTypes/character';
 import Modal from '../Modal/Modal';
 import './ModalCard.css';
 

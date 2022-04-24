@@ -1,5 +1,5 @@
 import React from 'react';
-import { Character } from '../../utils/types';
+import { Character } from '../../types/apiTypes/character';
 import './Card.css';
 
 type CardProps = {

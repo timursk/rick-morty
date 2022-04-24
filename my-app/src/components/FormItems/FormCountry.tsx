@@ -1,6 +1,6 @@
 import React from 'react';
+import { FormItemProps } from '../../types/form/formItemProps';
 import { ErrorMessage } from '../../utils/constants';
-import { FormItemProps } from '../../utils/types';
 import FormLabel from '../FormLabel/FormLabel';
 
 const FormCountry = (props: FormItemProps) => {

@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import Form from '../../../components/Form/Form';
 import FormCard from '../../../components/FormCard/FormCard';
+import { formCardType } from '../../../types/form/formCardType';
 import './FormPage.css';
 
-export type Card = {
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  country: string;
-  profilePicture: File;
-};
-
 const FormPage = () => {
-  const [cardsData, setCardsData] = useState<Card[]>(null);
+  const [cardsData, setCardsData] = useState<formCardType[]>(null);
 
-  const addCard = (card: Card) => {
+  const addCard = (card: formCardType) => {
     if (!cardsData) {
       setCardsData([card]);
       return;

@@ -1,4 +1,4 @@
-import { Characters } from '../utils/types';
+import { Characters } from '../types/apiTypes/characters';
 
 const URL = 'https://rickandmortyapi.com/api';
 const resources = {

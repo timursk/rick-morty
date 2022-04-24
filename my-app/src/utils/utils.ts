@@ -1,6 +1,6 @@
-import { pageNumbers } from '../components/Pagination/Pagination';
-import sortTypes from '../types/sortTypes';
-import { Character } from './types';
+import { Character } from '../types/apiTypes/character';
+import sortTypes from '../types/store/sortTypes';
+import { pageNumbers } from '../types/switch/pageNumbers';
 
 export const random = (min: number, max: number) => {
   return min + Math.floor(Math.random() * (max - min + 1));

@@ -1,6 +1,6 @@
 import React, { RefObject, useContext, useEffect, useRef } from 'react';
 import AppContext from '../../store/store';
-import { actionTypes } from '../../types/actionTypes';
+import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
 
 type InputProps = {

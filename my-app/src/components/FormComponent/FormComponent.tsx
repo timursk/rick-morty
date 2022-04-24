@@ -1,10 +1,10 @@
 import React, { FormEvent, useContext, useEffect, useRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import AppContext from '../../store/store';
-import { actionTypes } from '../../types/actionTypes';
-import Content from '../../types/content';
-import { FormErrors } from '../../utils/types';
-import { Inputs } from '../Form/Form';
+import { FormErrors } from '../../types/form/formErrors';
+import { Inputs } from '../../types/form/inputs';
+import { actionTypes } from '../../types/store/actionTypes';
+import Content from '../../types/store/content';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
 import FormDate from '../FormItems/FormDate';

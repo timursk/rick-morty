@@ -1,8 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import RoutesComponent from './routes/RoutesComponent';
 import React from 'react';
 import './App.css';
-import AppProvider from './components/AppProvider/AppProvider';
+import AppProvider from './containers/AppProvider/AppProvider';
 import Header from './components/Header/Header';
 
 function App() {

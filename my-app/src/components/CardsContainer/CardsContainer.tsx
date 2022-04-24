@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Character } from '../../utils/types';
 import Card from '../Card/Card';
 import loader from '../../assets/loading.svg';
 import AppContext from '../../store/store';
 import { sortByType } from '../../utils/utils';
+import { Character } from '../../types/apiTypes/character';
 
 type Props = {
   loading: boolean;

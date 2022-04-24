@@ -7,8 +7,8 @@ import React, {
   useState,
 } from 'react';
 import AppContext from '../../store/store';
-import { actionTypes } from '../../types/actionTypes';
-import sortTypes from '../../types/sortTypes';
+import { actionTypes } from '../../types/store/actionTypes';
+import sortTypes from '../../types/store/sortTypes';
 import './MainSwitch.css';
 
 type Props = {
