@@ -1,7 +1,6 @@
 import { createContext, Dispatch } from 'react';
 import appAction from '../types/store/appAction';
 import appContent from '../types/store/appContent';
-import Content from '../types/store/appContent';
 import initialState from './initialAppState';
 
 const AppContext = createContext<{ state: appContent; dispatch: Dispatch<appAction> }>({
