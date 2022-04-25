@@ -33,7 +33,7 @@ const MainSwitch = (props: Props) => {
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const number = +e.target.value;
     setCardsPerPage(number);
-    dispatch({ type: actionTypes.PER_PAGE, payload: { perPage: number } });
+    dispatch({ type: actionTypes.PER_PAGE, payload: number });
   };
 
   return (
