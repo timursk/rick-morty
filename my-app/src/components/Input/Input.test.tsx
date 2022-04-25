@@ -5,7 +5,9 @@ import Input from './Input';
 
 describe('Input', () => {
   const input = React.createRef() as RefObject<HTMLInputElement>;
-  const { unmount } = render(<Input refInput={input} />);
+  const setIsLoading = jest.fn();
+  // const { unmount } = render(<Input setIsLoading={setIsLoading} />);
+  const { unmount } = render(<Input />);
   test("input's value is equal to ls item", () => {
     const value = localStorage.getItem('input') || '';
     expect(screen.getByRole('textbox')).toHaveValue(value);

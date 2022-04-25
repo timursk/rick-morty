@@ -1,6 +1,6 @@
 import { Characters } from '../types/apiTypes/characters';
+import { URL } from '../utils/constants';
 
-const URL = 'https://rickandmortyapi.com/api';
 const resources = {
   character: '/character',
 };

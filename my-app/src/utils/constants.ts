@@ -10,3 +10,5 @@ export enum ErrorMessage {
 }
 
 export const ApiMaxCards = 20;
+
+export const URL = 'https://rickandmortyapi.com/api';

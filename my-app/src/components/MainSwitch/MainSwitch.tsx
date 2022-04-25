@@ -12,27 +12,26 @@ import sortTypes from '../../types/store/sortTypes';
 import './MainSwitch.css';
 
 type Props = {
-  setCardsPerPage: Dispatch<SetStateAction<number>>;
+  // setCardsPerPage: Dispatch<SetStateAction<number>>;
 };
 const radioValues = Object.values(sortTypes);
 
 const MainSwitch = (props: Props) => {
-  const { setCardsPerPage } = props;
+  // const { setCardsPerPage } = props;
   const { state, dispatch } = useContext(AppContext);
   const [isDisplay, setDisplay] = useState(false);
 
-  useEffect(() => {
-    setCardsPerPage(+state.mainPage.perPage);
-  }, [setCardsPerPage, state.mainPage.perPage]);
+  // useEffect(() => {
+  //   setCardsPerPage(+state.mainPage.perPage);
+  // }, [setCardsPerPage, state.mainPage.perPage]);
 
-  const handleClick = (item: sortTypes) => {
+  const handleSortClick = (item: sortTypes) => {
     setDisplay(false);
     dispatch({ type: actionTypes.SORT, payload: item });
   };
 
-  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handlePageSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const number = +e.target.value;
-    setCardsPerPage(number);
     dispatch({ type: actionTypes.PER_PAGE, payload: number });
   };
 
@@ -52,7 +51,7 @@ const MainSwitch = (props: Props) => {
         {isDisplay && (
           <div className="main-sort__switcher">
             {radioValues.map((item, id) => (
-              <label key={id} onClick={() => handleClick(item)}>
+              <label key={id} onClick={() => handleSortClick(item)}>
                 <input type="radio" />
                 {item}
               </label>
@@ -62,7 +61,7 @@ const MainSwitch = (props: Props) => {
       </div>
       <div>
         <span>Per page: </span>
-        <select onChange={(e) => handleSelect(e)} defaultValue={state.mainPage.perPage}>
+        <select onChange={(e) => handlePageSelect(e)} defaultValue={state.mainPage.perPage}>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>

@@ -1,15 +1,28 @@
-import React, { RefObject, useContext, useEffect, useRef } from 'react';
+import React, {
+  createRef,
+  Dispatch,
+  FormEvent,
+  RefObject,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
 
 type InputProps = {
-  refInput: RefObject<HTMLInputElement>;
+  // setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 const Input = (props: InputProps) => {
   const { state, dispatch } = useContext(AppContext);
-  const refSearchValue = useRef<string>(state.mainPage.searchValue);
+  // const { setIsLoading } = props;
+  const { searchValue } = state.mainPage;
+
+  const refSearchValue = useRef<string>(searchValue);
+  const refInput = createRef<HTMLInputElement>();
 
   useEffect(() => {
     const saveValue = () => {
@@ -24,20 +37,30 @@ const Input = (props: InputProps) => {
     };
   }, [dispatch]);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    // setIsLoading(true);
+
+    const name = refInput.current.value;
+    dispatch({ type: actionTypes.INPUT, payload: name });
+  };
+
   return (
-    <div className="input-container">
-      <input
-        type="text"
-        name="input"
-        className="input"
-        autoComplete="off"
-        ref={props.refInput}
-        defaultValue={state.mainPage.searchValue}
-        onChange={(ev) => {
-          refSearchValue.current = ev.target.value;
-        }}
-      />
-    </div>
+    <form onSubmit={(e) => handleSubmit(e)}>
+      <div className="input-container">
+        <input
+          type="text"
+          name="input"
+          className="input"
+          autoComplete="off"
+          ref={refInput}
+          defaultValue={searchValue}
+          onChange={(ev) => {
+            refSearchValue.current = ev.target.value;
+          }}
+        />
+      </div>
+    </form>
   );
 };
 

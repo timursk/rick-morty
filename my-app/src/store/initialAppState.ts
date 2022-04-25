@@ -14,12 +14,17 @@ const initialAppState: appContent = {
     profilePicture: null,
   },
   mainPage: {
+    isLoading: true,
     searchValue: '',
     sort: sortTypes.DEFAULT,
     isFetching: true,
     currentPage: 1,
     perPage: ApiMaxCards,
-    totalCount: 0,
+    totalCardsCount: null,
+    totalPagesCount: null,
+    totalApiPagesCount: null,
+    cards: [],
+    pickedCard: null,
   },
 };
 
