@@ -22,8 +22,8 @@ const MainSwitch = (props: Props) => {
   const [isDisplay, setDisplay] = useState(false);
 
   useEffect(() => {
-    setCardsPerPage(+state.perPage);
-  }, [setCardsPerPage, state.perPage]);
+    setCardsPerPage(+state.mainPage.perPage);
+  }, [setCardsPerPage, state.mainPage.perPage]);
 
   const handleClick = (item: sortTypes) => {
     setDisplay(false);
@@ -33,7 +33,7 @@ const MainSwitch = (props: Props) => {
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const number = +e.target.value;
     setCardsPerPage(number);
-    dispatch({ type: actionTypes.PER_PAGE, payload: { perPage: `${number}` } });
+    dispatch({ type: actionTypes.PER_PAGE, payload: { perPage: number } });
   };
 
   return (
@@ -47,7 +47,7 @@ const MainSwitch = (props: Props) => {
             setDisplay(!isDisplay);
           }}
         >
-          {state.sort}
+          {state.mainPage.sort}
         </a>
         {isDisplay && (
           <div className="main-sort__switcher">
@@ -62,7 +62,7 @@ const MainSwitch = (props: Props) => {
       </div>
       <div>
         <span>Per page: </span>
-        <select onChange={(e) => handleSelect(e)} defaultValue={state.perPage}>
+        <select onChange={(e) => handleSelect(e)} defaultValue={state.mainPage.perPage}>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>

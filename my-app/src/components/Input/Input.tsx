@@ -9,7 +9,7 @@ type InputProps = {
 
 const Input = (props: InputProps) => {
   const { state, dispatch } = useContext(AppContext);
-  const refSearchValue = useRef<string>(state.searchValue);
+  const refSearchValue = useRef<string>(state.mainPage.searchValue);
 
   useEffect(() => {
     const saveValue = () => {
@@ -32,7 +32,7 @@ const Input = (props: InputProps) => {
         className="input"
         autoComplete="off"
         ref={props.refInput}
-        defaultValue={state.searchValue}
+        defaultValue={state.mainPage.searchValue}
         onChange={(ev) => {
           refSearchValue.current = ev.target.value;
         }}

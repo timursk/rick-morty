@@ -14,7 +14,7 @@ const Form = (props: InputProps) => {
   const [isSubmitDisable, setSubmitDisable] = useState(false);
   const { register, handleSubmit, formState, reset } = useForm<Inputs>({
     defaultValues: {
-      ...state,
+      ...state.form,
     },
   });
 

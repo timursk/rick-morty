@@ -24,11 +24,11 @@ const CardsContainer = (props: Props) => {
   useEffect(() => {
     if (data && data.length) {
       setLoading(true);
-      const sorted = sortByType(state.sort, data);
+      const sorted = sortByType(state.mainPage.sort, data);
       setSortedData(sorted);
       setLoading(false);
     }
-  }, [state.sort, data, setLoading]);
+  }, [state.mainPage.sort, data, setLoading]);
 
   return (
     <>

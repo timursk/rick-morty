@@ -25,7 +25,7 @@ const Main = () => {
   const [cardsPerPage, setCardsPerPage] = useState(20);
   const [apiPage, setApiPage] = useState(1);
   const [currentLink, setCurrentLink] = useState(
-    `https://rickandmortyapi.com/api/character?page=1?name=`
+    `https://rickandmortyapi.com/api/character?page=1&name=`
   );
   const input = createRef<HTMLInputElement>();
   const _isMounted = useRef<boolean>(true);
@@ -53,15 +53,15 @@ const Main = () => {
     const name = input.current.value;
     setLoading(true);
     setCurrentLink(currentLink.replace(/name=.{0,}/, `name=${name}`));
-
-    getCharacterByName(name).then((result) => {
-      if (_isMounted.current) {
-        const data = result.results;
-        setPaginationInfo(result.info);
-        setData(data);
-        setLoading(false);
-      }
-    });
+    // getCharacterByName(name).then((result) => {
+    //   console.log(result);
+    //   if (_isMounted.current) {
+    //     const data = result.results;
+    //     setPaginationInfo(result.info);
+    //     setData(data);
+    //     setLoading(false);
+    //   }
+    // });
   };
 
   const handleShow = (item: Character) => {

@@ -4,7 +4,9 @@ import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';
 import { Inputs } from '../../types/form/inputs';
 import { actionTypes } from '../../types/store/actionTypes';
-import Content from '../../types/store/content';
+import appContent from '../../types/store/appContent';
+import Content from '../../types/store/appContent';
+import { storeForm } from '../../types/store/storeForm';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
 import FormDate from '../FormItems/FormDate';
@@ -25,9 +27,8 @@ type Props = {
 
 const FormComponent = (props: Props) => {
   const { state, dispatch } = useContext(AppContext);
-  const refFormValues = useRef<Partial<Content>>(state);
+  const refFormValues = useRef(state.form);
   const { onSubmit, errors, register, isDirty, isValid, isSubmitDisable } = props;
-
   useEffect(() => {
     const saveValue = () => {
       dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
@@ -47,7 +48,7 @@ const FormComponent = (props: Props) => {
       onSubmit={onSubmit}
       onChange={(e: FormEvent) => {
         const target = e.target as HTMLInputElement;
-        const name = target.name as keyof Content;
+        const name = target.name as keyof storeForm;
         let value: string | boolean | FileList;
 
         if (target.type === 'checkbox') {
