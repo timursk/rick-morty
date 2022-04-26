@@ -1,29 +1,14 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import sortTypes from '../../types/store/sortTypes';
 import './MainSwitch.css';
 
-type Props = {
-  // setCardsPerPage: Dispatch<SetStateAction<number>>;
-};
 const radioValues = Object.values(sortTypes);
 
-const MainSwitch = (props: Props) => {
-  // const { setCardsPerPage } = props;
+const MainSwitch = () => {
   const { state, dispatch } = useContext(AppContext);
   const [isDisplay, setDisplay] = useState(false);
-
-  // useEffect(() => {
-  //   setCardsPerPage(+state.mainPage.perPage);
-  // }, [setCardsPerPage, state.mainPage.perPage]);
 
   const handleSortClick = (item: sortTypes) => {
     setDisplay(false);

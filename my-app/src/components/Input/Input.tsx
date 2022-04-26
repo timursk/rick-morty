@@ -1,24 +1,10 @@
-import React, {
-  createRef,
-  Dispatch,
-  FormEvent,
-  RefObject,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { createRef, FormEvent, useContext, useEffect, useRef } from 'react';
 import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
 
-type InputProps = {
-  // setIsLoading: Dispatch<SetStateAction<boolean>>;
-};
-
-const Input = (props: InputProps) => {
+const Input = () => {
   const { state, dispatch } = useContext(AppContext);
-  // const { setIsLoading } = props;
   const { searchValue } = state.mainPage;
 
   const refSearchValue = useRef<string>(searchValue);
@@ -39,7 +25,6 @@ const Input = (props: InputProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // setIsLoading(true);
 
     const name = refInput.current.value;
     dispatch({ type: actionTypes.INPUT, payload: name });

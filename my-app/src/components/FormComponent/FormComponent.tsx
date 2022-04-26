@@ -4,8 +4,6 @@ import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';
 import { Inputs } from '../../types/form/inputs';
 import { actionTypes } from '../../types/store/actionTypes';
-import appContent from '../../types/store/appContent';
-import Content from '../../types/store/appContent';
 import { storeForm } from '../../types/store/storeForm';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
