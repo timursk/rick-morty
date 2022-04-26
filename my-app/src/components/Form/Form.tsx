@@ -10,7 +10,7 @@ type InputProps = {
   addCard: (item: formCardType) => void;
 };
 
-const Form = (props: InputProps) => {
+const Form = ({ addCard }: InputProps) => {
   const { state } = useContext(AppContext);
   const [isSubmitDisable, setSubmitDisable] = useState(false);
   const refFormValues = useRef(state.form);
@@ -25,7 +25,6 @@ const Form = (props: InputProps) => {
 
   const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
     const { firstName, lastName, birthDate, country, profilePicture } = data;
-    const { addCard } = props;
 
     addCard({
       firstName: firstName,

@@ -3,8 +3,7 @@ import { FormItemProps } from '../../types/form/formItemProps';
 import { ErrorMessage } from '../../utils/constants';
 import FormLabel from '../FormLabel/FormLabel';
 
-const FormCountry = (props: FormItemProps) => {
-  const { errors, register } = props;
+const FormCountry = ({ errors, register }: FormItemProps) => {
   return (
     <FormLabel>
       <p>

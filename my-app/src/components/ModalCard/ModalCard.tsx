@@ -8,14 +8,13 @@ type Props = {
   onClick: () => void;
 };
 
-const ModalCard = (props: Props) => {
+const ModalCard = ({
+  character: { gender, image, location, name, species, status },
+  onClick,
+}: Props) => {
   const handleClick = (ev: MouseEvent) => {
     ev.stopPropagation();
   };
-
-  const { onClick } = props;
-  const { gender, image, location, name, species, status } = props.character;
-
   return (
     <Modal>
       <div onClick={onClick} className="modal-container">

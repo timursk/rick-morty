@@ -9,8 +9,7 @@ type Props = {
   profilePicture: File;
 };
 
-const FormCard = (props: Props) => {
-  const { firstName, lastName, birthDate, country, profilePicture } = props;
+const FormCard = ({ firstName, lastName, birthDate, country, profilePicture }: Props) => {
   const url = URL.createObjectURL(profilePicture);
 
   return (

@@ -3,8 +3,7 @@ import { FormItemProps } from '../../types/form/formItemProps';
 import { ErrorMessage } from '../../utils/constants';
 import FormLabel from '../FormLabel/FormLabel';
 
-const FormNotify = (props: FormItemProps) => {
-  const { errors, register } = props;
+const FormNotify = ({ errors, register }: FormItemProps) => {
   return (
     <FormLabel labelClass="checkbox-item switch">
       <p>

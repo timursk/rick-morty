@@ -3,8 +3,7 @@ import { FormItemProps } from '../../types/form/formItemProps';
 import { ErrorMessage } from '../../utils/constants';
 import FormLabel from '../FormLabel/FormLabel';
 
-const FormDate = (props: FormItemProps) => {
-  const { errors, register } = props;
+const FormDate = ({ errors, register }: FormItemProps) => {
   return (
     <FormLabel>
       <p>

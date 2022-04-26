@@ -24,9 +24,16 @@ type Props = {
   refFormValues: MutableRefObject<storeForm>;
 };
 
-const FormComponent = (props: Props) => {
+const FormComponent = ({
+  onSubmit,
+  errors,
+  register,
+  isDirty,
+  isValid,
+  isSubmitDisable,
+  refFormValues,
+}: Props) => {
   const { dispatch } = useContext(AppContext);
-  const { onSubmit, errors, register, isDirty, isValid, isSubmitDisable, refFormValues } = props;
 
   useEffect(() => {
     const saveValue = () => {

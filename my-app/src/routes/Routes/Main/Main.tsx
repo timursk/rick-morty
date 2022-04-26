@@ -24,7 +24,6 @@ const Main = () => {
   const isMounted = useRef<boolean>(true);
 
   useEffect(() => {
-    // setIsLoading(true);
     dispatch({ type: actionTypes.LOADING_START });
     isMounted.current = true;
     const apiPage = getApiPage(currentPage, perPage);

@@ -7,8 +7,7 @@ type CardProps = {
   onClick: (item: Character) => void;
 };
 
-const Card = (props: CardProps) => {
-  const { item, onClick } = props;
+const Card = ({ item, onClick }: CardProps) => {
   return (
     <div onClick={() => onClick(item)} className="card" data-testid="card-item">
       <img className="card-img" src={item.image} alt="item" />

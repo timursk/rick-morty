@@ -3,8 +3,7 @@ import { FormItemProps } from '../../types/form/formItemProps';
 import { ErrorMessage } from '../../utils/constants';
 import FormLabel from '../FormLabel/FormLabel';
 
-const FormConsent = (props: FormItemProps) => {
-  const { errors, register } = props;
+const FormConsent = ({ errors, register }: FormItemProps) => {
   return (
     <FormLabel labelClass="checkbox-item">
       <p>
