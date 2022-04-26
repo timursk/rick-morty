@@ -4,7 +4,6 @@ import { ApiMaxCards } from '../utils/constants';
 
 const initialAppState: appContent = {
   form: {
-    // form: '',
     firstName: '',
     lastName: '',
     birthDate: '',

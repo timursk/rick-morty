@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useEffect, useRef } from 'react';
+import React, { FormEvent, MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';
@@ -21,12 +21,13 @@ type Props = {
   isDirty: boolean;
   isValid: boolean;
   isSubmitDisable: boolean;
+  refFormValues: MutableRefObject<storeForm>;
 };
 
 const FormComponent = (props: Props) => {
-  const { state, dispatch } = useContext(AppContext);
-  const refFormValues = useRef(state.form);
-  const { onSubmit, errors, register, isDirty, isValid, isSubmitDisable } = props;
+  const { dispatch } = useContext(AppContext);
+  const { onSubmit, errors, register, isDirty, isValid, isSubmitDisable, refFormValues } = props;
+
   useEffect(() => {
     const saveValue = () => {
       dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
@@ -38,28 +39,26 @@ const FormComponent = (props: Props) => {
       saveValue();
       window.removeEventListener('beforeunload', saveValue);
     };
-  }, [dispatch]);
+  }, [refFormValues, dispatch]);
+
+  const handleChange = (e: FormEvent) => {
+    const target = e.target as HTMLInputElement;
+    const name = target.name as keyof storeForm;
+    let value: string | boolean | FileList;
+
+    if (target.type === 'checkbox') {
+      value = target.checked;
+    } else if (target.type === 'file') {
+      value = target.files;
+    } else {
+      value = target.value;
+    }
+
+    refFormValues.current[name] = value;
+  };
 
   return (
-    <form
-      className="form"
-      onSubmit={onSubmit}
-      onChange={(e: FormEvent) => {
-        const target = e.target as HTMLInputElement;
-        const name = target.name as keyof storeForm;
-        let value: string | boolean | FileList;
-
-        if (target.type === 'checkbox') {
-          value = target.checked;
-        } else if (target.type === 'file') {
-          value = target.files;
-        } else {
-          value = target.value;
-        }
-
-        refFormValues.current[name] = value;
-      }}
-    >
+    <form className="form" onSubmit={onSubmit} onChange={handleChange}>
       <FormName errors={errors} register={register} />
       <FormSurname errors={errors} register={register} />
       <FormDate errors={errors} register={register} />

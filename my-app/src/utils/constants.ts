@@ -1,3 +1,5 @@
+import { storeForm } from '../types/store/storeForm';
+
 export enum ErrorMessage {
   firstName = ' * - Invalid name value!',
   lastName = ' * - Invalid surname value!',
@@ -12,3 +14,13 @@ export enum ErrorMessage {
 export const ApiMaxCards = 20;
 
 export const URL = 'https://rickandmortyapi.com/api';
+
+export const initialForm: storeForm = {
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+  country: '',
+  consent: false,
+  notify: false,
+  profilePicture: null,
+};

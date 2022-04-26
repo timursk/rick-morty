@@ -35,7 +35,7 @@ const Main = () => {
         if (result.results && result.results.length) {
           dispatch({ type: actionTypes.FETCH_CARDS, payload: result });
         } else {
-          dispatch({ type: actionTypes.FETCH_EMPTY, payload: result });
+          dispatch({ type: actionTypes.FETCH_EMPTY });
         }
 
         dispatch({ type: actionTypes.LOADING_STOP });

@@ -51,7 +51,6 @@ const mainPageReducer: Reducer<State, Action> = (state, action) => {
       const sortedCards = sortByType(state.sort, data.results);
       return {
         ...state,
-        // cards: data.results,
         cards: sortedCards,
         totalCardsCount: data.info.count,
         totalApiPagesCount: data.info.pages,

@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import AppContext from '../../store/store';
 import { formCardType } from '../../types/form/formCardType';
 import { Inputs } from '../../types/form/inputs';
+import { initialForm } from '../../utils/constants';
 import FormComponent from '../FormComponent/FormComponent';
 
 type InputProps = {
@@ -12,6 +13,8 @@ type InputProps = {
 const Form = (props: InputProps) => {
   const { state } = useContext(AppContext);
   const [isSubmitDisable, setSubmitDisable] = useState(false);
+  const refFormValues = useRef(state.form);
+
   const { register, handleSubmit, formState, reset } = useForm<Inputs>({
     defaultValues: {
       ...state.form,
@@ -40,16 +43,10 @@ const Form = (props: InputProps) => {
   };
 
   useEffect(() => {
-    isSubmitSuccessful &&
-      reset({
-        firstName: '',
-        lastName: '',
-        birthDate: '',
-        country: 'Russia',
-        consent: false,
-        notify: false,
-        profilePicture: null,
-      });
+    if (isSubmitSuccessful) {
+      reset(initialForm);
+      refFormValues.current = initialForm;
+    }
   }, [isSubmitSuccessful, reset]);
 
   return (
@@ -60,6 +57,7 @@ const Form = (props: InputProps) => {
       isDirty={isDirty}
       isValid={isValid}
       isSubmitDisable={isSubmitDisable}
+      refFormValues={refFormValues}
     />
   );
 };
