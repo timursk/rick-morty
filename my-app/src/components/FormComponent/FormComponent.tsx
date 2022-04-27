@@ -1,4 +1,4 @@
-import React, { FormEvent, MutableRefObject, useContext, useEffect, useRef } from 'react';
+import React, { FormEvent, MutableRefObject, useContext, useEffect } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';

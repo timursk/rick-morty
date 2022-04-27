@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
-import AppContext from '../../store/store';
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const cardLink = { link: '/card', name: 'Main/card' };
 const mainLink = { link: '/', name: 'Main' };

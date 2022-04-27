@@ -1,72 +1,26 @@
-import React, { MouseEvent, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppContext from '../../store/store';
-import { actionTypes } from '../../types/store/actionTypes';
-import Loader from '../Loader/Loader';
-import Modal from '../Modal/Modal';
+import React from 'react';
+import { Character } from '../../types/apiTypes/character';
 import './ModalCard.css';
 
-const ModalCard = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const navigate = useNavigate();
+type Props = {
+  item: Character;
+};
 
-  useEffect(() => {
-    if (!state.mainPage.pickedCard) {
-      setTimeout(() => navigate('/'), 2000);
-    }
-    const unpick = () => {
-      dispatch({ type: actionTypes.UNPICK_CARD });
-    };
-
-    return () => {
-      unpick();
-    };
-  }, [dispatch, navigate, state.mainPage.pickedCard]);
-
-  if (!state.mainPage.pickedCard) {
-    return (
-      <>
-        <p>NO INFO!</p>
-        <p>REDIRECTING...</p>
-        <Loader />
-      </>
-    );
-  }
-
-  const { gender, image, location, name, species, status } = state.mainPage.pickedCard;
-
-  const handleClick = (ev: MouseEvent) => {
-    ev.preventDefault();
-    navigate('/');
-  };
-
+const ModalCard = ({ item: { image, location, name, species, status, gender } }: Props) => {
   return (
-    <>
-      <a onClick={handleClick} href="">
-        Back
-      </a>
-      <div className="card modal-card" data-testid="modal-card">
-        <img className="card-img modal-card__img" src={image} alt="item" />
-        <div className="modal-card__info">
-          <p>
-            Name: <span className="modal-card__content">{name}</span>
-          </p>
-          <p>
-            Gender: <span className="modal-card__content">{gender}</span>
-          </p>
-          <p>
-            Location: <span className="modal-card__content">{location.name}</span>
-          </p>
-          <p>
-            Species: <span className="modal-card__content">{species}</span>
-          </p>
-          <p>
-            Status: <span className="modal-card__content">{status}</span>
-          </p>
-        </div>
-        <button className="modal-card__btn"></button>
+    <div className="card modal-card" data-testid="modal-card">
+      <img className="card-img modal-card__img" src={image} alt="item" />
+      <div className="modal-card__info">
+        <p>{name}</p>
+        <p>
+          <span className="status__info">
+            {status} - {species}, {gender}
+          </span>
+        </p>
+        <p className="location__info">Last known location:</p>
+        <p className="location__name">{location.name}</p>
       </div>
-    </>
+    </div>
   );
 };
 

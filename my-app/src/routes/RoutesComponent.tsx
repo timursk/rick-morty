@@ -5,7 +5,7 @@ const Main = React.lazy(() => import('./Routes/Main/Main'));
 const About = React.lazy(() => import('./Routes/About/About'));
 const Error404 = React.lazy(() => import('./Routes/Error404/Error404'));
 const FormPage = React.lazy(() => import('./Routes/FormPage/FormPage'));
-import ModalCard from '../components/ModalCard/ModalCard';
+import CardPage from './Routes/CardPage/CardPage';
 
 const RoutesComponent = () => {
   return (
@@ -18,7 +18,7 @@ const RoutesComponent = () => {
           </Suspense>
         }
       />
-      <Route path="card" element={<ModalCard />} />
+      <Route path="card" element={<CardPage />} />
       <Route
         path="/about"
         element={
