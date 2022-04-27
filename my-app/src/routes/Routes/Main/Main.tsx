@@ -18,6 +18,8 @@ const getApiPage = (currentPage: number, cardsPerPage: number) => {
   return Math.floor((currentPage - 1) / divider) + 1;
 };
 
+let prevLink = getLink();
+
 const Main = () => {
   const { state, dispatch } = useContext(AppContext);
   const { searchValue, currentPage, perPage } = state.mainPage;
@@ -29,17 +31,20 @@ const Main = () => {
     const apiPage = getApiPage(currentPage, perPage);
     const link = getLink(apiPage, searchValue);
 
-    getCharactersByLink(link).then((result) => {
-      if (isMounted.current) {
-        if (result.results && result.results.length) {
-          dispatch({ type: actionTypes.FETCH_CARDS, payload: result });
-        } else {
-          dispatch({ type: actionTypes.FETCH_EMPTY });
-        }
+    if (link !== prevLink) {
+      prevLink = link;
 
+      getCharactersByLink(link).then((result) => {
+        if (isMounted.current) {
+          if (result.results && result.results.length) {
+            dispatch({ type: actionTypes.FETCH_CARDS, payload: result });
+          } else {
+            dispatch({ type: actionTypes.FETCH_EMPTY });
+          }
+        }
         dispatch({ type: actionTypes.LOADING_STOP });
-      }
-    });
+      });
+    }
 
     return () => {
       isMounted.current = false;
