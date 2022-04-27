@@ -21,7 +21,7 @@ const Header = () => {
           return (
             <NavLink
               style={({ isActive }) => ({
-                color: isActive ? '#3896ff' : 'white',
+                color: isActive ? '#3896ff' : '#bfbfbf',
                 textDecoration: 'none',
               })}
               to={link}

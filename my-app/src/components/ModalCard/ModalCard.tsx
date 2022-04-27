@@ -11,14 +11,14 @@ const ModalCard = ({ item: { image, location, name, species, status, gender } }:
     <div className="card modal-card" data-testid="modal-card">
       <img className="card-img modal-card__img" src={image} alt="item" />
       <div className="modal-card__info">
-        <p>{name}</p>
-        <p>
-          <span className="status__info">
+        <h2 className="card-info__item name__info">{name}</h2>
+        <p className="card-info__item card-info__status">
+          <span className={`status__info ${status.search(/alive/i) ? 'status-dead__info' : ''}`}>
             {status} - {species}, {gender}
           </span>
         </p>
-        <p className="location__info">Last known location:</p>
-        <p className="location__name">{location.name}</p>
+        <p className="card-info__item location__info">Last known location:</p>
+        <p className="card-info__item location__name">{location.name}</p>
       </div>
     </div>
   );

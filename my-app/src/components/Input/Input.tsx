@@ -1,18 +1,17 @@
-import React, { createRef, FormEvent, useContext, useEffect, useRef } from 'react';
+import React, { FormEvent, useContext, useEffect } from 'react';
 import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
+
+let refInput = '';
 
 const Input = () => {
   const { state, dispatch } = useContext(AppContext);
   const { searchValue } = state.mainPage;
 
-  const refSearchValue = useRef<string>(searchValue);
-  const refInput = createRef<HTMLInputElement>();
-
   useEffect(() => {
     const saveValue = () => {
-      dispatch({ type: actionTypes.INPUT, payload: refSearchValue.current });
+      dispatch({ type: actionTypes.INPUT, payload: refInput });
     };
 
     window.addEventListener('beforeunload', saveValue);
@@ -26,7 +25,7 @@ const Input = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const name = refInput.current.value;
+    const name = refInput;
     dispatch({ type: actionTypes.INPUT, payload: name });
   };
 
@@ -38,10 +37,9 @@ const Input = () => {
           name="input"
           className="input"
           autoComplete="off"
-          ref={refInput}
           defaultValue={searchValue}
           onChange={(ev) => {
-            refSearchValue.current = ev.target.value;
+            refInput = ev.target.value;
           }}
         />
       </div>

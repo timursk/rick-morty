@@ -16,11 +16,27 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   border-radius: 5px;
   background-color: #282c34;
   color: #bfbfbf;
   cursor: default;
   font-size: 1.5em;
+}
+
+.card-info__item {
+  margin: 0;
+  text-align: left;
+}
+
+.card-info__status {
+  margin-bottom: 35px;
+}
+
+.name__info {
+  margin-bottom: 0px;
+  font-size: 2em;
+  font-weight: 700;
 }
 
 .status__info {
@@ -42,12 +58,16 @@
   display: inline-block;
 }
 
+.status-dead__info::before {
+  background: rgb(214, 61, 46);
+}
+
 .location__info {
   margin-bottom: 5px;
 }
 
 .location__name {
-  margin-top: 0;
+  font-weight: 700;
 }
 
 .card-img.modal-card__img {
