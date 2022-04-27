@@ -26,12 +26,12 @@ const Main = () => {
   const isMounted = useRef<boolean>(true);
 
   useEffect(() => {
-    dispatch({ type: actionTypes.LOADING_START });
     isMounted.current = true;
     const apiPage = getApiPage(currentPage, perPage);
     const link = getLink(apiPage, searchValue);
 
     if (link !== prevLink) {
+      dispatch({ type: actionTypes.LOADING_START });
       prevLink = link;
 
       getCharactersByLink(link).then((result) => {
