@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import { Route, Navigate, Routes } from 'react-router-dom';
+import Loader from '../components/Loader/Loader';
 const Main = React.lazy(() => import('./Routes/Main/Main'));
 const About = React.lazy(() => import('./Routes/About/About'));
 const Error404 = React.lazy(() => import('./Routes/Error404/Error404'));
 const FormPage = React.lazy(() => import('./Routes/FormPage/FormPage'));
-import loader from '../assets/loading.svg';
 import ModalCard from '../components/ModalCard/ModalCard';
 
 const RoutesComponent = () => {
@@ -13,7 +13,7 @@ const RoutesComponent = () => {
       <Route
         path="/"
         element={
-          <Suspense fallback={<img className="loader" src={loader} alt="loader" />}>
+          <Suspense fallback={<Loader />}>
             <Main />
           </Suspense>
         }
@@ -22,7 +22,7 @@ const RoutesComponent = () => {
       <Route
         path="/about"
         element={
-          <Suspense fallback={<img src={loader} alt="loader" />}>
+          <Suspense fallback={<Loader />}>
             <About />
           </Suspense>
         }
@@ -30,7 +30,7 @@ const RoutesComponent = () => {
       <Route
         path="/404"
         element={
-          <Suspense fallback={<img src={loader} alt="loader" />}>
+          <Suspense fallback={<Loader />}>
             <Error404 />
           </Suspense>
         }
@@ -38,7 +38,7 @@ const RoutesComponent = () => {
       <Route
         path="/form"
         element={
-          <Suspense fallback={<img src={loader} alt="loader" />}>
+          <Suspense fallback={<Loader />}>
             <FormPage />
           </Suspense>
         }

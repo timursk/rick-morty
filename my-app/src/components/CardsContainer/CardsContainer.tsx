@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import Card from '../Card/Card';
-import loader from '../../assets/loading.svg';
 import AppContext from '../../store/store';
 import { Character } from '../../types/apiTypes/character';
 import { ApiMaxCards } from '../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { actionTypes } from '../../types/store/actionTypes';
+import Loader from '../Loader/Loader';
 
 const getSlicedCards = (
   ApiMaxCards: number,
@@ -35,7 +35,7 @@ const CardsContainer = () => {
   return (
     <>
       {isLoading ? (
-        <img className="loader" src={loader} alt="loader" data-testid="loader" />
+        <Loader />
       ) : slicedCards.length ? (
         <div className="cards-container">
           {slicedCards.map((item) => {

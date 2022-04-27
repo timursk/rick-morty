@@ -2,6 +2,7 @@ import React, { MouseEvent, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
+import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
 import './ModalCard.css';
 
@@ -10,6 +11,9 @@ const ModalCard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!state.mainPage.pickedCard) {
+      setTimeout(() => navigate('/'), 2000);
+    }
     const unpick = () => {
       dispatch({ type: actionTypes.UNPICK_CARD });
     };
@@ -17,13 +21,14 @@ const ModalCard = () => {
     return () => {
       unpick();
     };
-  }, [dispatch]);
+  }, [dispatch, navigate, state.mainPage.pickedCard]);
 
   if (!state.mainPage.pickedCard) {
     return (
       <>
         <p>NO INFO!</p>
         <p>REDIRECTING...</p>
+        <Loader />
       </>
     );
   }
