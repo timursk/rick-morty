@@ -1,3 +1,4 @@
+import { Character } from '../apiTypes/character';
 import { Characters } from '../apiTypes/characters';
 import { actionTypes } from './actionTypes';
 import sortTypes from './sortTypes';
@@ -12,6 +13,8 @@ type appAction =
   | { type: actionTypes.FETCH_EMPTY }
   | { type: actionTypes.LOADING_START }
   | { type: actionTypes.LOADING_STOP }
-  | { type: actionTypes.CHANGE_PAGE; payload: number };
+  | { type: actionTypes.CHANGE_PAGE; payload: number }
+  | { type: actionTypes.PICK_CARD; payload: Character }
+  | { type: actionTypes.UNPICK_CARD };
 
 export default appAction;

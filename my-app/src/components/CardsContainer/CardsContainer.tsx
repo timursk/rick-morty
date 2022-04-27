@@ -4,6 +4,8 @@ import loader from '../../assets/loading.svg';
 import AppContext from '../../store/store';
 import { Character } from '../../types/apiTypes/character';
 import { ApiMaxCards } from '../../utils/constants';
+import { useNavigate } from 'react-router-dom';
+import { actionTypes } from '../../types/store/actionTypes';
 
 const getSlicedCards = (
   ApiMaxCards: number,
@@ -19,13 +21,15 @@ const getSlicedCards = (
 };
 
 const CardsContainer = () => {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const { cards, isLoading, currentPage, perPage } = state.mainPage;
+  const navigate = useNavigate();
 
   const slicedCards = getSlicedCards(ApiMaxCards, perPage, currentPage, cards);
 
   const handleClick = (item: Character) => {
-    console.log(item);
+    dispatch({ type: actionTypes.PICK_CARD, payload: item });
+    navigate('/card');
   };
 
   return (

@@ -8,7 +8,8 @@ describe('Modal', () => {
   test('modal shows the children and a close button', () => {
     const handleClose = jest.fn();
 
-    render(<ModalCard character={fakeItem} onClick={handleClose} />);
+    // render(<ModalCard character={fakeItem} onClick={handleClose} />);
+    render(<ModalCard />);
 
     expect(screen.getByTestId('modal-card')).toBeInTheDocument();
     userEvent.click(screen.getByRole('button'));

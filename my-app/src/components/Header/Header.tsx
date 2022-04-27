@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import AppContext from '../../store/store';
 
+const cardLink = { link: '/card', name: 'Main/card' };
+const mainLink = { link: '/', name: 'Main' };
 const links = [
   { link: '/', name: 'Main' },
   { link: '/about', name: 'About' },
@@ -8,6 +11,13 @@ const links = [
 ];
 
 const Header = () => {
+  const {
+    state: {
+      mainPage: { pickedCard },
+    },
+  } = useContext(AppContext);
+  links[0] = pickedCard ? cardLink : mainLink;
+
   return (
     <header className="App-header">
       <nav className="header-container">

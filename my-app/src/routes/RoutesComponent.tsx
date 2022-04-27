@@ -5,6 +5,7 @@ const About = React.lazy(() => import('./Routes/About/About'));
 const Error404 = React.lazy(() => import('./Routes/Error404/Error404'));
 const FormPage = React.lazy(() => import('./Routes/FormPage/FormPage'));
 import loader from '../assets/loading.svg';
+import ModalCard from '../components/ModalCard/ModalCard';
 
 const RoutesComponent = () => {
   return (
@@ -17,6 +18,7 @@ const RoutesComponent = () => {
           </Suspense>
         }
       />
+      <Route path="card" element={<ModalCard />} />
       <Route
         path="/about"
         element={

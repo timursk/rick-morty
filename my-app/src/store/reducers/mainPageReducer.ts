@@ -69,6 +69,19 @@ const mainPageReducer: Reducer<State, Action> = (state, action) => {
         currentPage,
       };
     }
+    case actionTypes.PICK_CARD: {
+      const pickedCard = action.payload;
+      return {
+        ...state,
+        pickedCard,
+      };
+    }
+    case actionTypes.UNPICK_CARD: {
+      return {
+        ...state,
+        pickedCard: null,
+      };
+    }
     default:
       return state;
   }
