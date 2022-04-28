@@ -60,6 +60,7 @@ const mainPageReducer: Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         cards: [],
+        totalApiPagesCount: 1,
       };
     }
     case actionTypes.CHANGE_PAGE: {

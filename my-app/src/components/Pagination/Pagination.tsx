@@ -6,13 +6,13 @@ import './Pagination.css';
 
 const Pagination = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { currentPage, totalPagesCount, totalApiPagesCount } = state.mainPage;
+  const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPage;
 
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 
   useEffect(() => {
     setPageNumbers(createPages(totalPagesCount || totalApiPagesCount, currentPage));
-  }, [totalApiPagesCount, totalPagesCount, currentPage]);
+  }, [totalApiPagesCount, totalPagesCount, currentPage, searchValue]);
 
   const handleBack = useCallback(
     (e: MouseEvent) => {
