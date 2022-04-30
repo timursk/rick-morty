@@ -1,13 +1,16 @@
 import React, { FormEvent, useContext, useEffect } from 'react';
-import AppContext from '../../store/store';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+// import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
 
 let refInput = '';
 
 const Input = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const { searchValue } = state.mainPage;
+  // const { state, dispatch } = useContext(AppContext);
+  const state = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const { searchValue } = state.mainPageReducer;
 
   useEffect(() => {
     const saveValue = () => {

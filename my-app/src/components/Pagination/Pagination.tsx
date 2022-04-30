@@ -1,12 +1,15 @@
 import React, { MouseEvent, useCallback, useContext, useEffect, useState } from 'react';
 import { createPages } from '../../utils/utils';
-import AppContext from '../../store/store';
+// import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Pagination.css';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
 const Pagination = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPage;
+  // const { state, dispatch } = useContext(AppContext);
+  const state = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPageReducer;
 
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
 

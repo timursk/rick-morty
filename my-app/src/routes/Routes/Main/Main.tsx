@@ -6,8 +6,9 @@ import CardsContainer from '../../../components/CardsContainer/CardsContainer';
 import Pagination from '../../../components/Pagination/Pagination';
 import { ApiMaxCards, URL } from '../../../utils/constants';
 import './Main.css';
-import AppContext from '../../../store/store';
+// import AppContext from '../../../store/store';
 import { actionTypes } from '../../../types/store/actionTypes';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const getLink = (page = 0, name = '') => {
   return `${URL}/character?page=${page}&name=${name}`;
@@ -21,8 +22,11 @@ const getApiPage = (currentPage: number, cardsPerPage: number) => {
 let prevLink = getLink();
 
 const Main = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const { searchValue, currentPage, perPage } = state.mainPage;
+  // const state = useAppSelector((state) => state.mainPage);
+  const state = useAppSelector((state) => state.mainPageReducer);
+  const dispatch = useAppDispatch();
+  // const { state, dispatch } = useContext(AppContext);
+  const { searchValue, currentPage, perPage } = state;
   const isMounted = useRef<boolean>(true);
 
   useEffect(() => {

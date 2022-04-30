@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils';
 import initialAppState from '../../store/initialAppState';
 import formReducer from '../../store/reducers/formReducer';
 import mainPageReducer from '../../store/reducers/mainPageReducer';
-import AppContext from '../../store/store';
+// import AppContext from '../../store/store';
 import appAction from '../../types/store/appAction';
 import appContent from '../../types/store/appContent';
 import { isAdult } from '../../utils/utils';
@@ -34,11 +34,12 @@ const reducer = ({ form, mainPage }: appContent, action: appAction) => ({
 
 const FormWithReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  return (
-    <AppContext.Provider value={{ state, dispatch }}>
-      <Form addCard={addCard} />
-    </AppContext.Provider>
-  );
+  return <Form addCard={addCard} />;
+  // return (
+  //   // <AppContext.Provider value={{ state, dispatch }}>
+  //     <Form addCard={addCard} />
+  //   {/* </AppContext.Provider> */}
+  // );
 };
 
 describe('Form', () => {

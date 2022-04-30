@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from 'react';
-import AppContext from '../../store/store';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+// import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import sortTypes from '../../types/store/sortTypes';
 import './MainSwitch.css';
@@ -7,7 +8,9 @@ import './MainSwitch.css';
 const radioValues = Object.values(sortTypes);
 
 const MainSwitch = () => {
-  const { state, dispatch } = useContext(AppContext);
+  // const { state, dispatch } = useContext(AppContext);
+  const state = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
   const [isDisplay, setDisplay] = useState(false);
 
   const handleSortClick = (item: sortTypes) => {
@@ -31,7 +34,7 @@ const MainSwitch = () => {
             setDisplay(!isDisplay);
           }}
         >
-          {state.mainPage.sort}
+          {state.mainPageReducer.sort}
         </a>
         {isDisplay && (
           <div className="main-sort__switcher">
@@ -46,7 +49,7 @@ const MainSwitch = () => {
       </div>
       <div>
         <span>Per page: </span>
-        <select onChange={(e) => handlePageSelect(e)} defaultValue={state.mainPage.perPage}>
+        <select onChange={(e) => handlePageSelect(e)} defaultValue={state.mainPageReducer.perPage}>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>

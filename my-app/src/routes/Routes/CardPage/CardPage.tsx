@@ -2,13 +2,16 @@ import React, { MouseEvent, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../components/Loader/Loader';
 import ModalCard from '../../../components/ModalCard/ModalCard';
-import AppContext from '../../../store/store';
+import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+// import AppContext from '../../../store/store';
 import { actionTypes } from '../../../types/store/actionTypes';
 import './CardPage.css';
 
 const CardPage = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const item = state.mainPage.pickedCard;
+  // const { state, dispatch } = useContext(AppContext);
+  const state = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const item = state.mainPageReducer.pickedCard;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const CardPage = () => {
     };
   }, [dispatch, navigate, item]);
 
-  if (!state.mainPage.pickedCard) {
+  if (!state.mainPageReducer.pickedCard) {
     return (
       <>
         <p>NO INFO!</p>

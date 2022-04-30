@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import Card from '../Card/Card';
-import AppContext from '../../store/store';
+// import AppContext from '../../store/store';
 import { Character } from '../../types/apiTypes/character';
 import { ApiMaxCards } from '../../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { actionTypes } from '../../types/store/actionTypes';
 import Loader from '../Loader/Loader';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
 const getSlicedCards = (
   ApiMaxCards: number,
@@ -21,8 +22,10 @@ const getSlicedCards = (
 };
 
 const CardsContainer = () => {
-  const { state, dispatch } = useContext(AppContext);
-  const { cards, isLoading, currentPage, perPage } = state.mainPage;
+  // const { state, dispatch } = useContext(AppContext);
+  const state = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const { cards, isLoading, currentPage, perPage } = state.mainPageReducer;
   const navigate = useNavigate();
 
   const slicedCards = getSlicedCards(ApiMaxCards, perPage, currentPage, cards);
