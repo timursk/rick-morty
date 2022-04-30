@@ -4,6 +4,7 @@ import { createPages } from '../../utils/utils';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Pagination.css';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { changePage } from '../../store/reducers/mainPageSlice';
 
 const Pagination = () => {
   // const { state, dispatch } = useContext(AppContext);
@@ -21,7 +22,8 @@ const Pagination = () => {
     (e: MouseEvent) => {
       e.preventDefault();
       const number = currentPage - 1 || 1;
-      dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
+      // dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
+      dispatch(changePage(number));
     },
     [currentPage, dispatch]
   );
@@ -39,7 +41,8 @@ const Pagination = () => {
   const handleLinkClick = useCallback(
     (e: MouseEvent, number: number) => {
       e.preventDefault();
-      dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
+      // dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
+      dispatch(changePage(number));
     },
     [dispatch]
   );

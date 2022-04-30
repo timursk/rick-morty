@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../../components/Loader/Loader';
 import ModalCard from '../../../components/ModalCard/ModalCard';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
+import { unpickCard } from '../../../store/reducers/mainPageSlice';
 // import AppContext from '../../../store/store';
 import { actionTypes } from '../../../types/store/actionTypes';
 import './CardPage.css';
@@ -20,7 +21,8 @@ const CardPage = () => {
     }
 
     const unpick = () => {
-      dispatch({ type: actionTypes.UNPICK_CARD });
+      // dispatch({ type: actionTypes.UNPICK_CARD });
+      dispatch(unpickCard());
     };
 
     return () => {

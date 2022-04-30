@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { actionTypes } from '../../types/store/actionTypes';
 import Loader from '../Loader/Loader';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { pickCard } from '../../store/reducers/mainPageSlice';
 
 const getSlicedCards = (
   ApiMaxCards: number,
@@ -31,7 +32,8 @@ const CardsContainer = () => {
   const slicedCards = getSlicedCards(ApiMaxCards, perPage, currentPage, cards);
 
   const handleClick = (item: Character) => {
-    dispatch({ type: actionTypes.PICK_CARD, payload: item });
+    // dispatch({ type: actionTypes.PICK_CARD, payload: item });
+    dispatch(pickCard(item));
     navigate('/card');
   };
 

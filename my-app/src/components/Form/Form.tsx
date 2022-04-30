@@ -14,9 +14,8 @@ type InputProps = {
 const Form = ({ addCard }: InputProps) => {
   // const { state } = useContext(AppContext);
   const state = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
   const [isSubmitDisable, setSubmitDisable] = useState(false);
-  const refFormValues = useRef(state.formReducer);
+  const refFormValues = useRef({ ...state.formReducer });
 
   const { register, handleSubmit, formState, reset } = useForm<Inputs>({
     defaultValues: {

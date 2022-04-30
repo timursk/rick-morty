@@ -1,6 +1,7 @@
 import React, { FormEvent, MutableRefObject, useContext, useEffect } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { saveForm } from '../../store/reducers/formSlice';
 // import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';
 import { Inputs } from '../../types/form/inputs';
@@ -40,7 +41,8 @@ const FormComponent = ({
 
   useEffect(() => {
     const saveValue = () => {
-      dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
+      // dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
+      dispatch(saveForm(refFormValues.current));
     };
 
     window.addEventListener('beforeunload', saveValue);

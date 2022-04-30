@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setPerPage, sort } from '../../store/reducers/mainPageSlice';
 // import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import sortTypes from '../../types/store/sortTypes';
@@ -15,12 +16,14 @@ const MainSwitch = () => {
 
   const handleSortClick = (item: sortTypes) => {
     setDisplay(false);
-    dispatch({ type: actionTypes.SORT, payload: item });
+    // dispatch({ type: actionTypes.SORT, payload: item });
+    dispatch(sort(item));
   };
 
   const handlePageSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const number = +e.target.value;
-    dispatch({ type: actionTypes.PER_PAGE, payload: number });
+    // dispatch({ type: actionTypes.PER_PAGE, payload: number });
+    dispatch(setPerPage(number));
   };
 
   return (

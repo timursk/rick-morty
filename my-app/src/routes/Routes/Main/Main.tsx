@@ -9,6 +9,12 @@ import './Main.css';
 // import AppContext from '../../../store/store';
 import { actionTypes } from '../../../types/store/actionTypes';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {
+  fetchCards,
+  fetchEmpty,
+  startLoading,
+  stopLoading,
+} from '../../../store/reducers/mainPageSlice';
 
 const getLink = (page = 0, name = '') => {
   return `${URL}/character?page=${page}&name=${name}`;
@@ -35,18 +41,22 @@ const Main = () => {
     const link = getLink(apiPage, searchValue);
 
     if (link !== prevLink) {
-      dispatch({ type: actionTypes.LOADING_START });
+      // dispatch({ type: actionTypes.LOADING_START });
+      dispatch(startLoading());
       prevLink = link;
 
       getCharactersByLink(link).then((result) => {
         if (isMounted.current) {
           if (result.results && result.results.length) {
-            dispatch({ type: actionTypes.FETCH_CARDS, payload: result });
+            // dispatch({ type: actionTypes.FETCH_CARDS, payload: result });
+            dispatch(fetchCards(result));
           } else {
-            dispatch({ type: actionTypes.FETCH_EMPTY });
+            // dispatch({ type: actionTypes.FETCH_EMPTY });
+            dispatch(fetchEmpty());
           }
         }
-        dispatch({ type: actionTypes.LOADING_STOP });
+        // dispatch({ type: actionTypes.LOADING_STOP });
+        dispatch(stopLoading());
       });
     }
 

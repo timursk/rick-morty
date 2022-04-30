@@ -1,5 +1,6 @@
 import React, { FormEvent, useContext, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { input } from '../../store/reducers/mainPageSlice';
 // import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Input.css';
@@ -14,7 +15,8 @@ const Input = () => {
 
   useEffect(() => {
     const saveValue = () => {
-      dispatch({ type: actionTypes.INPUT, payload: refInput });
+      // dispatch({ type: actionTypes.INPUT, payload: refInput });
+      dispatch(input(refInput));
     };
 
     window.addEventListener('beforeunload', saveValue);
@@ -29,7 +31,8 @@ const Input = () => {
     e.preventDefault();
 
     const name = refInput;
-    dispatch({ type: actionTypes.INPUT, payload: name });
+    // dispatch({ type: actionTypes.INPUT, payload: name });
+    dispatch(input(name));
   };
 
   return (
