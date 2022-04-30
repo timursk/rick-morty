@@ -16,8 +16,9 @@ const CardPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let timeId: number = null;
     if (!item) {
-      setTimeout(() => navigate('/'), 2000);
+      timeId = window.setTimeout(() => navigate('/'), 2000);
     }
 
     const unpick = () => {
@@ -27,6 +28,7 @@ const CardPage = () => {
 
     return () => {
       unpick();
+      clearTimeout(timeId);
     };
   }, [dispatch, navigate, item]);
 
