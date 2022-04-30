@@ -1,13 +1,11 @@
-import React, { MouseEvent, useCallback, useContext, useEffect, useState } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { createPages } from '../../utils/utils';
-// import AppContext from '../../store/store';
 import { actionTypes } from '../../types/store/actionTypes';
 import './Pagination.css';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { changePage } from '../../store/reducers/mainPageSlice';
 
 const Pagination = () => {
-  // const { state, dispatch } = useContext(AppContext);
   const state = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPageReducer;
@@ -22,7 +20,6 @@ const Pagination = () => {
     (e: MouseEvent) => {
       e.preventDefault();
       const number = currentPage - 1 || 1;
-      // dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
       dispatch(changePage(number));
     },
     [currentPage, dispatch]
@@ -41,7 +38,6 @@ const Pagination = () => {
   const handleLinkClick = useCallback(
     (e: MouseEvent, number: number) => {
       e.preventDefault();
-      // dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
       dispatch(changePage(number));
     },
     [dispatch]

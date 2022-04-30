@@ -1,11 +1,9 @@
-import React, { FormEvent, MutableRefObject, useContext, useEffect } from 'react';
+import React, { FormEvent, MutableRefObject, useEffect } from 'react';
 import { UseFormRegister } from 'react-hook-form';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { saveForm } from '../../store/reducers/formSlice';
-// import AppContext from '../../store/store';
 import { FormErrors } from '../../types/form/formErrors';
 import { Inputs } from '../../types/form/inputs';
-import { actionTypes } from '../../types/store/actionTypes';
 import { storeForm } from '../../types/store/storeForm';
 import FormConsent from '../FormItems/FormConsent';
 import FormCountry from '../FormItems/FormCountry';
@@ -35,13 +33,10 @@ const FormComponent = ({
   isSubmitDisable,
   refFormValues,
 }: Props) => {
-  // const { dispatch } = useContext(AppContext);
-  const state = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const saveValue = () => {
-      // dispatch({ type: actionTypes.FORM, payload: refFormValues.current });
       dispatch(saveForm(refFormValues.current));
     };
 

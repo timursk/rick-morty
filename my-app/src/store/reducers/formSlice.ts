@@ -10,7 +10,6 @@ export const formReducer = createSlice({
   initialState,
   reducers: {
     saveForm: (state, action: PayloadAction<storeForm>) => {
-      // state = action.payload;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.birthDate = action.payload.birthDate;

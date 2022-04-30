@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Character } from '../../types/apiTypes/character';
 import { Characters } from '../../types/apiTypes/characters';
 import sortTypes from '../../types/store/sortTypes';
-import { storeMainPage } from '../../types/store/storeMainPage';
 import { sortByType } from '../../utils/utils';
 import initialAppState from '../initialAppState';
 import { RootState } from '../store';

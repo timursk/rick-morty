@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-// import AppContext from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import { formCardType } from '../../types/form/formCardType';
 import { Inputs } from '../../types/form/inputs';
 import { initialForm } from '../../utils/constants';
@@ -12,7 +11,6 @@ type InputProps = {
 };
 
 const Form = ({ addCard }: InputProps) => {
-  // const { state } = useContext(AppContext);
   const state = useAppSelector((state) => state);
   const [isSubmitDisable, setSubmitDisable] = useState(false);
   const refFormValues = useRef({ ...state.formReducer });

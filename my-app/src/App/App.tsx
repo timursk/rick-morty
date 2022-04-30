@@ -1,17 +1,16 @@
 import RoutesComponent from '../routes/RoutesComponent';
 import React from 'react';
-import './App.css';
-import AppProvider from '../containers/AppProvider/AppProvider';
 import Header from '../components/Header/Header';
+import './App.css';
 
 function App() {
   return (
-    <AppProvider>
+    <>
       <Header />
       <main className="main-container">
         <RoutesComponent />
       </main>
-    </AppProvider>
+    </>
   );
 }
 
