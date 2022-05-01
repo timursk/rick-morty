@@ -5,7 +5,6 @@ import MainSwitch from '../../../components/MainSwitch/MainSwitch';
 import CardsContainer from '../../../components/CardsContainer/CardsContainer';
 import Pagination from '../../../components/Pagination/Pagination';
 import { ApiMaxCards, URL } from '../../../utils/constants';
-import './Main.css';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   fetchCards,

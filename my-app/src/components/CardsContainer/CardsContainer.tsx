@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { pickCard } from '../../store/reducers/mainPageSlice';
+import './CardsContainer.css';
 
 const getSlicedCards = (
   ApiMaxCards: number,

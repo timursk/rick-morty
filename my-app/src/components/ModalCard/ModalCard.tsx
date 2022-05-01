@@ -9,7 +9,7 @@ type Props = {
 const ModalCard = ({ item: { image, location, name, species, status, gender } }: Props) => {
   return (
     <div className="card modal-card" data-testid="modal-card">
-      <img className="card-img modal-card__img" src={image} alt="item" />
+      <img className="modal-card__img" src={image} alt="item" />
       <div className="modal-card__info">
         <h2 className="card-info__item name__info">{name}</h2>
         <p className="card-info__item card-info__status">
