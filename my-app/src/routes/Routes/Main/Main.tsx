@@ -13,6 +13,7 @@ import {
   startLoading,
   stopLoading,
 } from '../../../store/reducers/mainPageSlice';
+import fetchCharacterByLink from '../../../store/features/fetchCharacterByLink';
 
 const getLink = (page = 0, name = '') => {
   return `${URL}/character?page=${page}&name=${name}`;
@@ -41,16 +42,18 @@ const Main = () => {
       dispatch(startLoading());
       prevLink = link;
 
-      getCharactersByLink(link).then((result) => {
-        if (isMounted.current) {
-          if (result.results && result.results.length) {
-            dispatch(fetchCards(result));
-          } else {
-            dispatch(fetchEmpty());
-          }
-        }
-        dispatch(stopLoading());
-      });
+      // getCharactersByLink(link).then((result) => {
+      //   if (isMounted.current) {
+      //     if (result.results && result.results.length) {
+      //       dispatch(fetchCards(result));
+      //     } else {
+      //       dispatch(fetchEmpty());
+      //     }
+      //   }
+      //   dispatch(stopLoading());
+      // });
+      dispatch(fetchCharacterByLink(link));
+      dispatch(stopLoading());
     }
 
     return () => {

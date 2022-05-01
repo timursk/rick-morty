@@ -11,7 +11,7 @@ const Pagination = () => {
   const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPageReducer;
 
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
-
+  console.log(state.mainPageReducer);
   useEffect(() => {
     setPageNumbers(createPages(totalPagesCount || totalApiPagesCount, currentPage));
   }, [totalApiPagesCount, totalPagesCount, currentPage, searchValue]);

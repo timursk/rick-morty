@@ -3,6 +3,7 @@ import { Character } from '../../types/apiTypes/character';
 import { Characters } from '../../types/apiTypes/characters';
 import sortTypes from '../../types/store/sortTypes';
 import { sortByType } from '../../utils/utils';
+import fetchCharacterByLink from '../features/fetchCharacterByLink';
 import initialAppState from '../initialAppState';
 import { RootState } from '../store';
 
@@ -55,6 +56,15 @@ export const mainPageReducer = createSlice({
     unpickCard: (state) => {
       state.pickedCard = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCharacterByLink.fulfilled, (state, action) => {
+      const sortedCards = sortByType(state.sort, action.payload.results);
+
+      state.cards = sortedCards;
+      state.totalCardsCount = action.payload.info.count;
+      state.totalApiPagesCount = action.payload.info.pages;
+    });
   },
 });
 
