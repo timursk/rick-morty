@@ -34,20 +34,20 @@ const CardsContainer = () => {
     navigate('/card');
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!isLoading && !slicedCards.length) {
+    return <p className="info-error">no info</p>;
+  }
+
   return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : slicedCards.length ? (
-        <div className="cards-container">
-          {slicedCards.map((item) => {
-            return <Card onClick={handleClick} item={item} key={item.id} />;
-          })}
-        </div>
-      ) : (
-        <p className="info-error">no info</p>
-      )}
-    </>
+    <div className="cards-container">
+      {slicedCards.map((item) => (
+        <Card onClick={handleClick} item={!isLoading ? item : null} key={item.id} />
+      ))}
+    </div>
   );
 };
 

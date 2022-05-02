@@ -1,17 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import Input from '../../../components/Input/Input';
-import { getCharactersByLink } from '../../../services/CardService';
 import MainSwitch from '../../../components/MainSwitch/MainSwitch';
 import CardsContainer from '../../../components/CardsContainer/CardsContainer';
 import Pagination from '../../../components/Pagination/Pagination';
 import { ApiMaxCards, URL } from '../../../utils/constants';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  fetchCards,
-  fetchEmpty,
-  startLoading,
-  stopLoading,
-} from '../../../store/reducers/mainPageSlice';
+import { startLoading, stopLoading } from '../../../store/reducers/mainPageSlice';
 import fetchCharacterByLink from '../../../store/features/fetchCharacterByLink';
 
 const getLink = (page = 0, name = '') => {
@@ -41,18 +35,9 @@ const Main = () => {
       dispatch(startLoading());
       prevLink = link;
 
-      // getCharactersByLink(link).then((result) => {
-      //   if (isMounted.current) {
-      //     if (result.results && result.results.length) {
-      //       dispatch(fetchCards(result));
-      //     } else {
-      //       dispatch(fetchEmpty());
-      //     }
-      //   }
-      //   dispatch(stopLoading());
-      // });
-      dispatch(fetchCharacterByLink(link));
-      dispatch(stopLoading());
+      dispatch(fetchCharacterByLink(link)).then(() => {
+        dispatch(stopLoading());
+      });
     }
 
     return () => {

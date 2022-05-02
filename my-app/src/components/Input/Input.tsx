@@ -15,11 +15,8 @@ const Input = () => {
       dispatch(input(refInput));
     };
 
-    window.addEventListener('beforeunload', saveValue);
-
     return () => {
       saveValue();
-      window.removeEventListener('beforeunload', saveValue);
     };
   }, [dispatch]);
 

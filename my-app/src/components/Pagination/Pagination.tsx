@@ -1,6 +1,5 @@
 import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { createPages } from '../../utils/utils';
-import { actionTypes } from '../../types/store/actionTypes';
 import './Pagination.css';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { changePage } from '../../store/reducers/mainPageSlice';
@@ -11,7 +10,7 @@ const Pagination = () => {
   const { currentPage, totalPagesCount, totalApiPagesCount, searchValue } = state.mainPageReducer;
 
   const [pageNumbers, setPageNumbers] = useState<number[]>([]);
-  console.log(state.mainPageReducer);
+
   useEffect(() => {
     setPageNumbers(createPages(totalPagesCount || totalApiPagesCount, currentPage));
   }, [totalApiPagesCount, totalPagesCount, currentPage, searchValue]);
@@ -30,7 +29,7 @@ const Pagination = () => {
       e.preventDefault();
       const number =
         currentPage === (totalPagesCount || totalApiPagesCount) ? currentPage : currentPage + 1;
-      dispatch({ type: actionTypes.CHANGE_PAGE, payload: number });
+      dispatch(changePage(number));
     },
     [currentPage, dispatch, totalApiPagesCount, totalPagesCount]
   );
