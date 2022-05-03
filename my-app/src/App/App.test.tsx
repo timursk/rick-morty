@@ -3,14 +3,20 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
+
+const AppComponent = () => (
+  <MemoryRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </MemoryRouter>
+);
 
 describe('App', () => {
   test('renders after loading', async () => {
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
+    render(<AppComponent />);
     expect(await screen.findByTestId('loader')).toBeInTheDocument();
   });
 
@@ -26,25 +32,16 @@ describe('App', () => {
 
   describe('Router', () => {
     test('main page routing', async () => {
-      render(
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
-      );
+      render(<AppComponent />);
       const mainLink = screen.getByTestId('Main');
       userEvent.click(mainLink);
       expect(await screen.findByTestId('main-page')).toBeInTheDocument();
     });
 
     test('about page routing', async () => {
-      render(
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
-      );
+      render(<AppComponent />);
       const aboutLink = screen.getByTestId('About');
       userEvent.click(aboutLink);
-      // expect(screen.getByTestId('about-page')).toBeInTheDocument();
       expect(await screen.findByTestId('about-page')).toBeInTheDocument();
     });
 
@@ -58,11 +55,7 @@ describe('App', () => {
     });
 
     test('form page routing', async () => {
-      render(
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
-      );
+      render(<AppComponent />);
       const formLink = screen.getByTestId('Form');
       userEvent.click(formLink);
       expect(await screen.findByTestId('form-page')).toBeInTheDocument();

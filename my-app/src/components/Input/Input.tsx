@@ -28,7 +28,7 @@ const Input = () => {
   };
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form onSubmit={(e) => handleSubmit(e)} data-testid="formMainInput">
       <div className="input-container">
         <input
           type="text"

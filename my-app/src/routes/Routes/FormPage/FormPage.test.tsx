@@ -2,7 +2,18 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
+import { store } from '../../../store/store';
 import FormPage from './FormPage';
+
+const FormPageComponent = () => (
+  <MemoryRouter>
+    <Provider store={store}>
+      <FormPage />
+    </Provider>
+  </MemoryRouter>
+);
 
 describe('FormPage', () => {
   let container: HTMLDivElement;
@@ -20,7 +31,7 @@ describe('FormPage', () => {
     global.URL.createObjectURL = jest.fn();
     const fakeFile = new File(['photo'], 'photo.png', { type: 'image/png' });
     await act(async () => {
-      ReactDOM.render(<FormPage />, container);
+      ReactDOM.render(<FormPageComponent />, container);
     });
 
     await act(async () => userEvent.type(screen.getByTestId('firstName'), 'testnammmed'));
