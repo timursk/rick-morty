@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { input } from '../../store/reducers/mainPageSlice';
+import { input, saveInputValue } from '../../store/reducers/mainPageSlice';
 import './Input.css';
 
 let refInput = '';
@@ -12,7 +12,7 @@ const Input = () => {
 
   useEffect(() => {
     const saveValue = () => {
-      dispatch(input(refInput));
+      dispatch(saveInputValue(refInput));
     };
 
     return () => {

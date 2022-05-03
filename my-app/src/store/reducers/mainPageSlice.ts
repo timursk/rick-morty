@@ -22,6 +22,9 @@ export const mainPageReducer = createSlice({
       state.searchValue = action.payload;
       state.currentPage = 1;
     },
+    saveInputValue: (state, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
     sort: (state, action: PayloadAction<sortTypes>) => {
       const sort = action.payload;
       const sortedCards = sortByType(sort, state.cards);
@@ -65,6 +68,7 @@ export const {
   startLoading,
   stopLoading,
   input,
+  saveInputValue,
   sort,
   setPerPage,
   changePage,
