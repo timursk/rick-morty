@@ -9,7 +9,12 @@ type CardProps = {
 
 const Card = ({ item, onClick }: CardProps) => {
   return (
-    <div onClick={() => onClick(item)} className="card" data-testid="card-item">
+    <div
+      onClick={() => onClick(item)}
+      className="card"
+      data-testid="card-item"
+      data-title={`${item.name}`}
+    >
       <img className="card-img" src={item.image} alt="item" />
     </div>
   );
