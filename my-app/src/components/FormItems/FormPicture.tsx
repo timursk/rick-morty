@@ -28,7 +28,7 @@ const FormPicture = ({ errors, register }: FormItemProps) => {
         {...rest}
         ref={(item: HTMLInputElement | null) => {
           ref(item);
-          if (item) {
+          if (item && state.profilePicture) {
             item.files = state.profilePicture;
           }
         }}

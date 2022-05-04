@@ -28,7 +28,9 @@ describe('Form', () => {
   });
 
   test("form's items rendered", async () => {
-    render(<FormComponent />);
+    await act(async () => {
+      ReactDOM.render(<FormComponent />, container);
+    });
     expect(screen.getByTestId('firstName')).toHaveValue('');
     expect(screen.getByTestId('lastName')).toHaveValue('');
     expect(screen.getByTestId('birthDate')).toHaveValue('');
@@ -38,12 +40,16 @@ describe('Form', () => {
     expect(screen.getByRole('button')).toBeDisabled();
   });
 
-  test('form button able/disable', () => {
-    render(<FormComponent />);
+  test('form button able/disable', async () => {
+    await act(async () => {
+      ReactDOM.render(<FormComponent />, container);
+    });
     const btn = screen.getByRole('button');
     const randomInput = screen.getByTestId('lastName');
     expect(btn).toBeDisabled();
-    userEvent.type(randomInput, 'test');
+    await act(async () => {
+      userEvent.type(randomInput, 'test');
+    });
     expect(btn).toBeEnabled();
   });
 
@@ -69,17 +75,19 @@ describe('Form', () => {
 
   test('form clearing', async () => {
     const fakeFile = new File(['photo'], 'photo.png', { type: 'image/png' });
-    render(<FormComponent />);
     await act(async () => {
-      userEvent.type(screen.getByTestId('firstName'), 'test');
-      userEvent.type(screen.getByTestId('lastName'), 'surname');
-      userEvent.type(screen.getByTestId('birthDate'), '1990-10-10');
-      userEvent.selectOptions(screen.getByTestId('country'), 'Sweden');
-      userEvent.click(screen.getByTestId('consent'));
-      userEvent.click(screen.getByTestId('notify'));
-      userEvent.upload(screen.getByTestId('profilePicture'), fakeFile);
-      fireEvent.submit(screen.getByRole('button'));
+      ReactDOM.render(<FormComponent />, container);
     });
+    // await act(async () => {
+    //   userEvent.type(screen.getByTestId('firstName'), 'test');
+    //   userEvent.type(screen.getByTestId('lastName'), 'surname');
+    //   userEvent.type(screen.getByTestId('birthDate'), '1990-10-10');
+    //   userEvent.selectOptions(screen.getByTestId('country'), 'Sweden');
+    //   userEvent.click(screen.getByTestId('consent'));
+    //   userEvent.click(screen.getByTestId('notify'));
+    //   userEvent.upload(screen.getByTestId('profilePicture'), fakeFile);
+    //   fireEvent.submit(screen.getByRole('button'));
+    // });
     expect(screen.getByTestId('firstName')).toHaveValue('');
     expect(screen.getByTestId('lastName')).toHaveValue('');
     expect(screen.getByTestId('birthDate')).toHaveValue('');
