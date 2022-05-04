@@ -18,10 +18,13 @@ export const formReducer = createSlice({
       state.notify = action.payload.notify;
       state.profilePicture = action.payload.profilePicture;
     },
+    saveProfilePicture: (state, action: PayloadAction<FileList>) => {
+      state.profilePicture = action.payload;
+    },
   },
 });
 
-export const { saveForm } = formReducer.actions;
+export const { saveForm, saveProfilePicture } = formReducer.actions;
 
 export const selectForm = (state: RootState) => state;
 
