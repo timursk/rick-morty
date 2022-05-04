@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
@@ -74,7 +74,7 @@ describe('Form', () => {
   });
 
   test('form clearing', async () => {
-    const fakeFile = new File(['photo'], 'photo.png', { type: 'image/png' });
+    // const fakeFile = new File(['photo'], 'photo.png', { type: 'image/png' });
     await act(async () => {
       ReactDOM.render(<FormComponent />, container);
     });
