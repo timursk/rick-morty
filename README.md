@@ -18,7 +18,7 @@
 * React-testing-library: 12.1.4
 	
 ## Setup
-To run this project, go to [website](https://pma-app.netlify.app/), or install it locally via npm:
+To run this project, go to [website](https://rickmorty-timursk.netlify.app/), or install it locally via npm:
 ```sh
 cd rick-morty/my-app
 npm install
