@@ -1,0 +1,18 @@
+.form-card {
+  display: flex;
+  /* max-width: 400px;
+  margin: 0 auto 10px; */
+  padding-top: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.form-card__img {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+}

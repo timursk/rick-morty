@@ -1,0 +1,32 @@
+.back-card {
+  display: block;
+  position: relative;
+  margin: 0 0 10px 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #282c34;
+}
+
+.back-card:hover {
+  text-decoration: underline;
+}
+
+.back-card:active {
+  color: rgb(56, 150, 255);
+}
+
+.back-card::before {
+  position: absolute;
+  content: '';
+  width: 24px;
+  height: 24px;
+  background-image: url('../../../assets/back.png');
+  top: 50%;
+  left: -25px;
+  transform: translateY(-50%);
+}
+
+.back-card:active.back-card::before {
+  filter: invert(41%) sepia(94%) saturate(1321%) hue-rotate(196deg) brightness(105%) contrast(101%);
+}

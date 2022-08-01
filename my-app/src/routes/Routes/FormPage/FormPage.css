@@ -1,0 +1,7 @@
+.form-cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 15px;
+}

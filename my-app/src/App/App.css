@@ -1,0 +1,29 @@
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 40%;
+}
+
+.main-container {
+  min-height: 90vh;
+  /* margin: 0 300px; */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.loader {
+  display: block;
+  margin: 0 auto;
+}
